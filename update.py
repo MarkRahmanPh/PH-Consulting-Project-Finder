@@ -82,6 +82,12 @@ QUERIES = {
   ('rail','"railroad crossing" "RFQ" Washington'),
   ('rail','"rail" "engineering services" "RFQ" Washington'),
   ('rail','"grade separation" "consultant" Washington'),
+  # Civil engineering and ADA professional-services opportunities (not construction-only bids)
+  ('civil','"ADA curb ramp" "consultant" Washington'),
+  ('civil','"ADA improvements" "engineering services" Washington'),
+  ('civil','"roadway design" "RFQ" Washington'),
+  ('civil','"civil engineering" "on-call" Washington'),
+  ('civil','"sidewalk improvements" "consultant" Washington'),
  ],
  'OR': [
   ('signal','"signal timing" "RFP" Oregon'),
@@ -90,11 +96,16 @@ QUERIES = {
   ('planning','"traffic impact study" "RFP" Oregon'),
   ('rail','"railroad" "engineering" "RFP" Oregon'),
   ('rail','"rail crossing" "RFQ" Oregon'),
+  ('civil','"ADA curb ramp" "consultant" Oregon'),
+  ('civil','"ADA improvements" "RFQ" Oregon'),
+  ('civil','"roadway design" "engineering services" Oregon'),
+  ('civil','"civil engineering" "on-call" Oregon'),
+  ('civil','"sidewalk improvements" "consultant" Oregon'),
  ]
 }
 
 REQUEST_RE = re.compile(r'\b(rfp|rfq|rsoq|soq|request for (qualifications|proposals)|on[ -]?call|consultant|professional services|solicitation|prequalification)\b', re.I)
-FIELD_RE = re.compile(r'\b(traffic|signal|intersection|transit|transportation|pedestrian|bike|roadway|rail|railroad|crossing|grade separation|safety|corridor|ITS|ATSPM|TSP|planning)\b', re.I)
+FIELD_RE = re.compile(r'\b(traffic|signal|intersection|transit|transportation|pedestrian|bike|roadway|rail|railroad|crossing|grade separation|safety|corridor|ITS|ATSPM|TSP|planning|ADA|curb ramps?|sidewalks?|accessible|accessibility|civil engineering|complete streets)\b', re.I)
 BLOCK_RE = re.compile(r'\b(construction bid|construction only|low bid|bid tabulation|bid opening results|job posting|hiring|employment|equipment purchase|janitorial|roof replacement)\b',re.I)
 TAG_RE = re.compile(r'<[^>]+>')
 
