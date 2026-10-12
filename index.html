@@ -1,1 +1,140 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PH Consulting | Opportunity Finder</title><style>:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#17233b;background:#f3f6fb}body{margin:0}header{background:linear-gradient(110deg,#10254a,#17618a);color:white;padding:32px max(24px,calc((100vw - 1200px)/2))}h1{margin:0;font-size:30px}header p{opacity:.85}.wrap{max-width:1200px;margin:auto;padding:24px}.toolbar{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}input,select,button{border:1px solid #cbd5e1;border-radius:9px;padding:11px 13px;font-size:14px;background:white}input{flex:1;min-width:240px}button{cursor:pointer;background:#17618a;color:white;border:0}button:hover{background:#104d70}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}.stat,.item,.notice{background:white;border:1px solid #e0e7f0;border-radius:13px;padding:18px}.stat strong{display:block;font-size:25px;margin-top:6px}.muted{color:#64748b;font-size:13px}.items{display:grid;gap:12px;margin-top:16px}.item{display:grid;grid-template-columns:1fr auto;gap:12px}.item h3{margin:4px 0 8px;font-size:18px}.item p{margin:6px 0}.pill{display:inline-block;background:#eaf2fb;color:#195b86;padding:4px 8px;border-radius:20px;font-size:12px;font-weight:650}.high{background:#ffe9e8;color:#a62b27}.link{color:#17618a;font-weight:700;text-decoration:none}.notice{margin-top:16px;background:#fffdf4}.small{font-size:12px}.empty{text-align:center;padding:36px}.actions{display:flex;gap:10px;align-items:center;justify-content:flex-end;flex-wrap:wrap}@media(max-width:700px){.item{grid-template-columns:1fr}.actions{justify-content:flex-start}}</style></head><body><header><h1>PH Consulting · Project Finder</h1><p>Washington & Oregon · Traffic Signals · ITS · Traffic Operations · Railroad Engineering · Civil / ADA</p></header><main class="wrap"><div class="stats"><div class="stat"><span class="muted">Discovered records</span><strong id="total">—</strong></div><div class="stat"><span class="muted">Washington</span><strong id="wa">—</strong></div><div class="stat"><span class="muted">Oregon</span><strong id="or">—</strong></div><div class="stat"><span class="muted">Last data update (Pacific)</span><strong id="updated" style="font-size:17px">—</strong></div></div><div class="notice"><b>Agency-listed opportunities and unverified discovery leads.</b> The initial opportunities and deadlines were checked against agency notices on October 11, 2026. Daily search feeds may find other leads, but they do not automatically re-verify deadline changes, addenda, or open status. Open the source and confirm the official procurement document before pursuing. New data is collected daily only after the included GitHub Actions workflow is enabled; this HTML file alone cannot run daily searches while closed.</div><div class="toolbar"><input id="search" placeholder="Search agency, scope, railroad, signal, ATSPM…" aria-label="Search opportunities"><select id="state"><option value="">All states</option><option>WA</option><option>OR</option></select><select id="type"><option value="">All disciplines</option><option value="signal">Signals / ITS</option><option value="rail">Railroad</option><option value="planning">Planning / Operations</option><option value="civil">Civil / ADA</option></select><select id="sort"><option value="new">Newest found</option><option value="old">Oldest found</option></select><button id="reload">Refresh data</button></div><div class="muted" id="status">Loading…</div><section id="items" class="items"></section><p class="muted small">Sources: official agency procurement pages (initial watchlist) and public search feeds (unverified leads). Always check agency source and amendments. Daily refresh requires GitHub Pages + Actions setup described in README.</p></main><script>let all=[];const $=id=>document.getElementById(id);function safe(t){return String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function render(){let q=$('search').value.toLowerCase(),s=$('state').value,t=$('type').value;let rows=all.filter(x=>(!s||x.state===s)&&(!t||x.category===t)&&[x.title,x.summary,x.source,x.agency,x.role].join(' ').toLowerCase().includes(q));rows.sort((a,b)=>$('sort').value==='new'?b.found.localeCompare(a.found):a.found.localeCompare(b.found));$('items').innerHTML=rows.length?rows.map(x=>`<article class="item"><div><span class="pill ${x.priority==='HIGH'?'high':''}">${safe(x.priority||'LEAD')}</span> <span class="pill">${safe(x.state)}</span> <span class="pill">${safe(x.category==='civil'?'Civil / ADA':x.category)}</span><h3>${safe(x.title)}</h3><p>${safe(x.summary)}</p><div class="muted">${safe(x.agency||'Agency not confirmed')} · ${safe(x.role||'')}</div><div class="muted">Due: <b>${safe(x.due_date||'Not verified')} ${safe(x.due_time||'')}</b> · ${safe(x.status||'Discovery lead')} · ${safe(x.source)}</div></div><div class="actions"><a class="link" target="_blank" rel="noopener noreferrer" href="${safe(x.url)}">View source ↗</a></div></article>`).join(''):'<div class="empty">No matching records. Try broader filters or check whether the daily workflow has run.</div>';$('status').textContent=`Showing ${rows.length} of ${all.length} discovery leads`;}async function load(){try{const r=await fetch('./opportunities.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('Data file missing');const d=await r.json();all=d.items||[];$('updated').textContent=d.updated_pacific||'Unknown';$('total').textContent=all.length;$('wa').textContent=all.filter(x=>x.state==='WA').length;$('or').textContent=all.filter(x=>x.state==='OR').length;render()}catch(e){$('status').textContent='Could not load opportunities.json. Run the updater or enable the scheduled workflow.';$('items').innerHTML='';}}['search','state','type','sort'].forEach(id=>$(id).addEventListener('input',render));$('reload').onclick=load;load();setInterval(load,60*60*1000);</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PH Consulting | Project Finder</title>
+  <style>
+    :root {font-family:Inter,ui-sans-serif,Segoe UI,Arial,sans-serif; color:#172a40;background:#f4f7fa}
+    *{box-sizing:border-box}body{margin:0;line-height:1.47}
+    header{background:linear-gradient(120deg,#102844,#1c6584);color:white;padding:30px max(22px,calc((100vw - 1180px)/2))}
+    .brand{font-size:12px;letter-spacing:.14em;font-weight:800;opacity:.8;text-transform:uppercase}
+    h1{font-size:clamp(26px,4vw,36px);margin:5px 0 7px;line-height:1.15}header p{opacity:.86;margin:0}
+    main{max-width:1220px;margin:auto;padding:23px 20px 65px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .stat,.panel,.project{background:#fff;border:1px solid #e2e8ef;border-radius:13px;box-shadow:0 2px 8px rgba(22,45,67,.025)}
+    .stat{padding:16px}.stat b{display:block;font-size:26px;line-height:1.35}.sub{font-size:12px;color:#64768a}
+    .panel{padding:17px;margin-top:15px}.panel h2{font-size:16px;margin:0 0 7px}
+    .info{background:#f7fafc;color:#516479;border-left:3px solid #237da0}
+    .toolbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:16px}
+    input,select,button{font:inherit;font-size:14px;border-radius:9px;padding:10px 12px;border:1px solid #c9d5e3;background:#fff;color:#18324d}
+    button{cursor:pointer;background:#156282;color:#fff;border:0;font-weight:700}button:hover{background:#104a62}
+    .toolbar input[type=search]{flex:1;min-width:210px}.toolbar select{min-width:150px}
+    .checks{display:flex;gap:15px;flex-wrap:wrap;margin-top:11px;font-size:13px;color:#52667c}
+    .checks label{display:flex;align-items:center;gap:5px}.checks input{accent-color:#17698d}
+    .toprow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:20px 0 12px}
+    .toprow h2{margin:0;font-size:20px}.results{display:grid;gap:11px}
+    .project{padding:17px;display:grid;grid-template-columns:1fr auto;gap:22px;border-left:4px solid #cadbe3}
+    .project.priority{border-left-color:#d88445}.project.expired{opacity:.67}
+    .project h3{margin:8px 0;font-size:18px;line-height:1.3}.project p{font-size:14px;margin:6px 0}
+    .tags{display:flex;flex-wrap:wrap;gap:6px}.tag{font-size:11px;letter-spacing:.02em;font-weight:700;border-radius:5px;padding:4px 7px;background:#e9f2f7;color:#275d7a}
+    .tag.high{background:#fff0e0;color:#965515}.tag.new{background:#e5f6ee;color:#197052}.tag.changed{background:#fff1dd;color:#94591b}.tag.expired{background:#f2e9e9;color:#8a4545}
+    .meta{color:#60758b;font-size:13px}.due{color:#243a50}.aside{min-width:142px;text-align:right;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:9px}
+    .link{color:#12698d;text-decoration:none;font-weight:750;white-space:nowrap}.link:hover{text-decoration:underline}
+    .footer{margin-top:22px;font-size:12px;color:#60758b}.health{font-size:13px;color:#486277}.health details{margin-top:8px}
+    .none{text-align:center;padding:42px 10px;color:#65798e;border:1px dashed #c5d7e4;border-radius:12px;background:#fff}
+    a:focus,button:focus,input:focus,select:focus{outline:3px solid #9de0f4;outline-offset:2px}
+    @media(max-width:780px){.stats{grid-template-columns:repeat(2,1fr)}.project{grid-template-columns:1fr}.aside{text-align:left;align-items:flex-start}.stat b{font-size:22px}}
+  </style>
+</head>
+<body>
+<header><div class="brand">PH Consulting</div><h1>Project Opportunity Finder</h1>
+<p>Washington first · Signal timing / ITS · Railroad / FRA · Traffic planning · Civil / ADA</p></header>
+<main>
+  <section class="stats" aria-label="Summary">
+    <div class="stat"><span class="sub">Records with future known deadlines</span><b id="active">—</b></div>
+    <div class="stat"><span class="sub">Washington / Oregon</span><b id="states">—</b></div>
+    <div class="stat"><span class="sub">Recently found or changed (7 days)</span><b id="recent">—</b></div>
+    <div class="stat"><span class="sub">Data last updated (Pacific)</span><b id="updated" style="font-size:16px;padding-top:6px">—</b></div>
+  </section>
+  <section class="panel info"><strong>Official-source monitoring + discovery leads.</strong>
+    The script checks selected public WA/OR procurement listings and agency notices. Dates are labeled verified only when visible on a fetched notice.
+    Not every state/agency portal is machine-accessible; RSS results are <strong>unverified leads</strong>, not confirmed open RFQs.
+    Compare the issuing agency's original RFP and addenda before submitting a proposal.
+  </section>
+  <section class="toolbar" aria-label="Search and filters">
+    <input type="search" id="search" placeholder="Search agency, project, MAXTIME, FRA, ADA..." aria-label="Search opportunities">
+    <select id="state" aria-label="State"><option value="">WA + OR</option><option value="WA">Washington</option><option value="OR">Oregon</option></select>
+    <select id="type" aria-label="Discipline"><option value="">All disciplines</option><option value="signal">Signals / ITS</option><option value="rail">Railroad</option><option value="planning">Planning / Operations</option><option value="civil">Civil / ADA</option></select>
+    <select id="sort" aria-label="Sort"><option value="due">Upcoming deadline</option><option value="new">Newest found</option><option value="recent">Recently changed</option></select>
+    <button type="button" id="refresh">Refresh data</button>
+  </section>
+  <div class="checks">
+    <label><input type="checkbox" id="showleads" checked> Include unverified leads</label>
+    <label><input type="checkbox" id="showexpired"> Include expired deadlines</label>
+    <label><input type="checkbox" id="highonly"> High priority only</label>
+  </div>
+  <div class="toprow"><h2>Opportunity watchlist</h2><span class="sub" id="count">Loading…</span></div>
+  <section id="projects" class="results" aria-live="polite"></section>
+  <section class="panel health"><h2>Search source health</h2>
+    <div id="healthtext">Waiting for data.</div>
+    <details><summary>Show source check results</summary><div id="healthdetails"></div></details>
+    <p class="sub">The three-hour GitHub Actions job updates the JSON file; the Refresh data button only reloads published results. A listed deadline can change without an accessible addendum.</p>
+    <a class="link" href="https://github.com/MarkRahmanPh/PH-Consulting-Project-Finder/actions/workflows/daily-update.yml" target="_blank" rel="noopener noreferrer">Run search on GitHub ↗</a>
+  </section>
+  <footer class="footer">Source monitoring: WA OMWBE bid listings, WA WEBS public calendar (when accessible), Port of Coos Bay solicitations, selected official detail pages, and discovery feeds. Not a complete replacement for WEBS and OregonBuys supplier accounts.</footer>
+</main>
+<script>
+  const $ = id => document.getElementById(id);
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  const human = {'rail':'Railroad','signal':'Signals / ITS','planning':'Planning / Operations','civil':'Civil / ADA'};
+  let records = [];
+  let dataset = {};
+  const validURL = x => /^https:\/\//i.test(x || '') ? x : '#';
+  const daysSince = str => {const d = new Date(`${str || '1900-01-01'}T12:00:00`);return (Date.now()-d.getTime())/86400000;};
+  const recent = x => !!(x.change_on && daysSince(x.change_on) <= 7);
+  function draw() {
+    const q = $('search').value.trim().toLowerCase(), state = $('state').value, type = $('type').value;
+    let entries = records.filter(x => (!state || x.state === state) && (!type || x.category === type) &&
+      (!$('highonly').checked || x.priority === 'HIGH') && ($('showexpired').checked || !x.expired) &&
+      ($('showleads').checked || x.source_kind !== 'news_feed') &&
+      [x.title,x.agency,x.summary,x.role,x.source].join(' ').toLowerCase().includes(q));
+    const sort = $('sort').value;
+    entries.sort((a,b) => {
+      if (sort === 'new') return (b.first_seen || b.found || '').localeCompare(a.first_seen || a.found || '');
+      if (sort === 'recent') return (b.change_on || '').localeCompare(a.change_on || '');
+      return (a.due_date || '9999-12-31').localeCompare(b.due_date || '9999-12-31') || ((a.state !== 'WA') - (b.state !== 'WA'));
+    });
+    $('count').textContent = `Showing ${entries.length} of ${records.length} saved records`;
+    $('projects').innerHTML = entries.length ? entries.map(x => {
+      const isLead = x.source_kind === 'news_feed';
+      const change = recent(x) ? x.change_type : '';
+      const label = change === 'NEWLY FOUND' ? 'Newly found' : change === 'DEADLINE CHANGED' ? 'Deadline changed' : change === 'ADDENDUM POSTED' ? 'Addendum posted' : change === 'EXPIRED' ? 'Expired' : '';
+      const link = esc(validURL(x.url));
+      return `<article class="project ${x.priority==='HIGH'?'priority':''} ${x.expired?'expired':''}">
+        <div><div class="tags"><span class="tag">${esc(x.state || '—')}</span><span class="tag">${esc(human[x.category] || x.category || 'Other')}</span>
+        ${x.priority === 'HIGH' ? '<span class="tag high">High priority</span>' : ''}
+        ${label ? `<span class="tag ${change === 'NEWLY FOUND'?'new':change === 'EXPIRED'?'expired':'changed'}">${label}</span>` : ''}
+        ${isLead ? '<span class="tag">Unverified lead</span>' : ''}</div>
+        <h3>${esc(x.title)}</h3><p>${esc(x.summary || '')}</p>
+        <div class="meta"><strong>${esc(x.agency || 'Agency not confirmed')}</strong> · ${esc(x.role || '')}</div>
+        <div class="meta due">Due: <strong>${esc(x.due_date || 'Not verified')} ${esc(x.due_time || '')}</strong>
+        ${x.previous_due_date && change === 'DEADLINE CHANGED' ? ` · Previously ${esc(x.previous_due_date)}` : ''}</div>
+        <div class="meta">${esc(x.status || 'Requires review')} · ${esc(x.source || '')} ${x.verified_on ? `· Checked ${esc(x.verified_on)}` : ''}</div></div>
+        <div class="aside"><a class="link" href="${link}" target="_blank" rel="noopener noreferrer">${isLead ? 'Review lead' : 'View source'} ↗</a>
+        <span class="sub">First seen ${esc(x.first_seen || x.found || 'Unknown')}</span></div></article>`;
+    }).join('') : '<div class="none">No records match the filters. Try all disciplines and unverified leads, or check the last search status.</div>';
+  }
+  async function reload() {
+    const btn = $('refresh');btn.disabled = true;btn.textContent = 'Loading…';
+    try {
+      const response = await fetch(`./opportunities.json?refresh=${Date.now()}`, {cache:'no-store'});
+      if (!response.ok) throw Error(`HTTP ${response.status}`);
+      dataset = await response.json();
+      records = Array.isArray(dataset.items) ? dataset.items : [];
+      $('active').textContent = records.filter(x => !x.expired && x.due_date && x.source_kind !== 'news_feed').length;
+      $('states').textContent = `${records.filter(x=>x.state==='WA'&&!x.expired).length} / ${records.filter(x=>x.state==='OR'&&!x.expired).length}`;
+      $('recent').textContent = records.filter(x=>recent(x)).length;
+      $('updated').textContent = dataset.updated_pacific || 'Unknown';
+      const checks = dataset.source_checks || [];
+      $('healthtext').textContent = `${dataset.official_sources_checked ?? '?'} / ${dataset.official_sources_total ?? 3} public official listings accessed on latest run. No successful access does not mean no new opportunities.`;
+      $('healthdetails').innerHTML = checks.length ? checks.map(x => `<p>${x.ok ? '✓' : '⚠'} ${esc(x.source)} ${x.matches !== undefined ? `(${esc(x.matches)} matching records)` : ''} ${x.error ? '— '+esc(x.error) : ''}</p>`).join('') : '<p>No source report in this database yet.</p>';
+      draw();
+    } catch (error) {
+      $('count').textContent = `Data file failed to load: ${error.message}. Open the GitHub Pages URL, not a local file.`;
+      $('projects').innerHTML = '<div class="none">Could not load opportunities.json. Your existing data may still be in GitHub; check website publishing.</div>';
+    } finally {btn.disabled = false;btn.textContent = 'Refresh data';}
+  }
+  ['search','state','type','sort','showleads','showexpired','highonly'].forEach(id => $(id).addEventListener('input',draw));
+  $('refresh').addEventListener('click',reload);
+  reload();setInterval(reload,60*60*1000);
+</script>
+</body></html>
