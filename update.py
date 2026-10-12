@@ -319,6 +319,10 @@ def is_relevant(text):
 
 def is_strictly_relevant_record(row):
     title = row.get('title', '')
+    # Do not keep general guidance webpages as open procurement opportunities.
+    u = (row.get('url') or '').lower()
+    if '/engineering-standards/planning-guidance/' in u:
+        return False
     # Manually curated seeded records may omit RFP/RFQ words, but must contain an
     # unequivocal traffic/transport/rail/roadway subject in their own title.
     return classify_title(title, require_procurement=False) is not None
