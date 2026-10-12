@@ -130,7 +130,9 @@ FIT_RULES = [
         r"crosswalk improvements?|sidewalk improvements?|"
         r"curb ramps?|bicycle (?:improvements?|facilities|lanes?)|"
         r"RRFB|rectangular rapid flashing beacon|"
-        r"safe routes to school|pedestrian and bicycle|pedestrian/bicycle)\b", re.I)),
+        r"safe routes to school|pedestrian and bicycle|pedestrian/bicycle|"
+        r"shared[ -]use (?:path|trail)|multi[ -]use (?:path|trail)|"
+        r"bicycle and pedestrian (?:path|trail|improvements?))\b", re.I)),
     ('safety', re.compile(
         r"\b(?:SS4A|safe streets(?: and roads for all)?|HSIP|"
         r"highway safety improvement|safety action plan|"
