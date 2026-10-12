@@ -98,6 +98,61 @@ UNRELATED = re.compile(
     r"construction only|construction-only|ITB|invitation to bid|"
     r"bid tabulation|equipment purchase|waterfront property RFP)\b", re.I)
 
+# PH seeks design, signal/ITS, study, planning and engineering consulting work.
+# A construction bid, construction management-only RFQ, or agency guidance page
+# is NOT a consulting design opportunity, even when its subject is a roadway,
+# railroad crossing, pedestrian signal or safety improvement.
+CONSTRUCTION_DELIVERY_ONLY = re.compile(
+    r"\b(?:construction[ -]only|construction management|construction inspection|"
+    r"construction administration|construction oversight|construction supervision|"
+    r"construction engineering and inspection|CE[&/]I|CM[&/]GC|CMAR|"
+    r"resident engineer(?:ing)?|contractor prequalification|general contractor|"
+    r"invitation (?:to|for) bid(?:s)?|invitation to tender|advertisement for bids|"
+    r"request for bids|bid for construction|construction bids?|"
+    r"construction contracts?|construction of|roadway construction|"
+    r"bridge construction|paving contract|construction procurement|"
+    r"construction[- ]phase services|construction[- ]phase support)\b", re.I)
+# Design scope must be explicit to retain projects with both design and CM.
+DESIGN_SCOPE_WITH_CM = re.compile(
+    r"\b(?:design services|design and (?:engineering|construction management|"
+    r"construction administration)|engineering design|design engineering|"
+    r"engineering and design|design plans?|plans? and specifications|"
+    r"preliminary engineering|PS[&/]E|signal timing|retiming|"
+    r"signal coordination|ATSPM|traffic modeling|safety study|"
+    r"traffic study|traffic analysis|engineering study|feasibility study)\b", re.I)
+CONSTRUCTION_PROCUREMENT = re.compile(
+    r"\b(?:construction of|construction[- ]only|construction contracts?|"
+    r"construction bids?|bid for construction|request for bids|"
+    r"advertisement for bids|invitation to bid|"
+    r"invitation for bids|contractor prequalification|general contractor)\b", re.I)
+NON_SOLICITATION_PATHS = (
+    '/engineering-standards/planning-guidance/',
+    '/hillsboro-major-projects/',
+)
+def excluded_non_consulting(title, url=''):
+    """Exclude construction-only procurement and non-solicitation project pages.
+
+    Design-plus-construction management is eligible when actual design work is
+    named; pure construction management/inspection and contractor-led bids are not.
+    """
+    label = clean(title)
+    location = (url or '').lower()
+    if any(part in location for part in NON_SOLICITATION_PATHS):
+        return True
+    if CONSTRUCTION_DELIVERY_ONLY.search(label):
+        if CONSTRUCTION_PROCUREMENT.search(label):
+            return True  # Contractor procurement, even if called design-build.
+        if not DESIGN_SCOPE_WITH_CM.search(label):
+            return True
+    if re.search(r"\bdesign[ -]build\b", label, re.I):
+        # Usually a construction contract for a design-builder, not an RFQ for
+        # independent PH engineering services.
+        if not re.search(r"\b(?:engineering design services|consultant design services|"
+                         r"design consultant services)\b", label, re.I):
+            return True
+    return False
+
+
 # Specific matches, ranked when a title spans multiple disciplines.
 # Signal design + pedestrian access is signal unless the procurement is
 # primarily ADA. Freight rail infrastructure belongs to Railroad / FRA / RCE.
@@ -297,7 +352,7 @@ def classify_title(title, summary='', require_procurement=True):
     unrelated title. This guards against adjacent OMWBE listings contaminating rows.
     """
     title = clean(title)[:260]
-    if not title or len(title) < 9 or UNRELATED.search(title) or FEED_EXCLUDE.search(title):
+    if not title or len(title) < 9 or UNRELATED.search(title) or FEED_EXCLUDE.search(title) or excluded_non_consulting(title):
         return None
     if title.lower().startswith(('request for proposal no. rfp260903',)):
         return None
@@ -323,7 +378,7 @@ def is_strictly_relevant_record(row):
     title = row.get('title', '')
     # Do not keep general guidance webpages as open procurement opportunities.
     u = (row.get('url') or '').lower()
-    if '/engineering-standards/planning-guidance/' in u:
+    if excluded_non_consulting(title, u):
         return False
     # Manually curated seeded records may omit RFP/RFQ words, but must contain an
     # unequivocal traffic/transport/rail/roadway subject in their own title.
