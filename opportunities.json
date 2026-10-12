@@ -1,7 +1,7 @@
 {
   "parser_version": 6,
-  "updated_pacific": "Oct 12, 2026 11:10 AM PDT",
-  "last_run_iso": "2026-10-12T11:10:31.409972-07:00",
+  "updated_pacific": "Oct 12, 2026 01:16 PM PDT",
+  "last_run_iso": "2026-10-12T13:16:52.492025-07:00",
   "official_sources_checked": 3,
   "official_sources_total": 3,
   "source_checks": [
@@ -55,11 +55,11 @@
     "or": 115,
     "cities": 167,
     "counties": 75,
-    "checked_ever": 20,
-    "accessible_ever": 18,
-    "attempted_this_run": 18,
-    "accessible_this_run": 17,
-    "matches_this_run": 1,
+    "checked_ever": 40,
+    "accessible_ever": 34,
+    "attempted_this_run": 32,
+    "accessible_this_run": 27,
+    "matches_this_run": 8,
     "directories_accessible": 4,
     "directories_total": 4,
     "note": "Agency directory targets are NOT all scanned every run. Only rotating batches are checked. Some cities require portal accounts; some directory sites do not expose websites to automated tools. Coverage and lead status are best-effort."
@@ -155,11 +155,13 @@
       "kind": "city",
       "name": "Bellevue",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "website": "https://bellevuewa.gov/city-government/departments/ITD/doing-business-with-it",
+      "procurement_url": "https://bellevuewa.gov/city-government/departments/ITD/doing-business-with-it",
+      "last_check": "2026-10-12",
+      "status": "Official procurement page accessed",
+      "priority": 12,
+      "last_check_at": "2026-10-12T13:16:54.374656-07:00",
+      "last_matches": 0
     },
     {
       "id": "WA|city|bellingham",
@@ -167,11 +169,13 @@
       "kind": "city",
       "name": "Bellingham",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "website": "https://cob.org/services/business/purchasing/purchasing-bid-opening",
+      "procurement_url": "https://cob.org/services/business/purchasing/purchasing-bid-opening",
+      "last_check": "2026-10-12",
+      "status": "Official procurement page accessed",
+      "priority": 12,
+      "last_check_at": "2026-10-12T13:16:56.055906-07:00",
+      "last_matches": 0
     },
     {
       "id": "WA|city|blaine",
@@ -431,11 +435,13 @@
       "kind": "city",
       "name": "Federal Way",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "website": "https://www.federalwaywa.gov/bids",
+      "procurement_url": "https://www.federalwaywa.gov/bids",
+      "last_check": "2026-10-12",
+      "status": "Official procurement page accessed",
+      "priority": 12,
+      "last_check_at": "2026-10-12T13:16:56.577566-07:00",
+      "last_matches": 0
     },
     {
       "id": "WA|city|ferndale",
@@ -503,11 +509,13 @@
       "kind": "city",
       "name": "Issaquah",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "website": "https://www.issaquahwa.gov/1464/Bids-RFPs",
+      "procurement_url": "https://www.issaquahwa.gov/1464/Bids-RFPs",
+      "last_check": "2026-10-12",
+      "status": "Inaccessible / retry next rotation",
+      "priority": 12,
+      "last_check_at": "2026-10-12T13:16:56.666220-07:00",
+      "last_matches": 0
     },
     {
       "id": "WA|city|kenmore",
@@ -563,11 +571,13 @@
       "kind": "city",
       "name": "Lacey",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "website": "https://cityoflacey.org/rfp-rfq/",
+      "procurement_url": "https://cityoflacey.org/rfp-rfq/",
+      "last_check": "2026-10-12",
+      "status": "Official procurement page accessed",
+      "priority": 12,
+      "last_check_at": "2026-10-12T13:16:57.186841-07:00",
+      "last_matches": 3
     },
     {
       "id": "WA|city|lake stevens",
@@ -863,11 +873,13 @@
       "kind": "city",
       "name": "Redmond",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "website": "https://www.redmond.gov/bids.aspx",
+      "procurement_url": "https://www.redmond.gov/bids.aspx",
+      "last_check": "2026-10-12",
+      "status": "Official procurement page accessed",
+      "priority": 12,
+      "last_check_at": "2026-10-12T13:16:57.904275-07:00",
+      "last_matches": 0
     },
     {
       "id": "WA|city|renton",
@@ -935,11 +947,13 @@
       "kind": "city",
       "name": "Seattle",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "website": "https://www.seattle.gov/purchasing-and-contracting",
+      "procurement_url": "https://www.seattle.gov/purchasing-and-contracting",
+      "last_check": "2026-10-12",
+      "status": "Official procurement page accessed",
+      "priority": 12,
+      "last_check_at": "2026-10-12T13:16:58.214914-07:00",
+      "last_matches": 0
     },
     {
       "id": "WA|city|sedro-woolley",
@@ -1007,11 +1021,13 @@
       "kind": "city",
       "name": "Spokane",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "website": "https://my.spokanecity.org/administrative/purchasing/",
+      "procurement_url": "https://my.spokanecity.org/administrative/purchasing/",
+      "last_check": "2026-10-12",
+      "status": "Official procurement page accessed",
+      "priority": 12,
+      "last_check_at": "2026-10-12T13:16:59.236023-07:00",
+      "last_matches": 0
     },
     {
       "id": "WA|city|spokane valley",
@@ -1055,11 +1071,13 @@
       "kind": "city",
       "name": "Sumner",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "website": "https://sumnerwa.gov/bids/",
+      "procurement_url": "https://sumnerwa.gov/bids/",
+      "last_check": "2026-10-12",
+      "status": "Official procurement page accessed",
+      "priority": 12,
+      "last_check_at": "2026-10-12T13:17:00.187405-07:00",
+      "last_matches": 1
     },
     {
       "id": "WA|city|tacoma",
@@ -1067,11 +1085,13 @@
       "kind": "city",
       "name": "Tacoma",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "website": "https://tacoma.gov/government/departments/finance/procurement-and-payables-division/purchasing/contracting-opportunities/",
+      "procurement_url": "https://tacoma.gov/government/departments/finance/procurement-and-payables-division/purchasing/contracting-opportunities/",
+      "last_check": "2026-10-12",
+      "status": "Official procurement page accessed",
+      "priority": 12,
+      "last_check_at": "2026-10-12T13:17:01.620920-07:00",
+      "last_matches": 0
     },
     {
       "id": "WA|city|tukwila",
@@ -1115,11 +1135,13 @@
       "kind": "city",
       "name": "Vancouver",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "website": "https://www.cityofvancouver.us/business/procurement-services/",
+      "procurement_url": "https://www.cityofvancouver.us/business/procurement-services/",
+      "last_check": "2026-10-12",
+      "status": "Official procurement page accessed",
+      "priority": 12,
+      "last_check_at": "2026-10-12T13:17:02.894378-07:00",
+      "last_matches": 0
     },
     {
       "id": "WA|city|walla walla",
@@ -1151,11 +1173,13 @@
       "kind": "city",
       "name": "Wenatchee",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "website": "https://www.wenatcheewa.gov/services/bid-opportunities",
+      "procurement_url": "https://www.wenatcheewa.gov/services/bid-opportunities",
+      "last_check": "2026-10-12",
+      "status": "Official procurement page accessed",
+      "priority": 12,
+      "last_check_at": "2026-10-12T13:17:03.245479-07:00",
+      "last_matches": 0
     },
     {
       "id": "WA|city|west richland",
@@ -1175,11 +1199,13 @@
       "kind": "city",
       "name": "Woodinville",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "website": "https://www.woodinville.gov/193/Bids-Proposals",
+      "procurement_url": "https://www.woodinville.gov/193/Bids-Proposals",
+      "last_check": "2026-10-12",
+      "status": "Inaccessible / retry next rotation",
+      "priority": 12,
+      "last_check_at": "2026-10-12T13:17:03.546806-07:00",
+      "last_matches": 0
     },
     {
       "id": "WA|city|woodland",
@@ -1704,12 +1730,12 @@
       "name": "Port of Benton",
       "profile_url": "",
       "website": "https://portofbenton.com/business-with-us/",
-      "procurement_url": "https://portofbenton.com/wp-content/uploads/2026/09/WHITE-BLUFFS-RAIL-REHABILITATION-PROJECT-RFQ.pdf",
+      "procurement_url": "https://portofbenton.com/business-with-us/",
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T11:10:37.377661-07:00",
-      "last_matches": 0
+      "last_check_at": "2026-10-12T13:17:11.333892-07:00",
+      "last_matches": 1
     },
     {
       "id": "WA|port|port of seattle",
@@ -1722,7 +1748,7 @@
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T11:10:37.957252-07:00",
+      "last_check_at": "2026-10-12T13:17:11.987867-07:00",
       "last_matches": 0
     },
     {
@@ -1736,7 +1762,7 @@
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T11:10:38.233508-07:00",
+      "last_check_at": "2026-10-12T13:17:12.349250-07:00",
       "last_matches": 0
     },
     {
@@ -1750,7 +1776,7 @@
       "last_check": "2026-10-12",
       "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-12T11:10:38.367267-07:00",
+      "last_check_at": "2026-10-12T13:17:12.510319-07:00",
       "last_matches": 0
     },
     {
@@ -1792,7 +1818,7 @@
       "last_check": "2026-10-12",
       "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-12T11:10:32.221130-07:00",
+      "last_check_at": "2026-10-12T13:17:04.407272-07:00",
       "last_matches": 0
     },
     {
@@ -1806,7 +1832,7 @@
       "last_check": "2026-10-12",
       "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-12T11:10:32.786298-07:00",
+      "last_check_at": "2026-10-12T13:17:05.012717-07:00",
       "last_matches": 0
     },
     {
@@ -1820,7 +1846,7 @@
       "last_check": "2026-10-12",
       "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-12T11:10:37.035022-07:00",
+      "last_check_at": "2026-10-12T13:17:09.212572-07:00",
       "last_matches": 0
     },
     {
@@ -1834,7 +1860,7 @@
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T11:10:38.591798-07:00",
+      "last_check_at": "2026-10-12T13:17:13.131111-07:00",
       "last_matches": 0
     },
     {
@@ -1929,11 +1955,13 @@
       "kind": "city",
       "name": "Beaverton",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 5
+      "website": "https://beavertonoregon.gov/bid-proposal-opportunities",
+      "procurement_url": "https://beavertonoregon.gov/bid-proposal-opportunities",
+      "last_check": "2026-10-12",
+      "status": "Official procurement page accessed",
+      "priority": 8,
+      "last_check_at": "2026-10-12T13:17:13.625329-07:00",
+      "last_matches": 0
     },
     {
       "id": "OR|city|bend",
@@ -1941,11 +1969,13 @@
       "kind": "city",
       "name": "Bend",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 5
+      "website": "https://bendoregon.gov/departments/administration/procurement/",
+      "procurement_url": "https://bendoregon.gov/departments/administration/procurement/",
+      "last_check": "2026-10-12",
+      "status": "Inaccessible / retry next rotation",
+      "priority": 8,
+      "last_check_at": "2026-10-12T13:17:13.698245-07:00",
+      "last_matches": 0
     },
     {
       "id": "OR|city|brookings",
@@ -2061,11 +2091,13 @@
       "kind": "city",
       "name": "Eugene",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 5
+      "website": "https://www.eugene-or.gov/108/Purchasing",
+      "procurement_url": "https://www.eugene-or.gov/108/Purchasing",
+      "last_check": "2026-10-12",
+      "status": "Inaccessible / retry next rotation",
+      "priority": 8,
+      "last_check_at": "2026-10-12T13:17:14.679673-07:00",
+      "last_matches": 0
     },
     {
       "id": "OR|city|fairview",
@@ -2169,11 +2201,13 @@
       "kind": "city",
       "name": "Hillsboro",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 5
+      "website": "https://www.hillsboro-oregon.gov/our-city/departments/finance/procurement",
+      "procurement_url": "https://www.hillsboro-oregon.gov/our-city/departments/finance/procurement",
+      "last_check": "2026-10-12",
+      "status": "Official procurement page accessed",
+      "priority": 8,
+      "last_check_at": "2026-10-12T13:17:17.398216-07:00",
+      "last_matches": 1
     },
     {
       "id": "OR|city|hood river",
@@ -2421,11 +2455,13 @@
       "kind": "city",
       "name": "Portland",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 5
+      "website": "https://www.portland.gov/business-opportunities",
+      "procurement_url": "https://www.portland.gov/business-opportunities",
+      "last_check": "2026-10-12",
+      "status": "Official procurement page accessed",
+      "priority": 8,
+      "last_check_at": "2026-10-12T13:17:18.581574-07:00",
+      "last_matches": 0
     },
     {
       "id": "OR|city|prineville",
@@ -2721,11 +2757,13 @@
       "kind": "county",
       "name": "Clackamas County",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 6
+      "website": "https://www.clackamas.us/procurement-process",
+      "procurement_url": "https://www.clackamas.us/procurement-process",
+      "last_check": "2026-10-12",
+      "status": "Official procurement page accessed",
+      "priority": 8,
+      "last_check_at": "2026-10-12T13:17:14.619560-07:00",
+      "last_matches": 0
     },
     {
       "id": "OR|county|clatsop county",
@@ -2997,11 +3035,13 @@
       "kind": "county",
       "name": "Multnomah County",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
-      "last_check": "",
-      "status": "Not yet checked",
-      "priority": 6
+      "website": "https://multco.us/info/bids-proposal-opportunities",
+      "procurement_url": "https://multco.us/info/bids-proposal-opportunities",
+      "last_check": "2026-10-12",
+      "status": "Official procurement page accessed",
+      "priority": 8,
+      "last_check_at": "2026-10-12T13:17:18.425318-07:00",
+      "last_matches": 0
     },
     {
       "id": "OR|county|polk county",
@@ -3130,12 +3170,12 @@
       "name": "Port of Coos Bay",
       "profile_url": "",
       "website": "https://www.portofcoosbay.com/solicitations-public-notices",
-      "procurement_url": "https://www.portofcoosbay.com/contractor-and-vendor-registration",
+      "procurement_url": "https://www.portofcoosbay.com/solicitations-public-notices",
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T11:10:42.020345-07:00",
-      "last_matches": 0
+      "last_check_at": "2026-10-12T13:17:20.711429-07:00",
+      "last_matches": 2
     },
     {
       "id": "OR|port|port of morrow",
@@ -3148,7 +3188,7 @@
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T11:10:42.802542-07:00",
+      "last_check_at": "2026-10-12T13:17:21.460330-07:00",
       "last_matches": 0
     },
     {
@@ -3190,7 +3230,7 @@
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T08:15:10.882420-07:00",
+      "last_check_at": "2026-10-12T13:17:20.025332-07:00",
       "last_matches": 0
     },
     {
@@ -3204,7 +3244,7 @@
       "last_check": "2026-10-12",
       "status": "Supplier portal — manual review",
       "priority": 15,
-      "last_check_at": "2026-10-12T08:15:10.882482-07:00",
+      "last_check_at": "2026-10-12T13:17:20.025402-07:00",
       "last_matches": 0
     },
     {
@@ -3282,6 +3322,138 @@
   ],
   "agency_checks": [
     {
+      "agency": "Bellevue",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://bellevuewa.gov/city-government/departments/ITD/doing-business-with-it",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 0
+    },
+    {
+      "agency": "Bellingham",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://cob.org/services/business/purchasing/purchasing-bid-opening",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 0
+    },
+    {
+      "agency": "Federal Way",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://www.federalwaywa.gov/bids",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 0
+    },
+    {
+      "agency": "Issaquah",
+      "state": "WA",
+      "kind": "city",
+      "source": "",
+      "ok": false,
+      "attempted": true,
+      "status": "Inaccessible / retry next rotation",
+      "matches": 0,
+      "error": "HTTPError"
+    },
+    {
+      "agency": "Lacey",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://cityoflacey.org/rfp-rfq/",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 3
+    },
+    {
+      "agency": "Redmond",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://www.redmond.gov/bids.aspx",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 0
+    },
+    {
+      "agency": "Seattle",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://www.seattle.gov/purchasing-and-contracting",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 0
+    },
+    {
+      "agency": "Spokane",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://my.spokanecity.org/administrative/purchasing/",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 0
+    },
+    {
+      "agency": "Sumner",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://sumnerwa.gov/bids/",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 1
+    },
+    {
+      "agency": "Tacoma",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://tacoma.gov/government/departments/finance/procurement-and-payables-division/purchasing/contracting-opportunities/",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 0
+    },
+    {
+      "agency": "Vancouver",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://www.cityofvancouver.us/business/procurement-services/",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 0
+    },
+    {
+      "agency": "Wenatchee",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://www.wenatcheewa.gov/services/bid-opportunities",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 0
+    },
+    {
+      "agency": "Woodinville",
+      "state": "WA",
+      "kind": "city",
+      "source": "",
+      "ok": false,
+      "attempted": true,
+      "status": "Inaccessible / retry next rotation",
+      "matches": 0,
+      "error": "HTTPError"
+    },
+    {
       "agency": "Community Transit",
       "state": "WA",
       "kind": "transit",
@@ -3315,11 +3487,11 @@
       "agency": "Port of Benton",
       "state": "WA",
       "kind": "port",
-      "source": "https://portofbenton.com/wp-content/uploads/2026/09/WHITE-BLUFFS-RAIL-REHABILITATION-PROJECT-RFQ.pdf",
+      "source": "https://portofbenton.com/business-with-us/",
       "ok": true,
       "attempted": true,
       "status": "Official procurement page accessed",
-      "matches": 0
+      "matches": 1
     },
     {
       "agency": "Port of Seattle",
@@ -3362,9 +3534,19 @@
       "matches": 0
     },
     {
-      "agency": "Spokane Transit",
-      "state": "WA",
-      "kind": "transit",
+      "agency": "Beaverton",
+      "state": "OR",
+      "kind": "city",
+      "source": "https://beavertonoregon.gov/bid-proposal-opportunities",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 0
+    },
+    {
+      "agency": "Bend",
+      "state": "OR",
+      "kind": "city",
       "source": "",
       "ok": false,
       "attempted": true,
@@ -3373,90 +3555,91 @@
       "error": "HTTPError"
     },
     {
-      "agency": "WA Office of Minority and Women’s Business Enterprises",
-      "state": "WA",
-      "kind": "state",
-      "source": "https://omwbe.wa.gov/bid-opportunities/rfq-wetland-and-stream-services-request-2025-county-safety-program",
+      "agency": "Clackamas County",
+      "state": "OR",
+      "kind": "county",
+      "source": "https://www.clackamas.us/procurement-process",
       "ok": true,
       "attempted": true,
       "status": "Official procurement page accessed",
       "matches": 0
     },
     {
-      "agency": "Washington State Department of Transportation",
-      "state": "WA",
-      "kind": "state",
-      "source": "https://wsdot.wa.gov/business-wsdot/how-do-business-us",
+      "agency": "Eugene",
+      "state": "OR",
+      "kind": "city",
+      "source": "",
+      "ok": false,
+      "attempted": true,
+      "status": "Inaccessible / retry next rotation",
+      "matches": 0,
+      "error": "HTTPError"
+    },
+    {
+      "agency": "Hillsboro",
+      "state": "OR",
+      "kind": "city",
+      "source": "https://www.hillsboro-oregon.gov/our-city/departments/finance/procurement",
       "ok": true,
       "attempted": true,
       "status": "Official procurement page accessed",
       "matches": 1
     },
     {
-      "agency": "Port of Coos Bay",
+      "agency": "Multnomah County",
       "state": "OR",
-      "kind": "port",
-      "source": "https://www.portofcoosbay.com/contractor-and-vendor-registration",
+      "kind": "county",
+      "source": "https://multco.us/info/bids-proposal-opportunities",
       "ok": true,
       "attempted": true,
       "status": "Official procurement page accessed",
       "matches": 0
+    },
+    {
+      "agency": "Portland",
+      "state": "OR",
+      "kind": "city",
+      "source": "https://www.portland.gov/business-opportunities",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 0
+    },
+    {
+      "agency": "Oregon Department of Transportation",
+      "state": "OR",
+      "kind": "state",
+      "source": "https://www.oregon.gov/odot/Business/Procurement/Pages/index.aspx",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 0
+    },
+    {
+      "agency": "OregonBuys",
+      "state": "OR",
+      "kind": "state",
+      "source": "https://oregonbuys.gov/",
+      "ok": false,
+      "attempted": true,
+      "status": "Supplier portal — manual review",
+      "matches": 0
+    },
+    {
+      "agency": "Port of Coos Bay",
+      "state": "OR",
+      "kind": "port",
+      "source": "https://www.portofcoosbay.com/solicitations-public-notices",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 2
     },
     {
       "agency": "Port of Morrow",
       "state": "OR",
       "kind": "port",
       "source": "https://www.portofmorrow.com/rfps",
-      "ok": true,
-      "attempted": true,
-      "status": "Official procurement page accessed",
-      "matches": 0
-    },
-    {
-      "agency": "Port of Portland",
-      "state": "OR",
-      "kind": "port",
-      "source": "https://www.portofportland.com/",
-      "ok": true,
-      "attempted": true,
-      "status": "Official website accessed — no public bids link found",
-      "matches": 0
-    },
-    {
-      "agency": "Salem Area Mass Transit District",
-      "state": "OR",
-      "kind": "transit",
-      "source": "https://www.cherriots.org/",
-      "ok": true,
-      "attempted": true,
-      "status": "Official website accessed — no public bids link found",
-      "matches": 0
-    },
-    {
-      "agency": "TriMet",
-      "state": "OR",
-      "kind": "transit",
-      "source": "https://trimet.org/",
-      "ok": true,
-      "attempted": true,
-      "status": "Official website accessed — no public bids link found",
-      "matches": 0
-    },
-    {
-      "agency": "Lane Transit District",
-      "state": "OR",
-      "kind": "transit",
-      "source": "https://www.ltd.org/about/doing-business/procurement/",
-      "ok": true,
-      "attempted": true,
-      "status": "Official procurement page accessed",
-      "matches": 0
-    },
-    {
-      "agency": "Metro (Oregon)",
-      "state": "OR",
-      "kind": "regional",
-      "source": "https://www.oregonmetro.gov/about-metro/doing-business-metro",
       "ok": true,
       "attempted": true,
       "status": "Official procurement page accessed",
@@ -3642,28 +3825,53 @@
       "expired": false
     },
     {
-      "id": "official-5a904f19d9e36a06c3",
+      "id": "official-b153548adb8c71688a",
       "state": "WA",
-      "category": "planning",
-      "agency": "Washington State Department of Transportation",
-      "title": "Land use & transportation planning",
-      "summary": "Land use & transportation planning",
+      "category": "safety",
+      "agency": "Sumner",
+      "title": "REQUEST FOR QUALIFICATIONS FOR CONSTRUCTION MANAGEMENT SERVICES FOR HSIP-000S(668) SYSTEMIC HORIZONTAL CURVE AND ROADWAY DEPARTURE SAFETY IMPROVEMENTS, CIP 23-08",
+      "summary": "REQUEST FOR QUALIFICATIONS FOR CONSTRUCTION MANAGEMENT SERVICES FOR HSIP-000S(668) SYSTEMIC HORIZONTAL CURVE AND ROADWAY DEPARTURE SAFETY IMPROVEMENTS, CIP 23-08",
       "priority": "REVIEW",
-      "url": "https://wsdot.wa.gov/engineering-standards/planning-guidance/land-use-transportation-planning",
-      "source": "Washington State Department of Transportation public procurement listing",
+      "url": "https://sumnerwa.gov/rfq-cip-23-08/",
+      "source": "Sumner public procurement listing",
       "source_kind": "official_listing",
-      "status": "Official listing found — deadline requires review",
+      "status": "Agency procurement listing — review official notice",
       "due_date": null,
       "due_time": "",
       "role": "Review prime/subconsultant fit",
       "verified_on": null,
       "last_seen": "2026-10-12",
       "addenda_count": null,
-      "agency_id": "WA|state|washington state department of transportation",
-      "first_seen": "2026-10-11",
-      "found": "2026-10-11",
+      "agency_id": "WA|city|sumner",
+      "first_seen": "2026-10-12",
+      "found": "2026-10-12",
       "change_type": "NEWLY FOUND",
-      "change_on": "2026-10-11",
+      "change_on": "2026-10-12",
+      "expired": false
+    },
+    {
+      "id": "official-70fc033d6fafeafb6e",
+      "state": "WA",
+      "category": "rail",
+      "agency": "Port of Benton",
+      "title": "RFI - Engineering Services for White Bluffs Rail Rehabilitation Project",
+      "summary": "RFI - Engineering Services for White Bluffs Rail Rehabilitation Project",
+      "priority": "REVIEW",
+      "url": "https://portofbenton.com/wp-content/uploads/2026/09/RFI-Engineering-Services-for-White-Bluffs-Rail-Rehabilitation-Project.pdf",
+      "source": "Port of Benton public procurement listing",
+      "source_kind": "official_listing",
+      "status": "Agency procurement listing — review official notice",
+      "due_date": null,
+      "due_time": "",
+      "role": "Review prime/subconsultant fit",
+      "verified_on": null,
+      "last_seen": "2026-10-12",
+      "addenda_count": null,
+      "agency_id": "WA|port|port of benton",
+      "first_seen": "2026-10-12",
+      "found": "2026-10-12",
+      "change_type": "NEWLY FOUND",
+      "change_on": "2026-10-12",
       "expired": false
     },
     {
@@ -3686,7 +3894,8 @@
       "first_seen": "2026-10-11",
       "last_seen": "2026-10-12",
       "addenda_count": 2,
-      "expired": false
+      "expired": false,
+      "agency_id": "OR|port|port of coos bay"
     },
     {
       "id": "or-coos-pcip-2026",
@@ -3708,6 +3917,32 @@
       "first_seen": "2026-10-11",
       "last_seen": "2026-10-12",
       "addenda_count": 2,
+      "expired": false,
+      "agency_id": "OR|port|port of coos bay"
+    },
+    {
+      "id": "official-146f75af811ccfcebc",
+      "state": "OR",
+      "category": "planning",
+      "agency": "Hillsboro",
+      "title": "Oak/Baseline/10th Avenue Corridor Study",
+      "summary": "Oak/Baseline/10th Avenue Corridor Study",
+      "priority": "REVIEW",
+      "url": "https://www.hillsboro-oregon.gov/our-city/hillsboro-major-projects/oak-baseline-10th-avenue-corridor-study",
+      "source": "Hillsboro public procurement listing",
+      "source_kind": "official_listing",
+      "status": "Agency procurement listing — review official notice",
+      "due_date": null,
+      "due_time": "",
+      "role": "Review prime/subconsultant fit",
+      "verified_on": null,
+      "last_seen": "2026-10-12",
+      "addenda_count": null,
+      "agency_id": "OR|city|hillsboro",
+      "first_seen": "2026-10-12",
+      "found": "2026-10-12",
+      "change_type": "NEWLY FOUND",
+      "change_on": "2026-10-12",
       "expired": false
     }
   ],
