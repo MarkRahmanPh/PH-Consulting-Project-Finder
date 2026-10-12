@@ -77,7 +77,7 @@
       <option value="planning">7. Transportation Planning</option>
       <option value="transit">8. Transit / Freight Studies</option>
     </select>
-    <select id="sort" aria-label="Sort"><option value="due">Upcoming deadline</option><option value="new">Newest found</option><option value="recent">Recently changed</option></select>
+    <select id="sort" aria-label="Sort opportunities"><option value="new" selected>Newest found first</option><option value="due">Upcoming deadline</option><option value="recent">Recently changed</option></select>
     <button type="button" id="refresh">Refresh data</button>
   </section>
   <details class="panel category-guide"><summary><strong>What the 8 project categories include</strong></summary>
@@ -93,6 +93,7 @@
     </div>
   </details>
   <div class="checks">
+    <label><input type="checkbox" id="newonly"> Newly found only (last 7 days)</label>
     <label><input type="checkbox" id="showleads" checked> Include unverified leads</label>
     <label><input type="checkbox" id="showexpired"> Include expired deadlines</label>
     <label><input type="checkbox" id="highonly"> High priority only</label>
@@ -115,12 +116,12 @@
     </div>
     <div id="agencycount" class="sub"></div>
     <div id="agencylist" class="agency-list" aria-live="polite"></div>
-    <p class="sub">Agency listed ≠ website checked ≠ bid verified. The search rotates through a limited number of agencies every 3 hours. Some sites require registration, use JavaScript-only bidding portals, or are inaccessible to automation.</p>
+    <p class="sub">Agency listed ≠ website checked ≠ bid verified. The search rotates through a limited number of agencies every hour. Some sites require registration, use JavaScript-only bidding portals, or are inaccessible to automation.</p>
   </section>
   <section class="panel health"><h2>Search source health</h2>
     <div id="healthtext">Waiting for data.</div>
     <details><summary>Show source check results</summary><div id="healthdetails"></div></details>
-    <p class="sub">The three-hour GitHub Actions job updates the JSON file; the Refresh data button only reloads published results. A listed deadline can change without an accessible addendum.</p>
+    <p class="sub">The hourly GitHub Actions job updates the JSON file; the Refresh data button only reloads published results. A listed deadline can change without an accessible addendum.</p>
     <a class="link" href="https://github.com/MarkRahmanPh/PH-Consulting-Project-Finder/actions/workflows/daily-update.yml" target="_blank" rel="noopener noreferrer">Run search on GitHub ↗</a>
   </section>
   <footer class="footer">Coverage: WA MRSC city & county directories, League of Oregon Cities, Oregon state county directory, WA OMWBE, WA WEBS, Port of Coos Bay, rotating municipal/port/transit sites, and discovery feeds. Unavailable supplier portals may require manual registration. Not all agencies are checked every run, and indexed sources do not guarantee full coverage.</footer>
@@ -134,16 +135,17 @@
   let agencies = [];
   const validURL = x => /^https:\/\//i.test(x || '') ? x : '#';
   const daysSince = str => {const d = new Date(`${str || '1900-01-01'}T12:00:00`);return (Date.now()-d.getTime())/86400000;};
-  const recent = x => !!(x.change_on && daysSince(x.change_on) <= 7);
+  const recent = x => !!(x.change_on && daysSince(x.change_on) >= 0 && daysSince(x.change_on) <= 7);
+  const newlyFound = x => !!((x.first_seen || x.found) && daysSince(x.first_seen || x.found) >= 0 && daysSince(x.first_seen || x.found) <= 7 && x.change_type === 'NEWLY FOUND');
   function draw() {
     const q = $('search').value.trim().toLowerCase(), state = $('state').value, type = $('type').value;
     let entries = records.filter(x => (!state || x.state === state) && (!type || x.category === type) &&
-      (!$('highonly').checked || x.priority === 'HIGH') && ($('showexpired').checked || !x.expired) &&
+      (!$('highonly').checked || x.priority === 'HIGH') && (!$('newonly').checked || newlyFound(x)) && ($('showexpired').checked || !x.expired) &&
       ($('showleads').checked || x.source_kind !== 'news_feed') &&
       [x.title,x.agency,x.summary,x.role,x.source].join(' ').toLowerCase().includes(q));
     const sort = $('sort').value;
     entries.sort((a,b) => {
-      if (sort === 'new') return (b.first_seen || b.found || '').localeCompare(a.first_seen || a.found || '');
+      if (sort === 'new') return (b.first_seen || b.found || '').localeCompare(a.first_seen || a.found || '') || (b.change_on || '').localeCompare(a.change_on || '') || (a.due_date || '9999-12-31').localeCompare(b.due_date || '9999-12-31');
       if (sort === 'recent') return (b.change_on || '').localeCompare(a.change_on || '');
       return (a.due_date || '9999-12-31').localeCompare(b.due_date || '9999-12-31') || ((a.state !== 'WA') - (b.state !== 'WA'));
     });
@@ -208,7 +210,7 @@
       $('projects').innerHTML = '<div class="none">Could not load opportunities.json. Your existing data may still be in GitHub; check website publishing.</div>';
     } finally {btn.disabled = false;btn.textContent = 'Refresh data';}
   }
-  ['search','state','type','sort','showleads','showexpired','highonly'].forEach(id => $(id).addEventListener('input',draw));
+  ['search','state','type','sort','showleads','showexpired','highonly','newonly'].forEach(id => $(id).addEventListener('input',draw));
   ['agencysearch','agencystate','agencytype'].forEach(id=>$(id).addEventListener('input',drawAgencies));
   $('refresh').addEventListener('click',reload);
   reload();setInterval(reload,60*60*1000);
