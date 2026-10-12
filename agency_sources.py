@@ -250,6 +250,19 @@ def scan_agency_bids(html,base,agency,Document,absolute,classify_title,
         if not cat:continue
         u=absolute(base,a.attrs.get('href',''))
         if not u or u in seen:continue
+        # A completed study or general project-information page is not an RFQ.
+        path=(urlsplit(u).path or '').lower()
+        if any(fragment in path for fragment in ('/hillsboro-major-projects/',
+            '/engineering-standards/planning-guidance/', '/home/components/news/')):
+            continue
+        # Titles on an agency website are NOT automatically live solicitations.
+        # Require procurement language on the link or a solicitation-specific URL.
+        is_notice=bool(re.search(
+            r'\b(?:rfp|rfq|rfi|rsoq|soq|request for (?:proposals?|qualifications?|information)|'
+            r'on[ -]?call|professional services|solicitation|consultant roster|prequalification)\b',
+            title,re.I))
+        is_bid_url=bool(re.search(r'/(?:rfp|rfq|rfi|bids?|solicitations?)[/-]',path,re.I))
+        if not (is_notice or is_bid_url):continue
         host=(urlsplit(u).hostname or '').lower()
         if host != allowedhost and not (host.endswith('.'+allowedhost) or any(x in host for x in PORTAL_HOSTS)):
             continue
