@@ -1,7 +1,7 @@
 name: Daily PH opportunity discovery
 on:
   schedule:
-    - cron: '0 */3 * * *' # 7am PST / 8am PDT; GitHub cron uses UTC
+    - cron: '17 * * * *' # Run hourly at :17 UTC (also :17 Pacific); GitHub may delay scheduled runs
   workflow_dispatch:
 permissions:
   contents: write
