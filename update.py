@@ -24,6 +24,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from zoneinfo import ZoneInfo
 import agency_sources as AS
+import procurement_sources as PS
 
 ROOT = Path(__file__).resolve().parent
 OUTPUT = ROOT / 'opportunities.json'
@@ -834,6 +835,23 @@ def main():
                 logs.append({'source': source['name'], 'ok': True, 'matches': len(results)})
             except Exception as exc:
                 logs.append({'source': source['name'], 'ok': False, 'error': type(exc).__name__})
+        # Supplemental public listing pages; failures are visible and do not
+        # silently imply that an entire vendor portal was searched.
+        for source in PS.PUBLIC_SOURCES:
+            try:
+                html = fetch(source['url'], timeout=14)
+                candidates = PS.scan(source, html, today, Document, absolute,
+                                     classify_title, standard_row, parse_date, clean)
+                for item in candidates:
+                    if is_strictly_relevant_record(item):
+                        apply_observation(rows, item, today)
+                logs.append({'source': source['name'], 'ok': True,
+                             'matches': len(candidates),
+                             'note': 'Public listing only; restricted portals not searched'})
+            except Exception as exc:
+                logs.append({'source': source['name'], 'ok': False,
+                             'matches': 0, 'error': type(exc).__name__,
+                             'note': 'Manual review needed; no successful scan'})
         check_details(rows, today, logs)
         # Feed leads are intentionally separate from agency-verified opportunities.
         for state, searches in QUERIES.items():
@@ -862,6 +880,8 @@ def main():
         'official_sources_checked': sum(x['ok'] for x in logs if x['source'] in [s['name'] for s in OFFICIAL_INDEXES]),
         'official_sources_total': len(OFFICIAL_INDEXES),
         'source_checks': logs,
+        'manual_review_sources': PS.MANUAL_SOURCES,
+        'supplemental_public_sources': PS.PUBLIC_SOURCES,
         'agency_coverage': cover,
         'agency_catalog': sorted(catalog.values(), key=lambda a: (a.get('state') != 'WA', a.get('kind',''), a.get('name',''))),
         'directory_checks': directory_checks,
