@@ -1,7 +1,7 @@
 {
   "parser_version": 6,
-  "updated_pacific": "Oct 12, 2026 02:12 AM PDT",
-  "last_run_iso": "2026-10-12T02:12:55.740326-07:00",
+  "updated_pacific": "Oct 12, 2026 05:18 AM PDT",
+  "last_run_iso": "2026-10-12T05:18:32.553106-07:00",
   "official_sources_checked": 3,
   "official_sources_total": 3,
   "source_checks": [
@@ -56,9 +56,9 @@
     "cities": 167,
     "counties": 75,
     "checked_ever": 20,
-    "accessible_ever": 17,
+    "accessible_ever": 18,
     "attempted_this_run": 18,
-    "accessible_this_run": 15,
+    "accessible_this_run": 16,
     "matches_this_run": 1,
     "directories_accessible": 4,
     "directories_total": 4,
@@ -1708,7 +1708,7 @@
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T02:13:01.196016-07:00",
+      "last_check_at": "2026-10-12T05:18:38.472868-07:00",
       "last_matches": 0
     },
     {
@@ -1722,7 +1722,7 @@
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T02:13:01.741409-07:00",
+      "last_check_at": "2026-10-12T05:18:39.154655-07:00",
       "last_matches": 0
     },
     {
@@ -1736,7 +1736,7 @@
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T02:13:02.148185-07:00",
+      "last_check_at": "2026-10-12T05:18:39.529794-07:00",
       "last_matches": 0
     },
     {
@@ -1750,7 +1750,7 @@
       "last_check": "2026-10-12",
       "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-12T02:13:02.312806-07:00",
+      "last_check_at": "2026-10-12T05:18:39.997567-07:00",
       "last_matches": 0
     },
     {
@@ -1764,7 +1764,7 @@
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T02:13:03.827370-07:00",
+      "last_check_at": "2026-10-12T05:18:41.574189-07:00",
       "last_matches": 0
     },
     {
@@ -1778,7 +1778,7 @@
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T02:13:04.678980-07:00",
+      "last_check_at": "2026-10-12T05:18:42.425945-07:00",
       "last_matches": 1
     },
     {
@@ -1790,9 +1790,9 @@
       "website": "https://www.communitytransit.org/",
       "procurement_url": "",
       "last_check": "2026-10-12",
-      "status": "Inaccessible / retry next rotation",
+      "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-12T02:12:56.222414-07:00",
+      "last_check_at": "2026-10-12T05:18:33.036949-07:00",
       "last_matches": 0
     },
     {
@@ -1806,7 +1806,7 @@
       "last_check": "2026-10-12",
       "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-12T02:12:56.581495-07:00",
+      "last_check_at": "2026-10-12T05:18:33.400324-07:00",
       "last_matches": 0
     },
     {
@@ -1820,7 +1820,7 @@
       "last_check": "2026-10-12",
       "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-12T02:13:00.767580-07:00",
+      "last_check_at": "2026-10-12T05:18:38.117039-07:00",
       "last_matches": 0
     },
     {
@@ -1834,7 +1834,7 @@
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T02:13:02.682921-07:00",
+      "last_check_at": "2026-10-12T05:18:40.392900-07:00",
       "last_matches": 0
     },
     {
@@ -1848,7 +1848,7 @@
       "last_check": "2026-10-12",
       "status": "Inaccessible / retry next rotation",
       "priority": 15,
-      "last_check_at": "2026-10-12T02:13:02.805127-07:00",
+      "last_check_at": "2026-10-12T05:18:40.576303-07:00",
       "last_matches": 0
     },
     {
@@ -3134,7 +3134,7 @@
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T02:13:08.041384-07:00",
+      "last_check_at": "2026-10-12T05:18:50.006359-07:00",
       "last_matches": 0
     },
     {
@@ -3148,7 +3148,7 @@
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T02:13:08.707120-07:00",
+      "last_check_at": "2026-10-12T05:18:50.645982-07:00",
       "last_matches": 0
     },
     {
@@ -3176,7 +3176,7 @@
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T02:13:05.003691-07:00",
+      "last_check_at": "2026-10-12T05:18:47.273581-07:00",
       "last_matches": 0
     },
     {
@@ -3190,7 +3190,7 @@
       "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-12T02:13:06.638150-07:00",
+      "last_check_at": "2026-10-12T05:18:48.886199-07:00",
       "last_matches": 0
     },
     {
@@ -3204,7 +3204,7 @@
       "last_check": "2026-10-12",
       "status": "Supplier portal — manual review",
       "priority": 15,
-      "last_check_at": "2026-10-12T02:13:06.638203-07:00",
+      "last_check_at": "2026-10-12T05:18:48.886256-07:00",
       "last_matches": 0
     },
     {
@@ -3215,10 +3215,10 @@
       "profile_url": "",
       "website": "https://www.ltd.org/",
       "procurement_url": "https://www.ltd.org/about/doing-business/procurement/",
-      "last_check": "2026-10-11",
+      "last_check": "2026-10-12",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-11T23:15:38.503596-07:00",
+      "last_check_at": "2026-10-12T05:18:47.080910-07:00",
       "last_matches": 0
     },
     {
@@ -3243,10 +3243,10 @@
       "profile_url": "",
       "website": "https://trimet.org/",
       "procurement_url": "",
-      "last_check": "2026-10-11",
+      "last_check": "2026-10-12",
       "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-11T23:15:36.527088-07:00",
+      "last_check_at": "2026-10-12T05:18:44.129978-07:00",
       "last_matches": 0
     }
   ],
@@ -3285,12 +3285,11 @@
       "agency": "Community Transit",
       "state": "WA",
       "kind": "transit",
-      "source": "",
-      "ok": false,
+      "source": "https://www.communitytransit.org/",
+      "ok": true,
       "attempted": true,
-      "status": "Inaccessible / retry next rotation",
-      "matches": 0,
-      "error": "HTTPError"
+      "status": "Official website accessed — no public bids link found",
+      "matches": 0
     },
     {
       "agency": "King County Metro",
@@ -3394,6 +3393,26 @@
       "matches": 1
     },
     {
+      "agency": "TriMet",
+      "state": "OR",
+      "kind": "transit",
+      "source": "https://trimet.org/",
+      "ok": true,
+      "attempted": true,
+      "status": "Official website accessed — no public bids link found",
+      "matches": 0
+    },
+    {
+      "agency": "Lane Transit District",
+      "state": "OR",
+      "kind": "transit",
+      "source": "https://www.ltd.org/about/doing-business/procurement/",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 0
+    },
+    {
       "agency": "Metro (Oregon)",
       "state": "OR",
       "kind": "regional",
@@ -3441,26 +3460,6 @@
       "ok": true,
       "attempted": true,
       "status": "Official procurement page accessed",
-      "matches": 0
-    },
-    {
-      "agency": "Port of Portland",
-      "state": "OR",
-      "kind": "port",
-      "source": "https://www.portofportland.com/",
-      "ok": true,
-      "attempted": true,
-      "status": "Official website accessed — no public bids link found",
-      "matches": 0
-    },
-    {
-      "agency": "Salem Area Mass Transit District",
-      "state": "OR",
-      "kind": "transit",
-      "source": "https://www.cherriots.org/",
-      "ok": true,
-      "attempted": true,
-      "status": "Official website accessed — no public bids link found",
       "matches": 0
     }
   ],
