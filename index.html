@@ -30,14 +30,27 @@
     .meta{color:#60758b;font-size:13px}.due{color:#243a50}.aside{min-width:142px;text-align:right;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:9px}
     .link{color:#12698d;text-decoration:none;font-weight:750;white-space:nowrap}.link:hover{text-decoration:underline}
     .footer{margin-top:22px;font-size:12px;color:#60758b}.health{font-size:13px;color:#486277}.health details{margin-top:8px}
+    .coverage-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:12px 0}
+    .coverstat{padding:11px;background:#f2f7fa;border-radius:9px}
+    .coverstat strong{display:block;font-size:22px;color:#16354d}
+    .agency-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+    .agency-controls input{flex:1;min-width:175px}
+    .agency-list{max-height:420px;overflow:auto;border:1px solid #dae4ed;border-radius:9px}
+    .agency-row{display:flex;gap:12px;justify-content:space-between;align-items:center;border-bottom:1px solid #e9eef3;padding:9px 12px;font-size:13px}
+    .agency-row:last-child{border-bottom:0}
+    .agency-row a{color:#14617f}
+    .agency-state{font-size:11px;font-weight:800;color:#51718b}
+    .category-guide{margin-top:10px;font-size:13px;color:#496078}.category-guide summary{cursor:pointer;color:#183d54}
+    .category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 20px;margin-top:9px}
+    .category-grid p{margin:6px 0}.category-grid span{display:block;color:#61758b;margin-top:3px}
     .none{text-align:center;padding:42px 10px;color:#65798e;border:1px dashed #c5d7e4;border-radius:12px;background:#fff}
     a:focus,button:focus,input:focus,select:focus{outline:3px solid #9de0f4;outline-offset:2px}
-    @media(max-width:780px){.stats{grid-template-columns:repeat(2,1fr)}.project{grid-template-columns:1fr}.aside{text-align:left;align-items:flex-start}.stat b{font-size:22px}}
+    @media(max-width:780px){.coverage-grid{grid-template-columns:repeat(2,1fr)}.category-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.project{grid-template-columns:1fr}.aside{text-align:left;align-items:flex-start}.stat b{font-size:22px}}
   </style>
 </head>
 <body>
 <header><div class="brand">PH Consulting</div><h1>Project Opportunity Finder</h1>
-<p>Washington first · Signal timing / ITS · Railroad / FRA · Traffic planning · Civil / ADA</p></header>
+<p>Washington first · City & county procurement coverage · Signals / ITS · Railroad / FRA · ADA / Civil · Safety / Planning</p></header>
 <main>
   <section class="stats" aria-label="Summary">
     <div class="stat"><span class="sub">Records with future known deadlines</span><b id="active">—</b></div>
@@ -46,17 +59,39 @@
     <div class="stat"><span class="sub">Data last updated (Pacific)</span><b id="updated" style="font-size:16px;padding-top:6px">—</b></div>
   </section>
   <section class="panel info"><strong>Official-source monitoring + discovery leads.</strong>
-    The script checks selected public WA/OR procurement listings and agency notices. Dates are labeled verified only when visible on a fetched notice.
+    The script checks statewide listings plus rotating batches of WA and OR city, county, port and transit agency websites. The agency directory is broader than the websites successfully checked; check the coverage status below. Dates are labeled verified only when visible on a fetched notice.
     Not every state/agency portal is machine-accessible; RSS results are <strong>unverified leads</strong>, not confirmed open RFQs.
     Compare the issuing agency's original RFP and addenda before submitting a proposal.
   </section>
   <section class="toolbar" aria-label="Search and filters">
     <input type="search" id="search" placeholder="Search agency, project, MAXTIME, FRA, ADA..." aria-label="Search opportunities">
     <select id="state" aria-label="State"><option value="">WA + OR</option><option value="WA">Washington</option><option value="OR">Oregon</option></select>
-    <select id="type" aria-label="Discipline"><option value="">All disciplines</option><option value="signal">Signals / ITS</option><option value="rail">Railroad</option><option value="planning">Planning / Operations</option><option value="civil">Civil / ADA</option></select>
+    <select id="type" aria-label="Discipline">
+      <option value="">All 8 categories</option>
+      <option value="signal">1. Traffic Signals / Timing</option>
+      <option value="its">2. ITS / ATSPM / TSP</option>
+      <option value="rail">3. Railroad / FRA / RCE</option>
+      <option value="ada">4. ADA / Pedestrian</option>
+      <option value="civil">5. Roadway / Civil Design</option>
+      <option value="safety">6. Traffic Safety / SS4A</option>
+      <option value="planning">7. Transportation Planning</option>
+      <option value="transit">8. Transit / Freight Studies</option>
+    </select>
     <select id="sort" aria-label="Sort"><option value="due">Upcoming deadline</option><option value="new">Newest found</option><option value="recent">Recently changed</option></select>
     <button type="button" id="refresh">Refresh data</button>
   </section>
+  <details class="panel category-guide"><summary><strong>What the 8 project categories include</strong></summary>
+    <div class="category-grid">
+      <p><strong>1. Traffic Signals / Timing</strong><span>Signal timing, retiming, coordination, optimization, FYA/PPLT, LPI, controller programming, MAXTIME, EOS, signal design.</span></p>
+      <p><strong>2. ITS / ATSPM / TSP</strong><span>ITS, ATMS, adaptive signals, transit signal priority, preemption, detection, communications.</span></p>
+      <p><strong>3. Railroad / FRA / RCE</strong><span>Railroad crossings, grade separations, quiet zones, FRA/RCE, BNSF coordination, rail safety.</span></p>
+      <p><strong>4. ADA / Pedestrian</strong><span>ADA curb ramps, pedestrian crossings, accessible signals, pedestrian safety, bicycle improvements.</span></p>
+      <p><strong>5. Roadway / Civil Design</strong><span>Roadway engineering, intersection improvements, civil design, signing, pavement markings, street lighting.</span></p>
+      <p><strong>6. Traffic Safety / SS4A</strong><span>SS4A, HSIP, crash analysis, speed management, intersection safety and safety studies.</span></p>
+      <p><strong>7. Transportation Planning</strong><span>Transportation system plans, impact and corridor studies, forecasts, Synchro/VISSIM/Aimsun models.</span></p>
+      <p><strong>8. Transit / Freight Studies</strong><span>Transit operations, Next Gen TSP bus priority, freight corridors, port transport, rail freight, multimodal studies.</span></p>
+    </div>
+  </details>
   <div class="checks">
     <label><input type="checkbox" id="showleads" checked> Include unverified leads</label>
     <label><input type="checkbox" id="showexpired"> Include expired deadlines</label>
@@ -64,20 +99,39 @@
   </div>
   <div class="toprow"><h2>Opportunity watchlist</h2><span class="sub" id="count">Loading…</span></div>
   <section id="projects" class="results" aria-live="polite"></section>
+  <section class="panel health" id="coveragepanel">
+    <h2>WA / OR city, county & agency coverage</h2>
+    <p class="sub" id="covernote">Loading agency directory…</p>
+    <div class="coverage-grid">
+      <div class="coverstat"><span class="sub">Agencies listed</span><strong id="ctotal">—</strong></div>
+      <div class="coverstat"><span class="sub">Cities / counties</span><strong id="cmunicipal">—</strong></div>
+      <div class="coverstat"><span class="sub">Checked across runs</span><strong id="cchecked">—</strong></div>
+      <div class="coverstat"><span class="sub">Checked this run</span><strong id="ctoday">—</strong></div>
+    </div>
+    <div class="agency-controls">
+      <input type="search" id="agencysearch" placeholder="Find city, county, port or transit agency…" aria-label="Search monitored agencies">
+      <select id="agencystate" aria-label="Agency state"><option value="">WA + OR</option><option value="WA">Washington</option><option value="OR">Oregon</option></select>
+      <select id="agencytype" aria-label="Agency type"><option value="">All agency types</option><option value="city">Cities</option><option value="county">Counties</option><option value="port">Ports</option><option value="transit">Transit</option><option value="state">State agencies</option></select>
+    </div>
+    <div id="agencycount" class="sub"></div>
+    <div id="agencylist" class="agency-list" aria-live="polite"></div>
+    <p class="sub">Agency listed ≠ website checked ≠ bid verified. The search rotates through a limited number of agencies every 3 hours. Some sites require registration, use JavaScript-only bidding portals, or are inaccessible to automation.</p>
+  </section>
   <section class="panel health"><h2>Search source health</h2>
     <div id="healthtext">Waiting for data.</div>
     <details><summary>Show source check results</summary><div id="healthdetails"></div></details>
     <p class="sub">The three-hour GitHub Actions job updates the JSON file; the Refresh data button only reloads published results. A listed deadline can change without an accessible addendum.</p>
     <a class="link" href="https://github.com/MarkRahmanPh/PH-Consulting-Project-Finder/actions/workflows/daily-update.yml" target="_blank" rel="noopener noreferrer">Run search on GitHub ↗</a>
   </section>
-  <footer class="footer">Source monitoring: WA OMWBE bid listings, WA WEBS public calendar (when accessible), Port of Coos Bay solicitations, selected official detail pages, and discovery feeds. Not a complete replacement for WEBS and OregonBuys supplier accounts.</footer>
+  <footer class="footer">Coverage: WA MRSC city & county directories, League of Oregon Cities, Oregon state county directory, WA OMWBE, WA WEBS, Port of Coos Bay, rotating municipal/port/transit sites, and discovery feeds. Unavailable supplier portals may require manual registration. Not all agencies are checked every run, and indexed sources do not guarantee full coverage.</footer>
 </main>
 <script>
   const $ = id => document.getElementById(id);
   const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-  const human = {'rail':'Railroad','signal':'Signals / ITS','planning':'Planning / Operations','civil':'Civil / ADA'};
+  const human = {'signal':'Traffic Signals / Timing','its':'ITS / ATSPM / TSP','rail':'Railroad / FRA / RCE','ada':'ADA / Pedestrian','civil':'Roadway / Civil Design','safety':'Traffic Safety / SS4A','planning':'Transportation Planning','transit':'Transit / Freight Studies'};
   let records = [];
   let dataset = {};
+  let agencies = [];
   const validURL = x => /^https:\/\//i.test(x || '') ? x : '#';
   const daysSince = str => {const d = new Date(`${str || '1900-01-01'}T12:00:00`);return (Date.now()-d.getTime())/86400000;};
   const recent = x => !!(x.change_on && daysSince(x.change_on) <= 7);
@@ -113,6 +167,19 @@
         <span class="sub">First seen ${esc(x.first_seen || x.found || 'Unknown')}</span></div></article>`;
     }).join('') : '<div class="none">No records match the filters. Try all disciplines and unverified leads, or check the last search status.</div>';
   }
+  function drawAgencies(){
+    const q=$('agencysearch').value.trim().toLowerCase(),state=$('agencystate').value,kind=$('agencytype').value;
+    const matching=agencies.filter(a=>(!state||a.state===state)&&(!kind||a.kind===kind)&&
+      [a.name,a.kind,a.state].join(' ').toLowerCase().includes(q));
+    $('agencycount').textContent=`Showing ${Math.min(matching.length,120)} of ${matching.length} matching agencies (${agencies.length} total).`;
+    $('agencylist').innerHTML=matching.length?matching.slice(0,120).map(a=>{
+      const href=validURL(a.procurement_url||a.website||a.profile_url);
+      const label=a.procurement_url?'Bids page ↗':a.website?'Website ↗':a.profile_url?'Directory ↗':'';
+      return `<div class="agency-row"><div><span class="agency-state">${esc(a.state)} · ${esc(a.kind)}</span>
+        <strong>${esc(a.name)}</strong><div class="sub">${esc(a.status||'Not yet checked')}${a.last_check?' · Last checked '+esc(a.last_check):''}</div></div>
+        ${label?`<a target="_blank" rel="noopener noreferrer" href="${esc(href)}">${label}</a>`:''}</div>`;
+    }).join(''):'<div class="none">No agencies match your filters.</div>';
+  }
   async function reload() {
     const btn = $('refresh');btn.disabled = true;btn.textContent = 'Loading…';
     try {
@@ -120,6 +187,14 @@
       if (!response.ok) throw Error(`HTTP ${response.status}`);
       dataset = await response.json();
       records = Array.isArray(dataset.items) ? dataset.items : [];
+      agencies = Array.isArray(dataset.agency_catalog) ? dataset.agency_catalog : [];
+      const cv = dataset.agency_coverage || {};
+      $('ctotal').textContent = cv.total ?? '—';
+      $('cmunicipal').textContent = `${cv.cities ?? '—'} / ${cv.counties ?? '—'}`;
+      $('cchecked').textContent = cv.checked_ever ?? '—';
+      $('ctoday').textContent = `${cv.attempted_this_run ?? '—'} (${cv.accessible_this_run ?? 0} accessible)`;
+      $('covernote').textContent = cv.total ? `${cv.wa} WA and ${cv.or} OR agencies cataloged. ${cv.directories_accessible ?? 0}/${cv.directories_total ?? 4} directories accessible at last directory refresh. Actual public-procurement pages accessed vary by run.` : 'Run the updated Python script to populate agency coverage.';
+      drawAgencies();
       $('active').textContent = records.filter(x => !x.expired && x.due_date && x.source_kind !== 'news_feed').length;
       $('states').textContent = `${records.filter(x=>x.state==='WA'&&!x.expired).length} / ${records.filter(x=>x.state==='OR'&&!x.expired).length}`;
       $('recent').textContent = records.filter(x=>recent(x)).length;
@@ -134,6 +209,7 @@
     } finally {btn.disabled = false;btn.textContent = 'Refresh data';}
   }
   ['search','state','type','sort','showleads','showexpired','highonly'].forEach(id => $(id).addEventListener('input',draw));
+  ['agencysearch','agencystate','agencytype'].forEach(id=>$(id).addEventListener('input',drawAgencies));
   $('refresh').addEventListener('click',reload);
   reload();setInterval(reload,60*60*1000);
 </script>

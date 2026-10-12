@@ -23,11 +23,12 @@ from html import unescape
 from html.parser import HTMLParser
 from pathlib import Path
 from zoneinfo import ZoneInfo
+import agency_sources as AS
 
 ROOT = Path(__file__).resolve().parent
 OUTPUT = ROOT / 'opportunities.json'
 TZ = ZoneInfo('America/Los_Angeles')
-USER_AGENT = 'PH-Consulting-Project-Finder/3.0 (public procurement monitoring)'
+USER_AGENT = 'PH-Consulting-Project-Finder/6.0 (polite public procurement monitoring)'
 OFFICIAL_INDEXES = [
     {'name': 'WA OMWBE public bid postings', 'state': 'WA', 'kind': 'omwbe',
      'url': 'https://omwbe.wa.gov/small-business-assistance/bids-contracting-opportunities'},
@@ -42,28 +43,136 @@ ALLOWED_DETAIL_HOSTS = {
     'omwbe.wa.gov', 'www.omwbe.wa.gov',
     'www.shoalwaterbay-nsn.gov', 'shoalwaterbay-nsn.gov',
 }
+# Search phrases reflect PH Consulting's eight approved practice areas.
+# Source/title classification below is stricter than queries: a query hit alone
+# NEVER qualifies an opportunity for inclusion.
 QUERIES = {
     'WA': [
-        ('signal', 'Washington traffic signal timing RFQ consultant'),
-        ('signal', 'Washington traffic engineering on-call RFQ'),
-        ('signal', 'Washington ATSPM ITS transit signal priority RFP'),
-        ('rail', 'Washington railroad crossing elimination engineering RFQ'),
-        ('rail', 'Washington grade separation quiet zone consultant RFP'),
-        ('planning', 'Washington transportation safety SS4A engineering RFQ'),
-        ('planning', 'Washington transportation planning traffic study RFP'),
-        ('civil', 'Washington ADA curb ramps consultant RFQ'),
-        ('civil', 'Washington civil roadway design on-call engineering RFQ'),
+        ('signal', 'Washington "signal timing" OR "traffic engineering" RFQ consultant'),
+        ('signal', 'Washington "signal coordination" "controller" RFP'),
+        ('its', 'Washington "ITS" "ATSPM" OR "transit signal priority" consultant RFP'),
+        ('its', 'Washington "traffic signal preemption" "detection" RFQ'),
+        ('rail', 'Washington "railroad crossing" "grade separation" RFQ engineering'),
+        ('rail', 'Washington "quiet zone" "FRA" "RCE" consultant'),
+        ('ada', 'Washington "ADA curb ramps" "pedestrian crossings" design RFQ'),
+        ('ada', 'Washington "accessible pedestrian signals" RFP'),
+        ('civil', 'Washington "roadway design" "intersection improvements" engineering RFQ'),
+        ('civil', 'Washington "civil engineering" "roadway" on-call RFQ'),
+        ('safety', 'Washington "SS4A" "crash analysis" safety action plan consultant'),
+        ('safety', 'Washington "HSIP" "speed management" traffic safety RFQ'),
+        ('planning', 'Washington "traffic impact study" "transportation planning" RFQ'),
+        ('planning', 'Washington "traffic modeling" "corridor study" consultant'),
+        ('transit', 'Washington "transit operations" "freight corridor" planning RFP'),
+        ('transit', 'Washington "port transportation" "multimodal study" RFQ'),
     ],
     'OR': [
-        ('signal', 'Oregon signal retiming ITS traffic operations RFP'),
-        ('rail', 'Oregon railroad preliminary engineering FRA crossing RFP'),
-        ('planning', 'Oregon transportation planning safety study consultant RFP'),
-        ('civil', 'Oregon roadway ADA curb ramp design engineering RFQ'),
+        ('signal', 'Oregon "traffic signal timing" "MAXTIME" RFQ engineering'),
+        ('its', 'Oregon "ITS" "ATSPM" "TSP" consultant RFP'),
+        ('rail', 'Oregon "railroad crossing" "rail safety" FRA RFQ'),
+        ('rail', 'Oregon "grade separation" "quiet zone" engineering study'),
+        ('ada', 'Oregon "ADA curb ramps" "pedestrian" consultant RFQ'),
+        ('civil', 'Oregon "roadway design" "civil engineering" on-call RFQ'),
+        ('safety', 'Oregon "SS4A" "HSIP" "crash analysis" RFP'),
+        ('planning', 'Oregon "transportation system plan" "traffic impact" consultant'),
+        ('transit', 'Oregon "transit operations" "freight corridor" RFQ'),
     ],
 }
-CONSULTANT = re.compile(r'\b(rfp|rfq|rsoq|soq|request for (qualifications|proposals)|on[ -]?call|consultant|professional services|prequalification|engineering services|study|planning)\b', re.I)
-FIELD = re.compile(r'\b(traffic|signal(?:ized)?|intersection|transit|transportation|pedestrian|bike|bicycle|roadway|rail|railroad|crossing|grade separation|safety|corridor|ITS|ATSPM|TSP|planning|ADA|curb ramps?|sidewalk|accessible|civil engineering|design|freight|SS4A|quiet zone)\b', re.I)
-EXCLUDE = re.compile(r'\b(job posting|hiring|employment|janitorial|construction[- ]only|lowest bidder|bid tabulation|sealed construction bids|equipment purchase|construction advertisement)\b', re.I)
+
+# Rules examine a SINGLE procurement TITLE, never an entire list page.
+# Words such as 'engineering', 'design', 'planning', 'ADA', and 'safety' alone
+# are too generic to establish a PH Consulting specialty.
+PROCUREMENT = re.compile(
+    r"\b(?:RFP|RFQ|RSOQ|SOQ|request for (?:qualifications|proposals)|on[ -]?call|"
+    r"professional services|consultant|engineering(?: services| and design|/design)?|"
+    r"design(?: services)?|stud(?:y|ies)|planning|prequalification|roster|PS&E)\b", re.I)
+UNRELATED = re.compile(
+    r"\b(?:storm\s*water|stormwater|wastewater|sewer|water treatment|WTP|"
+    r"wetland|stream services|broadband|core\s*fiber|fiber optic network|"
+    r"recruitment|human resources|staffing|employee|employment|"
+    r"gender dysphoria|healthcare|medical facility|sports medicine|"
+    r"school building|school replacement|elementary school|Husky Hall|"
+    r"equine|arena|housing replacement|housing construction|"
+    r"readiness center|electrical maintenance|building renovation|"
+    r"janitorial|IT services|software licensing|"
+    r"paratransit (?:eligibility|assessment)|ADA assessment for paratransit|"
+    r"construction only|construction-only|ITB|invitation to bid|"
+    r"bid tabulation|equipment purchase|waterfront property RFP)\b", re.I)
+
+# Specific matches, ranked when a title spans multiple disciplines.
+# Signal design + pedestrian access is signal unless the procurement is
+# primarily ADA. Freight rail infrastructure belongs to Railroad / FRA / RCE.
+FIT_RULES = [
+    ('rail', re.compile(
+        r"\b(?:railroad|railway|rail line|rail crossing|grade separations?|quiet zones?|"
+        r"rail infrastructure|rail rehabilitation|rail signal|freight rail|BNSF|"
+        r"CRISI|railroad crossing elimination|RCE program|CBRL|rail feasibility|"
+        r"rail safety|rail grade crossings?|rail track|railway crossing|"
+        r"on.dock rail|rail bridge|FRA[ -]funded)\b", re.I)),
+    ('its', re.compile(
+        r"\b(?:intelligent transportation systems?|ITS|ATSPM|ATMS|"
+        r"adaptive signals?|adaptive signal control|transit signal priority|"
+        r"bus priority|next gen(?:eration)? TSP|TSP|emergency (?:vehicle )?preemption|"
+        r"signal preemption|traffic (?:signal )?detection|signal communications?|"
+        r"traffic communications?|connected vehicle|traffic management center|"
+        r"traffic signal systems? integration|traffic signal communications?)\b", re.I)),
+    ('signal', re.compile(
+        r"\b(?:traffic signals?|signal timing|signal retiming|signal coordination|"
+        r"signal optimization|signal controllers?|controller programming|"
+        r"controller upgrades?|signal designs?|signalized intersections?|"
+        r"MAXTIME|Econolite|Cobalt EOS|ASC/3|FYA|PPLT|"
+        r"leading pedestrian intervals?|LPI|traffic engineering|"
+        r"traffic operations?|traffic counts?|traffic calming|"
+        r"intersection (?:operations?|signal|timing)\b)", re.I)),
+    ('ada', re.compile(
+        r"\b(?:ADA (?:curb ramps?|sidewalks?|pedestrian|accessibility|"
+        r"improvements?|compliance|ramps?)|accessible pedestrian signals?|"
+        r"pedestrian (?:crossings?|improvements?|safety|accessibility|signals?)|"
+        r"crosswalk improvements?|sidewalk improvements?|"
+        r"curb ramps?|bicycle (?:improvements?|facilities|lanes?)|"
+        r"RRFB|rectangular rapid flashing beacon|"
+        r"safe routes to school|pedestrian and bicycle|pedestrian/bicycle)\b", re.I)),
+    ('safety', re.compile(
+        r"\b(?:SS4A|safe streets(?: and roads for all)?|HSIP|"
+        r"highway safety improvement|safety action plan|"
+        r"traffic safety|roadway safety|road safety|"
+        r"systemic (?:intersection |traffic |roadway )?safety|"
+        r"crash analysis|crash reduction|speed management|"
+        r"intersection safety|vision zero|safety studies|"
+        r"safety study|traffic (?:safety )?audit|road safety audit)\b", re.I)),
+    ('civil', re.compile(
+        r"\b(?:roadway (?:engineering|design|improvements?|rehabilitation|reconstruction)|"
+        r"road (?:design|engineering|reconstruction|rehabilitation|improvements?|slide repair)|"
+        r"street (?:improvements?|design|reconstruction|rehabilitation)|"
+        r"street[s]?cape|civil engineering|"
+        r"intersection (?:improvements?|redesign|reconstruction|design)|"
+        r"roadway signing|traffic signs? (?:and|&) (?:pavement )?markings?|"
+        r"pavement markings?|street lighting|roadway lighting|"
+        r"complete streets|multimodal corridor (?:design|improvements?)|"
+        r"roadway (?:PS&E|construction documents))\b", re.I)),
+    ('transit', re.compile(
+        r"\b(?:transit (?:operations?|planning|stud(?:y|ies)|development plans?|"
+        r"service planning|priority studies)|"
+        r"freight (?:corridors?|stud(?:y|ies)|planning|operations?|transportation)|"
+        r"port transportation|port traffic|terminal (?:planning|traffic impact|traffic stud(?:y|ies))|"
+        r"intermodal (?:port|terminal|freight|stud(?:y|ies)|planning)|"
+        r"multimodal (?:stud(?:y|ies)|transportation)|"
+        r"goods movement|truck route studies|rail freight (?:operations?|stud(?:y|ies)|planning))\b", re.I)),
+    ('planning', re.compile(
+        r"\b(?:transportation (?:system|safety|options|land.use|development|master) "
+        r"plans?|transportation planning|transportation system planning|"
+        r"transportation system plans?|transportation master plans?|"
+        r"traffic impact (?:stud(?:y|ies)|analysis)|"
+        r"traffic (?:stud(?:y|ies)|forecasting|forecast|modeling|models?|analysis|assessment)|"
+        r"travel demand modeling|transportation forecasting|"
+        r"transportation (?:stud(?:y|ies)|modeling|forecast|analysis)|"
+        r"corridor (?:stud(?:y|ies)|planning|analysis|design|improvements?)|"
+        r"multimodal (?:planning|stud(?:y|ies))|"
+        r"Synchro|VISSIM|Aimsun|Capitol Corridor Phase|"
+        r"WSDOT Consultant Prequalification)\b", re.I)),
+
+]
+FEED_EXCLUDE = re.compile(r"\b(?:job posting|hiring|contract award|awarded to|ceremony|grand opening|"
+    r"meeting agenda|press release|construction underway|bid tabulation)\b", re.I)
 DATE_NUM = re.compile(r'\b(\d{1,2})/(\d{1,2})/(\d{2,4})\b')
 MONTHS = r'(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan\.?|Feb\.?|Mar\.?|Apr\.?|Jun\.?|Jul\.?|Aug\.?|Sep\.?|Sept\.?|Oct\.?|Nov\.?|Dec\.?)'
 DATE_LONG = re.compile(r'\b(' + MONTHS + r')\s+(\d{1,2})(?:st|nd|rd|th)?,?\s+(20\d{2})\b', re.I)
@@ -179,30 +288,101 @@ def deadline(text, listing=False):
     return None
 
 
+def classify_title(title, summary='', require_procurement=True):
+    """Return exactly one PH discipline or None. NEVER use page-wide text as title.
+
+    Summary is accepted ONLY for manual/curated records and must never rescue an
+    unrelated title. This guards against adjacent OMWBE listings contaminating rows.
+    """
+    title = clean(title)[:260]
+    if not title or len(title) < 9 or UNRELATED.search(title) or FEED_EXCLUDE.search(title):
+        return None
+    if title.lower().startswith(('request for proposal no. rfp260903',)):
+        return None
+    # A vague engineering, safety, design or ADA title is NOT sufficient.
+    cat = next((name for name, rule in FIT_RULES if rule.search(title)), None)
+    if cat is None: return None
+    # A public official RFQ index is procurement-related, but a generic project
+    # description still needs a procurement/service indicator to stay on the list.
+    if require_procurement and not PROCUREMENT.search(title):
+        return None
+    return cat
+
+
 def category(text):
-    if re.search(r'\b(CBRL|railroad|rail line|rail crossing|rail infrastructure|quiet zone|grade separation|FRA|RCE)\b', text, re.I): return 'rail'
-    if re.search(r'\b(ADA|curb ramp|sidewalk|civil engineering|roadway design|road reconstruction)\b', text, re.I): return 'civil'
-    if re.search(r'\b(traffic signal|signal timing|signalized|ITS|ATSPM|TSP|signal controller|traffic engineering)\b', text, re.I): return 'signal'
-    return 'planning'
+    return classify_title(text, require_procurement=False)
 
 
 def is_relevant(text):
-    return bool(CONSULTANT.search(text) and FIELD.search(text) and not EXCLUDE.search(text))
+    return classify_title(text, require_procurement=True) is not None
+
+
+def is_strictly_relevant_record(row):
+    title = row.get('title', '')
+    # Manually curated seeded records may omit RFP/RFQ words, but must contain an
+    # unequivocal traffic/transport/rail/roadway subject in their own title.
+    return classify_title(title, require_procurement=False) is not None
+
+
+def single_title_date(title):
+    """An OMWBE result's own link text may have a trailing deadline."""
+    matches = list(DATE_NUM.finditer(title)) + list(DATE_LONG.finditer(title))
+    if len(matches) == 1:
+        match = matches[0]
+        if match.end() >= len(title.strip()) - 7:
+            return parse_date(match.group(0))
+    return None
+
+
+def remove_trailing_date(title):
+    return clean(re.sub(r'\s*(?:\d{1,2}/\d{1,2}/\d{2,4})\s*$', '', title))
 
 
 def priority(text):
     return 'HIGH' if re.search(r'\b(signal timing|traffic engineering|railroad|rail crossing|ATSPM|on-call traffic|traffic study|ADA curb ramp)\b', text, re.I) else 'REVIEW'
 
 
-def standard_row(title, agency, state, url, body, source, today, listing=False):
-    due = deadline(body, listing=listing)
-    cat = category(title + ' ' + body)
+def standard_row(title, agency, state, url, body, source, today, listing=False,
+                 observed_due=None):
+    due = observed_due if listing else deadline(body, listing=False)
+    cat = classify_title(title, require_procurement=False)
     return dict(id=ident(url), state=state, category=cat, agency=agency, title=title[:200],
-                summary=clean(body)[:410], priority=priority(title + ' ' + body),
+                summary=clean(body)[:410], priority=priority(title),
                 url=url, source=source, source_kind='official_listing',
                 status='Official listing — deadline observed' if due else 'Official listing — deadline unverified',
                 due_date=due, due_time='', role='Review prime/subconsultant fit',
-                verified_on=today, last_seen=today, addenda_count=None)
+                verified_on=today if due else None, last_seen=today, addenda_count=None)
+
+
+def safe_single_item_scope(a, url):
+    """Only use surrounding metadata if a tight ancestor has ONE bid-link.
+
+    This prevents unrelated titles and deadlines being borrowed from neighboring
+    OMWBE notices through a shared parent list/container.
+    """
+    c = a.parent
+    for _ in range(5):
+        if c is None: break
+        other = [node for node in c.findall('a')
+                 if '/bid-opportunities/' in (node.attrs.get('href', '') or '')]
+        if len(other) == 1 and c.tag in ('tr', 'li', 'article', 'div'):
+            text = c.text()
+            if len(text) < 650: return text
+        if len(other) > 1: break
+        c = c.parent
+    return a.text()
+
+
+def safe_listing_due(title, body):
+    # An unlabeled date is reliable only when attached to this particular link.
+    result = single_title_date(title)
+    if result: return result
+    explicit = deadline(body, listing=False)
+    if explicit: return explicit
+    matches = list(DATE_NUM.finditer(body)) + list(DATE_LONG.finditer(body))
+    if len(matches) == 1 and len(body) < 330:
+        return parse_date(matches[0].group(0))
+    return None
 
 
 def scan_omwbe(html, base, today):
@@ -213,35 +393,36 @@ def scan_omwbe(html, base, today):
         p = urllib.parse.urlsplit(url)
         if p.netloc not in ('omwbe.wa.gov', 'www.omwbe.wa.gov') or not p.path.startswith('/bid-opportunities/'):
             continue
-        title = a.text()
-        parent = wrapper(a)
-        if len(title) < 12 or title.lower().startswith(('read more', 'details')):
-            headings = [x.text() for x in parent.findall() if x.tag in ('h2', 'h3', 'h4')]
-            title = headings[0] if headings else title
-        surrounding = parent.text()
-        # Due date may be the sibling of the link within a table row.
-        if len(surrounding) < 35 and parent.parent:
-            surrounding = parent.parent.text()[:500]
-        if not is_relevant(title + ' ' + surrounding) or url in seen: continue
+        raw_title = a.text()
+        if len(raw_title) < 10 or raw_title.lower().startswith(('read more', 'details')):
+            continue
+        title = remove_trailing_date(raw_title)
+        if not classify_title(title, require_procurement=True) or url in seen:
+            continue
         seen.add(url)
-        yield standard_row(title, 'Agency named in notice — check source', 'WA', url, surrounding,
-                           'WA OMWBE official bid listing', today, listing=True)
+        local_text = safe_single_item_scope(a, url)
+        due = safe_listing_due(raw_title, local_text)
+        # Summary should NEVER contain an entire list of unrelated advertisements.
+        yield standard_row(title, 'Agency named in notice — check source', 'WA', url,
+                           title, 'WA OMWBE official bid listing', today,
+                           listing=True, observed_due=due)
 
 
 def scan_webs(html, base, today):
     doc = Document(html)
     for tr in doc.root.findall('tr'):
-        contents = tr.text()
-        if not is_relevant(contents): continue
         anchors = [a for a in tr.findall('a') if a.text().strip()]
         if not anchors: continue
-        a = sorted(anchors, key=lambda x: len(x.text()), reverse=True)[0]
-        url = absolute(base, a.attrs.get('href', ''))
+        candidate = next((a for a in sorted(anchors, key=lambda x: len(x.text()), reverse=True)
+                          if classify_title(remove_trailing_date(a.text()))), None)
+        if candidate is None: continue
+        title = remove_trailing_date(candidate.text())
+        url = absolute(base, candidate.attrs.get('href', ''))
         if not url: continue
-        title = a.text()
-        if not is_relevant(title + ' ' + contents): continue
-        yield standard_row(title, 'WA WEBS (see notice for agency)', 'WA', url, contents[:650],
-                           'WA WEBS public calendar', today, listing=True)
+        due = safe_listing_due(candidate.text(), tr.text()[:450])
+        yield standard_row(title, 'WA WEBS (see notice for agency)', 'WA', url,
+                           title, 'WA WEBS public calendar', today,
+                           listing=True, observed_due=due)
 
 
 def scan_coos(html, base, today):
@@ -253,7 +434,7 @@ def scan_coos(html, base, today):
         if p.netloc not in ('portofcoosbay.com', 'www.portofcoosbay.com'): continue
         if '/request-for-proposals-' not in p.path: continue
         title = a.text()
-        if url in seen or not is_relevant(title + ' ' + p.path.replace('-', ' ')): continue
+        if url in seen or not classify_title(title): continue
         seen.add(url)
         yield standard_row(title, 'Oregon International Port of Coos Bay', 'OR', url, title,
                            'Port of Coos Bay official solicitations', today)
@@ -281,7 +462,7 @@ def official_detail(html, row, today):
         mentions = re.findall(r'\b(?:addendum|addenda)\s*\d+\b', text, re.I)
         addenda = {clean(x).lower() for x in mentions}
     return {'due_date': due, 'addenda_count': len(addenda),
-            'category': category(row.get('title', '') + ' ' + text),
+            'category': classify_title(row.get('title', ''), require_procurement=False),
             'detail_excerpt': text[:410], 'verified_on': today}
 
 
@@ -296,14 +477,14 @@ def parse_feed(html, state, cat, today):
         title = clean(item.findtext('title'))
         desc = clean(TAG.sub(' ', item.findtext('description') or ''))
         url = clean(item.findtext('link'))
-        if not title or not url.startswith('https://') or not is_relevant(title + ' ' + desc): continue
+        if not title or not url.startswith('https://') or not classify_title(title, require_procurement=True): continue
         stamp = item.findtext('pubDate')
         if stamp:
             try:
                 if (date.fromisoformat(today) - parsedate_to_datetime(stamp).date()).days > 35: continue
             except (ValueError, TypeError, OverflowError): pass
         rid = 'feed-' + hashlib.sha1((title.lower() + '|' + url).encode()).hexdigest()[:18]
-        yield dict(id=rid, title=title[:190], agency='Not confirmed', state=state, category=cat,
+        yield dict(id=rid, title=title[:190], agency='Not confirmed', state=state, category=classify_title(title, require_procurement=False) or cat,
                    summary=desc[:330] or 'Discovery result; check issuing agency notice.', priority='REVIEW',
                    url=url, source='Google News RSS — discovery only', source_kind='news_feed',
                    status='Unverified lead — not confirmed open', role='Review relevance',
@@ -327,17 +508,31 @@ def allowed_detail(url):
     return False
 
 
-def merge_prior(prior):
+def merge_prior(prior, reset_legacy_dates=False):
     # Existing 2026-10-11 baseline is not treated as a fresh confirmed scrape.
     result = {}
     for row in prior:
-        if not isinstance(row, dict) or not row.get('id'): continue
+        if not isinstance(row, dict) or not row.get('id') or not is_strictly_relevant_record(row): continue
         row = dict(row)
         if row.get('source_kind') is None:
             row['source_kind'] = 'existing_watchlist' if row.get('source', '').startswith('Official') else 'news_feed'
             row['status'] = ('Previously recorded — recheck notice' if row['source_kind'] == 'existing_watchlist'
                              else 'Unverified lead — not confirmed open')
         row.setdefault('first_seen', row.get('found') or '2026-10-11')
+        row['category'] = classify_title(row.get('title',''), require_procurement=False)
+        # Previous versions scraped combined OMWBE listing text and falsely flagged
+        # deadline changes. Never carry that fabricated history into this release.
+        if reset_legacy_dates and row.get('source', '').startswith(('WA OMWBE', 'WA WEBS')):
+            if row.get('change_type') == 'DEADLINE CHANGED':
+                row['change_type'] = ''
+                row.pop('previous_due_date', None)
+                row.pop('change_on', None)
+            row['summary'] = clean(row.get('title',''))[:410]
+            # These historical dates were parsed from adjacent bid listings;
+            # remove until the safer v4 parser observes this exact entry's date.
+            row['due_date'] = None
+            row['verified_on'] = None
+            row['status'] = 'Deadline needs recheck on the issuing notice'
         result[row['id']] = row
     return result
 
@@ -434,14 +629,139 @@ def classify_expiry(rows, today):
             except (TypeError, ValueError): pass
 
 
+
+
+def update_agency_directories(catalog,old_data,today):
+    """Fetch up to four official jurisdiction directories once per week.
+
+    City profiles are official-directory metadata, not proof that the municipal
+    procurement portal has been checked. Failure never deletes prior agencies.
+    """
+    previous=old_data.get('catalog_last_refresh', '')
+    if previous:
+        try:
+            if (date.fromisoformat(today)-date.fromisoformat(previous)).days<7:
+                return old_data.get('directory_checks', [])
+        except ValueError:pass
+    checks=[]
+    for source in AS.DIRECTORIES:
+        try:
+            html=fetch(source['url'],timeout=8)
+            found=AS.parse_directory(html,source,Document,absolute)
+            for a in found:
+                old=catalog.get(a['id'])
+                if old:
+                    if a.get('website') and not old.get('website'):old['website']=a['website']
+                    if a.get('profile_url') and not old.get('profile_url'):old['profile_url']=a['profile_url']
+                else:catalog[a['id']]=a
+            checks.append({'source':source['name'],'url':source['url'],'ok':True,'found':len(found),'checked':today})
+        except Exception as e:
+            checks.append({'source':source['name'],'url':source['url'],'ok':False,'error':type(e).__name__,'checked':today})
+    return checks
+
+
+def scan_local_agencies(catalog,rows,today):
+    """Rotate through city/county/state/port/transit sites, WA weighted 65%.
+
+    No invented URLs. If directory profiles have no site URL, status remains
+    pending; if a vendor login is needed, status is manual review. For each
+    agency, only its own bid page is parsed, not adjoining bid listings.
+    """
+    try:batch=max(0,min(40,int(os.getenv('PH_AGENCY_BATCH','18'))))
+    except ValueError:batch=18
+    report=[]
+    selected=AS.selected_agencies(catalog,today,batch)
+    for agency in selected:
+        site=agency.get('website') or ''
+        profile=agency.get('profile_url') or ''
+        status='No official website in directory yet'; err=''; found=0; checked_url=''
+        try:
+            if not site and profile:
+                profile_html=fetch(profile,timeout=7)
+                site=AS.external_website_from_profile(profile_html,profile,Document,absolute)
+                if site:agency['website']=site
+                else: status='Directory profile did not expose a reliable site URL'
+            if site:
+                # Do not try to bypass supplier login portals or scrape pages
+                # that only expose client-side JS API data.
+                if any(d in (urllib.parse.urlsplit(site).hostname or '') for d in AS.PORTAL_HOSTS):
+                    status='Supplier portal — manual review';checked_url=site
+                else:
+                    proc=agency.get('procurement_url') or ''
+                    if proc and any(x in (urllib.parse.urlsplit(proc).hostname or '') for x in AS.PORTAL_HOSTS):
+                        status='Supplier portal — manual review';checked_url=proc
+                    else:
+                        homepage=fetch(site,timeout=7)
+                        checked_url=site
+                        if not proc:
+                            proc=AS.find_procurement_page(homepage,site,Document,absolute)
+                            if proc:agency['procurement_url']=proc
+                        html=homepage
+                        if proc and proc!=site:
+                            if any(x in (urllib.parse.urlsplit(proc).hostname or '') for x in AS.PORTAL_HOSTS):
+                                status='Supplier portal — manual review';checked_url=proc
+                            else:
+                                html=fetch(proc,timeout=7)
+                                checked_url=proc
+                        # No general-homepage scanning: only a discoverable bid page
+                        # is a defensible procurement listing.
+                        if status!='Supplier portal — manual review' and proc:
+                            results=AS.scan_agency_bids(html,checked_url,agency,Document,absolute,
+                                classify_title,safe_single_item_scope,safe_listing_due,
+                                remove_trailing_date,standard_row,today)
+                            for item in results:apply_observation(rows,item,today)
+                            found=len(results)
+                            status='Official procurement page accessed'
+                        elif status!='Supplier portal — manual review':
+                            status='Official website accessed — no public bids link found'
+        except Exception as exc:
+            err=type(exc).__name__
+            status='Inaccessible / retry next rotation'
+        agency['last_check']=today
+        agency['last_check_at']=datetime.now(TZ).isoformat()
+        agency['status']=status
+        agency['last_matches']=found
+        report.append({'agency':agency['name'],'state':agency['state'],'kind':agency['kind'],
+                       'source':checked_url or agency.get('profile_url',''),
+                       'ok':status.startswith('Official'),
+                       'attempted':bool(site or profile),
+                       'status':status,'matches':found,**({'error':err} if err else {})})
+    return report
+
+
+def coverage_summary(catalog,agency_checks,directory_checks):
+    all_agencies=list(catalog.values())
+    checked=[a for a in all_agencies if a.get('last_check')]
+    successful=[a for a in all_agencies if a.get('status','').startswith('Official')]
+    return {'total':len(all_agencies),
+            'wa':sum(a.get('state')=='WA' for a in all_agencies),
+            'or':sum(a.get('state')=='OR' for a in all_agencies),
+            'cities':sum(a.get('kind')=='city' for a in all_agencies),
+            'counties':sum(a.get('kind')=='county' for a in all_agencies),
+            'checked_ever':len(checked),'accessible_ever':len(successful),
+            'attempted_this_run':sum(x.get('attempted',False) for x in agency_checks),
+            'accessible_this_run':sum(x['ok'] for x in agency_checks),
+            'matches_this_run':sum(x['matches'] for x in agency_checks),
+            'directories_accessible':sum(x.get('ok',False) for x in directory_checks),
+            'directories_total':len(AS.DIRECTORIES),
+            'note':('Agency directory targets are NOT all scanned every run. Only rotating batches '
+                    'are checked. Some cities require portal accounts; some directory sites do not '
+                    'expose websites to automated tools. Coverage and lead status are best-effort.')}
+
 def main():
     now = datetime.now(TZ)
     today = os.environ.get('PH_TEST_DATE') or now.date().isoformat()
     prior, old_data = load_prior()
-    rows = merge_prior(prior)
+    rows = merge_prior(prior, reset_legacy_dates=old_data.get('parser_version') != 5)
+    removed_irrelevant = len(prior) - len(rows)
     logs = []
     seen = set()
+    catalog = AS.seeded_catalog(old_data.get('agency_catalog', []))
+    directory_checks = list(old_data.get('directory_checks', []))
+    agency_checks = []
     if os.environ.get('PH_OFFLINE') != '1':
+        directory_checks = update_agency_directories(catalog, old_data, today)
+        agency_checks = scan_local_agencies(catalog, rows, today)
         for source in OFFICIAL_INDEXES:
             try:
                 html = fetch(source['url'])
@@ -473,12 +793,21 @@ def main():
         keep = {r['id'] for r in sorted(feed, key=lambda r: r.get('first_seen', ''), reverse=True)[:60]}
         records = [r for r in records if r.get('source_kind') != 'news_feed' or r['id'] in keep]
     passed = sum(bool(r.get('expired')) for r in records)
+    cover = coverage_summary(catalog, agency_checks, directory_checks)
     payload = {
+        'parser_version': 6,
         'updated_pacific': now.strftime('%b %d, %Y %I:%M %p %Z'),
         'last_run_iso': now.isoformat(),
         'official_sources_checked': sum(x['ok'] for x in logs if x['source'] in [s['name'] for s in OFFICIAL_INDEXES]),
         'official_sources_total': len(OFFICIAL_INDEXES),
         'source_checks': logs,
+        'agency_coverage': cover,
+        'agency_catalog': sorted(catalog.values(), key=lambda a: (a.get('state') != 'WA', a.get('kind',''), a.get('name',''))),
+        'directory_checks': directory_checks,
+        'agency_checks': agency_checks,
+        'catalog_last_refresh': today if any(x.get('ok') for x in directory_checks) and
+            (not old_data.get('catalog_last_refresh') or (date.fromisoformat(today) - date.fromisoformat(old_data['catalog_last_refresh'])).days >= 7)
+            else old_data.get('catalog_last_refresh', ''),
         'items': records,
         'disclaimer': ('Official-listing checks are best effort and cannot cover every WA/OR agency. '
                        'Deadline verification applies only when explicitly visible in a fetched notice. '
@@ -486,9 +815,9 @@ def main():
                        'Unverified news results are not confirmed open procurements.'),
     }
     OUTPUT.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
-    print(f'PH Finder: {len(records)} records; {passed} deadline passed; '
+    print(f'PH Finder: {len(records)} records; agency targets={cover["total"]}; agency checks={cover["attempted_this_run"]}; {passed} deadline passed; '
           f'{payload["official_sources_checked"]}/{len(OFFICIAL_INDEXES)} official indexes fetched; '
-          f'{len(logs)} source checks; at {payload["updated_pacific"]}')
+          f'{len(logs)} source checks; {removed_irrelevant} irrelevant old records filtered; at {payload["updated_pacific"]}')
     # Exit cleanly on source blocks, preserving prior data; failures stay visible.
 
 
