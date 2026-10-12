@@ -1,16 +1,34 @@
-# PH Consulting Project Finder
+# PH Consulting Project Opportunity Finder
 
-## Make it update daily
-1. Create a new GitHub repository (public if using free GitHub Pages).
-2. Upload **all files**, including `.github/workflows/daily-update.yml`, to the repository root.
-3. In repository **Settings → Pages**, select **Deploy from a branch**, `main`, `/ (root)` and save.
-4. In **Actions**, enable workflows if prompted, then open **Daily PH opportunity discovery** and click **Run workflow** once.
-5. Open the Pages website at `https://YOUR-USERNAME.github.io/YOUR-REPO/`.
+Live dashboard: https://markrahmanph.github.io/PH-Consulting-Project-Finder/
 
-The scheduled workflow refreshes the JSON each day. GitHub Actions scheduled runs may be delayed, and the UTC schedule is 7 AM Pacific standard time / 8 AM Pacific daylight time. To have a consistent 7 AM Pacific time year-round, adjust the UTC cron seasonally or use a timezone-aware scheduler.
+## Search coverage and limits
 
-## Important limitations
-- This is a **lead discovery dashboard**, not a verified list of open RFPs. Search news results can include closed, irrelevant, duplicated or stale solicitations. Due dates are intentionally marked **Not verified**.
-- Google News RSS is an unofficial discovery feed; results can be incomplete or unavailable. Agency portals often require login or JS and cannot be reliably searched by this method.
-- Running `index.html` directly as a `file://` URL may block JSON fetching. Use GitHub Pages or `python -m http.server 8000` in this folder.
-- For production use, add official agency procurement APIs and a review/verification process before labeling any opportunity active.
+GitHub Actions runs `update.py` at minute **17 of every hour** (UTC and Pacific time both share the minute). It may start late during GitHub scheduling congestion. Each execution attempts up to **40 rotating agency sites** (default configured by `PH_AGENCY_BATCH`), plus the available official index pages and the supplemental public OregonBuys and WSDOT search pages.
+
+Sources and discovery routes:
+- Washington OMWBE and WEBS official public listings.
+- Oregon Port of Coos Bay notices.
+- OregonBuys public open-bid search (public listings only; pre-solicitations are never labeled open RFQs).
+- WSDOT consulting opportunities, when exposed in parseable public HTML.
+- City, county, port, and transit procurement pages in WA and OR, with WA prioritized and periodic source rotations.
+- Search-engine news RSS keyword discovery for eight PH practice areas; these are **unverified leads**, not confirmed open bid requests.
+- DJC A/E Wanted and restricted supplier portals appear as **manual-review sources**, not successful automated crawls.
+
+The agency catalog is a directory, **not** proof all municipalities have been scanned. Coverage numbers separate listed agencies, sites with URLs, pages attempted and pages accessed. A fetched page with zero matching notices might mean no results, website layout changes, or JS-only content; it does not establish there are no opportunities.
+
+### Scope filter
+Keep engineering design, PS&E, traffic signal/ITS programming and design, planning, railroad/grade-crossing design, ADA/pedestrian design, on-call consultant rosters and safety/transportation studies. Exclude construction-only contractor bid packages, construction-management-only work, inspection-only contracts and general informational webpages. Combined design and construction support is eligible only when design services are specifically named.
+
+### Running and checking
+1. In GitHub Actions, open `Daily PH opportunity discovery`; choose **Run workflow** for an immediate run.
+2. The workflow first runs `python -m py_compile update.py agency_sources.py procurement_sources.py`, then `python update.py`.
+3. Open `opportunities.json` to inspect `last_run_iso`, `agency_coverage`, `source_checks`, `manual_review_sources` and `searchable_agency_targets` after a successful update.
+4. On the dashboard press **Refresh data** to load the latest saved data. The button itself does not search procurement sites.
+
+## Known technical limitations
+- Many portals require logins, subscriptions, or JavaScript rendering. They cannot be fully crawled from a minimal Python stdlib-only GitHub Action.
+- Search indexes and RSS feeds may not contain newly posted solicitations immediately, and may miss them entirely.
+- Publication dates are distinct from first-discovered dates and proposal deadlines. A pre-solicitation or RFI should never automatically be labeled an open RFP.
+- Wider coverage requires more **valid official procurement URLs, official vendor APIs or licensed feeds**, not merely larger agency counts.
+- This is a discovery tool; verify the issuing agency's actual solicitation PDF, addenda, eligibility and closing date before pursuing work.
