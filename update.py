@@ -65,6 +65,15 @@ QUERIES = {
         ('planning', 'Washington "traffic modeling" "corridor study" consultant'),
         ('transit', 'Washington "transit operations" "freight corridor" planning RFP'),
         ('transit', 'Washington "port transportation" "multimodal study" RFQ'),
+        # Broader discovery: allow agency-issued notices using plain project names
+        # and on-call/SOQ terminology, not just narrow controller keywords.
+        ('signal', 'Washington city county "traffic engineering services" "request for qualifications"'),
+        ('its', 'Washington "signal modernization" "ITS" "consultant" solicitation'),
+        ('rail', 'Washington "rail grade crossing" "consultant" "RFQ"'),
+        ('ada', 'Washington "pedestrian improvements" "design services" "RFQ"'),
+        ('civil', 'Washington "roadway" "on call" "engineering services" RFQ'),
+        ('safety', 'Washington "safe streets" "transportation safety" "consultant" RFP'),
+        ('planning', 'Washington "transportation" "consulting services" "SOQ"'),
     ],
     'OR': [
         ('signal', 'Oregon "traffic signal timing" "MAXTIME" RFQ engineering'),
@@ -76,6 +85,11 @@ QUERIES = {
         ('safety', 'Oregon "SS4A" "HSIP" "crash analysis" RFP'),
         ('planning', 'Oregon "transportation system plan" "traffic impact" consultant'),
         ('transit', 'Oregon "transit operations" "freight corridor" RFQ'),
+        ('signal', 'Oregon "traffic signal" "engineering services" RFQ'),
+        ('rail', 'Oregon "rail crossing" "engineering services" RFP'),
+        ('ada', 'Oregon "pedestrian" "design services" RFQ'),
+        ('civil', 'Oregon "civil roadway" "on call" "consultant" RFQ'),
+        ('planning', 'Oregon "transportation system plan" "consultant services" RFP'),
     ],
 }
 
@@ -854,14 +868,22 @@ def main():
                              'note': 'Manual review needed; no successful scan'})
         check_details(rows, today, logs)
         # Feed leads are intentionally separate from agency-verified opportunities.
+        discovery_ok = discovery_failures = discovery_leads = 0
         for state, searches in QUERIES.items():
             for cat, q in searches:
                 try:
                     parsed = list(parse_feed(fetch(google_news(q), timeout=8), state, cat, today))
+                    discovery_ok += 1
                     for result in parsed[:5]:
-                        if result['id'] not in rows: apply_observation(rows, result, today)
+                        if result['id'] not in rows and is_strictly_relevant_record(result):
+                            apply_observation(rows, result, today)
+                            discovery_leads += 1
                 except Exception:
-                    pass
+                    discovery_failures += 1
+        logs.append({'source': 'Search-engine news discovery (unverified leads)',
+                     'ok': discovery_ok > 0, 'queries_ok': discovery_ok,
+                     'queries_failed': discovery_failures, 'matches': discovery_leads,
+                     'note': 'RSS leads require issuing-agency verification, not confirmed open solicitations'})
     classify_expiry(rows, today)
     records = sorted(rows.values(), key=lambda r: (
         bool(r.get('expired')), r.get('state') != 'WA', r.get('priority') != 'HIGH',
@@ -884,6 +906,8 @@ def main():
         'supplemental_public_sources': PS.PUBLIC_SOURCES,
         'agency_coverage': cover,
         'agency_catalog': sorted(catalog.values(), key=lambda a: (a.get('state') != 'WA', a.get('kind',''), a.get('name',''))),
+        'searchable_agency_targets': sum(bool(a.get('website') or a.get('profile_url')) for a in catalog.values()),
+        'public_procurement_pages_known': sum(bool(a.get('procurement_url')) for a in catalog.values()),
         'directory_checks': directory_checks,
         'agency_checks': agency_checks,
         'catalog_last_refresh': today if any(x.get('ok') for x in directory_checks) and
