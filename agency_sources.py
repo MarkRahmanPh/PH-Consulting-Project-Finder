@@ -89,6 +89,33 @@ def new_agency(state,kind,name,profile_url='',website='',procurement_url='',prio
                 last_check='',status='Not yet checked',priority=priority)
 
 
+# Official agency procurement/public bid pages independently identified from issuing-agency websites.
+# Some pages lead to supplier portals; a listed URL is NOT proof bids can be scraped.
+VERIFIED_PROCUREMENT_PAGES = [
+    ("WA", "city", "Redmond", "https://www.redmond.gov/bids.aspx"),
+    ("WA", "city", "Woodinville", "https://www.woodinville.gov/193/Bids-Proposals"),
+    ("WA", "city", "Tacoma", "https://tacoma.gov/government/departments/finance/procurement-and-payables-division/purchasing/contracting-opportunities/"),
+    ("WA", "city", "Seattle", "https://www.seattle.gov/purchasing-and-contracting"),
+    ("WA", "city", "Vancouver", "https://www.cityofvancouver.us/business/procurement-services/"),
+    ("WA", "city", "Spokane", "https://my.spokanecity.org/administrative/purchasing/"),
+    ("WA", "city", "Bellingham", "https://cob.org/services/business/purchasing/purchasing-bid-opening"),
+    ("WA", "city", "Bellevue", "https://bellevuewa.gov/city-government/departments/ITD/doing-business-with-it"),
+    ("WA", "city", "Issaquah", "https://www.issaquahwa.gov/1464/Bids-RFPs"),
+    ("WA", "city", "Sumner", "https://sumnerwa.gov/bids/"),
+    ("WA", "city", "Federal Way", "https://www.federalwaywa.gov/bids"),
+    ("WA", "city", "Lacey", "https://cityoflacey.org/rfp-rfq/"),
+    ("WA", "city", "Wenatchee", "https://www.wenatcheewa.gov/services/bid-opportunities"),
+    ("OR", "city", "Portland", "https://www.portland.gov/business-opportunities"),
+    ("OR", "city", "Eugene", "https://www.eugene-or.gov/108/Purchasing"),
+    ("OR", "city", "Bend", "https://bendoregon.gov/departments/administration/procurement/"),
+    ("OR", "city", "Hillsboro", "https://www.hillsboro-oregon.gov/our-city/departments/finance/procurement"),
+    ("OR", "city", "Beaverton", "https://beavertonoregon.gov/bid-proposal-opportunities"),
+    ("OR", "county", "Clackamas County", "https://www.clackamas.us/procurement-process"),
+    ("OR", "county", "Multnomah County", "https://multco.us/info/bids-proposal-opportunities"),
+    ("WA", "port", "Port of Benton", "https://portofbenton.com/business-with-us/"),
+    ("OR", "port", "Port of Coos Bay", "https://www.portofcoosbay.com/solicitations-public-notices"),
+]
+
 def seeded_catalog(existing=None):
     catalog={a['id']:dict(a) for a in (existing or []) if isinstance(a,dict) and a.get('id')}
     for state, counties in [('WA',WA_COUNTIES),('OR',OR_COUNTIES)]:
@@ -102,6 +129,17 @@ def seeded_catalog(existing=None):
     for state,kind,name,website in OTHER_AGENCIES:
         row=new_agency(state,kind,name,website=website,priority=15)
         catalog.setdefault(row['id'],row)
+    # Fill previously empty URLs and replace older mistakenly learned PDF or
+    # individual-bid links with a verified agency-wide procurement landing page.
+    for state,kind,name,url in VERIFIED_PROCUREMENT_PAGES:
+        aid=key(state,kind,name)
+        agency=catalog.get(aid)
+        if agency is None:
+            agency=new_agency(state,kind,name,priority=12 if state=='WA' else 8)
+            catalog[aid]=agency
+        agency['website']=url
+        agency['procurement_url']=url
+        agency['priority']=max(agency.get('priority') or 0,12 if state=='WA' else 8)
     return catalog
 
 
