@@ -13,9 +13,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Search PH opportunities across 32 rotating agencies
+      - name: Validate search scripts
+        run: python -m py_compile update.py agency_sources.py procurement_sources.py
+      - name: Search PH opportunities across 40 rotating agencies
         env:
-          PH_AGENCY_BATCH: '32'
+          PH_AGENCY_BATCH: '40'
         run: python update.py
       - name: Commit refreshed feed
         run: |
