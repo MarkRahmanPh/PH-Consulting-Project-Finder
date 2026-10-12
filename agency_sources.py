@@ -92,6 +92,14 @@ def new_agency(state,kind,name,profile_url='',website='',procurement_url='',prio
 # Official agency procurement/public bid pages independently identified from issuing-agency websites.
 # Some pages lead to supplier portals; a listed URL is NOT proof bids can be scraped.
 VERIFIED_PROCUREMENT_PAGES = [
+    ("WA", "city", "Bothell", "https://www.bothellwa.gov/bids.aspx"),
+    ("WA", "city", "Pasco", "https://www.pasco-wa.gov/Bids.aspx"),
+    ("WA", "city", "Everett", "https://www.everettwa.gov/Bids.aspx"),
+    ("WA", "county", "Pierce County", "https://www.piercecountywa.gov/currentsolicitations"),
+    ("WA", "county", "Snohomish County", "https://snohomishcountywa.gov/3706/Purchasing-Portal"),
+    ("WA", "county", "Whatcom County", "https://www.whatcomcounty.us/Bids.aspx"),
+    ("WA", "county", "King County", "https://kingcounty.gov/procurement/solicitations"),
+    ("OR", "county", "Washington County", "https://www.washingtoncountyor.gov/procurement"),
     ("WA", "city", "Redmond", "https://www.redmond.gov/bids.aspx"),
     ("WA", "city", "Woodinville", "https://www.woodinville.gov/193/Bids-Proposals"),
     ("WA", "city", "Tacoma", "https://tacoma.gov/government/departments/finance/procurement-and-payables-division/purchasing/contracting-opportunities/"),
@@ -228,7 +236,10 @@ def find_procurement_page(html,website,Document,absolute):
         host=(urlsplit(link).hostname or '').lower()
         if host!=homehost and not (host.endswith('.'+homehost) or any(x in host for x in PORTAL_HOSTS)):
             continue
-        if link==website:continue
+        if link==website or re.search(r'\.pdf(?:$|\?)',link,re.I):continue
+        # Only save a procurement landing page, not an individual RFQ notice.
+        if '/bid-opportunities/' in link and '/bid-opportunities/' not in website:
+            continue
         score=10 if re.search(r'\b(?:bid opportunities|rfps?|rfqs?|solicitations|procurement|purchasing)\b',text,re.I) else 4
         if host!=homehost:score-=2
         candidates.append((score,link))
@@ -246,7 +257,9 @@ def scan_agency_bids(html,base,agency,Document,absolute,classify_title,
         raw=a.text().strip()
         title=remove_trailing_date(raw)
         if len(title)<10 or GENERIC_LINK.fullmatch(title):continue
-        cat=classify_title(title,require_procurement=True)
+        # A bid page sometimes links an RFQ by project name only; later we
+        # validate a tightly scoped single-listing snippet for solicitation type.
+        cat=classify_title(title,require_procurement=False)
         if not cat:continue
         u=absolute(base,a.attrs.get('href',''))
         if not u or u in seen:continue
@@ -266,6 +279,32 @@ def scan_agency_bids(html,base,agency,Document,absolute,classify_title,
         host=(urlsplit(u).hostname or '').lower()
         if host != allowedhost and not (host.endswith('.'+allowedhost) or any(x in host for x in PORTAL_HOSTS)):
             continue
+        # Never infer an RFQ from the surrounding whole listings page.
+        # A title may omit "RFQ" only if this individual card supplies a
+        # consultant/engineering scope and an explicit procurement term.
+        local=safe_single_item_scope(a,u)
+        context=title
+        scoped=a.parent
+        for _ in range(4):
+            if scoped is None:break
+            snippet=scoped.text()
+            klass=(scoped.attrs.get('class') or '').lower()
+            if 30<len(snippet)<1100 and (
+                    scoped.tag in ('tr','li','article') or
+                    (scoped.tag=='div' and re.search(
+                        r'bid|rfq|rfp|solicit|item|result|card|posting',klass))):
+                context=snippet
+                break
+            scoped=scoped.parent
+        direct_notice=bool(re.search(
+            r'\b(?:RFQ|RFP|RFI|RSOQ|SOQ|request for (?:proposals?|qualifications?)|'
+            r'on[ -]?call|professional services|solicitation|consultant roster|prequalification)\b',
+            title,re.I))
+        scoped_consulting=bool(re.search(
+            r'\b(?:request for (?:qualifications|proposals)|RFQ|RFP|SOQ)\b',context,re.I)) and bool(
+            re.search(r'\b(?:engineering|design services|professional services|'
+                      r'consultants?|planning study|traffic study|transportation study)\b',context,re.I))
+        if not (direct_notice or scoped_consulting):continue
         seen.add(u)
         # Only use a date belonging to this actual bid link/card.
         local=safe_single_item_scope(a,u)
