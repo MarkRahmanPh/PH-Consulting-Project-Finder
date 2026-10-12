@@ -100,6 +100,15 @@
   </div>
   <div class="toprow"><h2>Opportunity watchlist</h2><span class="sub" id="count">Loading…</span></div>
   <section id="projects" class="results" aria-live="polite"></section>
+  <section class="panel" id="sourcespanel">
+    <h2>Additional procurement sources</h2>
+    <p class="sub">Public listing searches and manual portals are kept separate. A successful page fetch is not proof that every open RFQ was found.</p>
+    <div id="extrasources" class="sub">Source status will appear after the next search run.</div>
+    <div id="manualsources" class="sub">
+      <p><a href="https://www.djc.com/ae/wanted.html" target="_blank" rel="noopener noreferrer">DJC A/E Wanted ↗</a> — subscriber login; manual review only</p>
+      <p><a href="https://oregonbuys.gov/bso/" target="_blank" rel="noopener noreferrer">OregonBuys vendor portal ↗</a> — account may be required for details</p>
+    </div>
+  </section>
   <section class="panel health" id="coveragepanel">
     <h2>WA / OR city, county & agency coverage</h2>
     <p class="sub" id="covernote">Loading agency directory…</p>
@@ -159,7 +168,7 @@
         <div><div class="tags"><span class="tag">${esc(x.state || '—')}</span><span class="tag">${esc(human[x.category] || x.category || 'Other')}</span>
         ${x.priority === 'HIGH' ? '<span class="tag high">High priority</span>' : ''}
         ${label ? `<span class="tag ${change === 'NEWLY FOUND'?'new':change === 'EXPIRED'?'expired':'changed'}">${label}</span>` : ''}
-        ${isLead ? '<span class="tag">Unverified lead</span>' : ''}</div>
+        ${isLead ? '<span class="tag">Unverified lead</span>' : ''}${x.opportunity_stage === 'pre_solicitation' ? '<span class="tag">Pre-solicitation only</span>' : ''}${x.opportunity_stage === 'needs_open_status_review' ? '<span class="tag">Open status unverified</span>' : ''}</div>
         <h3>${esc(x.title)}</h3><p>${esc(x.summary || '')}</p>
         <div class="meta"><strong>${esc(x.agency || 'Agency not confirmed')}</strong> · ${esc(x.role || '')}</div>
         <div class="meta due">Due: <strong>${esc(x.due_date || 'Not verified')} ${esc(x.due_time || '')}</strong>
@@ -203,6 +212,17 @@
       $('updated').textContent = dataset.updated_pacific || 'Unknown';
       const checks = dataset.source_checks || [];
       $('healthtext').textContent = `${dataset.official_sources_checked ?? '?'} / ${dataset.official_sources_total ?? 3} public official listings accessed on latest run. No successful access does not mean no new opportunities.`;
+      const additional = dataset.supplemental_public_sources || [];
+      $('extrasources').innerHTML = additional.length ? additional.map(src => {
+        const log = checks.find(c => c.source === src.name);
+        return '<p><a href="' + esc(validURL(src.url)) + '" target="_blank" rel="noopener noreferrer">' +
+          esc(src.name) + ' ↗</a> — ' + (log ? (log.ok ? 'Public page accessed; ' + (log.matches || 0) + ' possible matching listings' : 'Automated check failed; manual review needed') : 'Awaiting first run') +
+          '</p>';
+      }).join('') : 'Additional public source status will appear after the next run.';
+      const manual = dataset.manual_review_sources || [];
+      if (manual.length) $('manualsources').innerHTML = manual.map(src =>
+        '<p><a href="' + esc(validURL(src.url)) + '" target="_blank" rel="noopener noreferrer">' +
+        esc(src.name) + ' ↗</a> — ' + esc(src.status) + '</p>').join('');
       $('healthdetails').innerHTML = checks.length ? checks.map(x => `<p>${x.ok ? '✓' : '⚠'} ${esc(x.source)} ${x.matches !== undefined ? `(${esc(x.matches)} matching records)` : ''} ${x.error ? '— '+esc(x.error) : ''}</p>`).join('') : '<p>No source report in this database yet.</p>';
       draw();
     } catch (error) {
