@@ -275,7 +275,8 @@ def scan_agency_bids(html,base,agency,Document,absolute,classify_title,
             r'on[ -]?call|professional services|solicitation|consultant roster|prequalification)\b',
             title,re.I))
         is_bid_url=bool(re.search(r'/(?:rfp|rfq|rfi|bids?|solicitations?)[/-]',path,re.I))
-        if not (is_notice or is_bid_url):continue
+        # Also allow scoped RFQs with a project-only anchor title; verify
+        # procurement/service language in that one result card below.
         host=(urlsplit(u).hostname or '').lower()
         if host != allowedhost and not (host.endswith('.'+allowedhost) or any(x in host for x in PORTAL_HOSTS)):
             continue
@@ -304,7 +305,8 @@ def scan_agency_bids(html,base,agency,Document,absolute,classify_title,
             r'\b(?:request for (?:qualifications|proposals)|RFQ|RFP|SOQ)\b',context,re.I)) and bool(
             re.search(r'\b(?:engineering|design services|professional services|'
                       r'consultants?|planning study|traffic study|transportation study)\b',context,re.I))
-        if not (direct_notice or scoped_consulting):continue
+        if not (direct_notice or scoped_consulting or
+                (is_bid_url and re.search(r'\b(?:RFQ|RFP|SOQ|request for qualifications|professional services)\b',context,re.I))):continue
         seen.add(u)
         # Only use a date belonging to this actual bid link/card.
         local=safe_single_item_scope(a,u)
