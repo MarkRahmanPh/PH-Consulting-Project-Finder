@@ -13,7 +13,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python update.py
+      - name: Search PH opportunities across 32 rotating agencies
+        env:
+          PH_AGENCY_BATCH: '32'
+        run: python update.py
       - name: Commit refreshed feed
         run: |
           git config user.name 'github-actions[bot]'
