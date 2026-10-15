@@ -15,6 +15,8 @@ jobs:
           python-version: '3.12'
       - name: Validate search scripts
         run: python -m py_compile update.py agency_sources.py procurement_sources.py
+      - name: Test opportunity matching and bid IDs
+        run: python -m unittest -q test_discovery
       - name: Search PH opportunities across 40 rotating agencies
         env:
           PH_AGENCY_BATCH: '40'
