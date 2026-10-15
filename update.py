@@ -747,6 +747,68 @@ def update_agency_directories(catalog,old_data,today):
     return checks
 
 
+
+def scan_civicengage_bid_details(index_html, index_url, agency, today):
+    """Verify individual public CivicEngage RFQs, even if listing cards
+    omit RFQ from their clickable project titles.
+
+    CivicEngage often uses bids.aspx?bidID=NNN for distinct bids. Fetch only
+    relevant individual bid details, validate the explicit RFQ/open markers
+    and closing date, and never infer the deadline from a neighboring card.
+    """
+    parsed = urllib.parse.urlsplit(index_url)
+    if not parsed.path.lower().endswith('/bids.aspx'):
+        return []
+    host = parsed.hostname or ''
+    doc = Document(index_html)
+    candidates, seen_urls = [], set()
+    for a in doc.root.findall('a'):
+        link = absolute(index_url, a.attrs.get('href', ''))
+        p = urllib.parse.urlsplit(link)
+        if p.hostname != host or not p.path.lower().endswith('/bids.aspx'):
+            continue
+        ids = urllib.parse.parse_qs(p.query.lower())
+        if not ids.get('bidid') or link in seen_urls:
+            continue
+        title = clean(a.text())
+        if not classify_title(title, require_procurement=False):
+            continue
+        seen_urls.add(link)
+        candidates.append((title, link))
+    matches = []
+    for title, link in candidates[:12]:
+        try:
+            detail = Document(fetch(link, timeout=9)).root.text()
+            # An RFQ must be explicitly confirmed on this individual page.
+            if not re.search(r'\bBid Number\s*:?\s*(?:RFQ|RSOQ|SOQ)\b', detail, re.I):
+                continue
+            status = re.search(r'\bStatus\s*:?\s*(Open|Closed|Awarded|Cancelled|Canceled)\b',
+                               detail, re.I)
+            if not status or status.group(1).lower() != 'open':
+                continue
+            if excluded_non_consulting(title):
+                continue
+            due_match = re.search(r'\bClosing Date/Time\s*:?\s*(.{0,45})', detail, re.I)
+            due = parse_date(due_match.group(1)) if due_match else None
+            if due and due < today:
+                continue
+            item = standard_row(title, agency['name'], agency['state'], link,
+                                title, f"{agency['name']} individual open RFQ", today,
+                                listing=True, observed_due=due)
+            item['status'] = ('Official individual RFQ — open; deadline observed' if due
+                              else 'Official individual RFQ — open; check deadline')
+            item['source_kind'] = 'official_detail'
+            item['opportunity_stage'] = 'open_solicitation'
+            item['verified_on'] = today
+            item['agency_id'] = agency['id']
+            matches.append(item)
+        except Exception:
+            # Do not infer that a bid is open if its detail was inaccessible.
+            continue
+    return matches
+
+
+
 def scan_local_agencies(catalog,rows,today):
     """Rotate through city/county/state/port/transit sites, WA weighted 65%.
 
@@ -796,9 +858,20 @@ def scan_local_agencies(catalog,rows,today):
                             results=AS.scan_agency_bids(html,checked_url,agency,Document,absolute,
                                 classify_title,safe_single_item_scope,safe_listing_due,
                                 remove_trailing_date,standard_row,today)
-                            for item in results:apply_observation(rows,item,today)
-                            found=len(results)
+                            # An additional verified detail-page pass corrects false
+                            # negatives on CivicEngage bidding pages.
+                            detail_results=scan_civicengage_bid_details(
+                                html, checked_url, agency, today)
+                            by_url={item['url']:item for item in results}
+                            # Verified individual details override unverified listing cards.
+                            for item in detail_results:by_url[item['url']]=item
+                            for item in by_url.values():apply_observation(rows,item,today)
+                            found=len(by_url)
                             status='Official procurement page accessed'
+                            if not found and re.search(
+                                r'\b(?:RFQ|RFP|on[ -]?call|bidID|engineering services)\b',
+                                html, re.I):
+                                status='Page accessible — solicitation text present; parser needs review'
                         elif status!='Supplier portal — manual review':
                             status='Official website accessed — no public bids link found'
         except Exception as exc:
@@ -811,6 +884,8 @@ def scan_local_agencies(catalog,rows,today):
         report.append({'agency':agency['name'],'state':agency['state'],'kind':agency['kind'],
                        'source':checked_url or agency.get('profile_url',''),
                        'ok':status.startswith('Official'),
+                       'page_accessed':status.startswith(('Official','Page accessible')),
+                       'parser_warning':status.startswith('Page accessible'),
                        'attempted':bool(site or profile),
                        'status':status,'matches':found,**({'error':err} if err else {})})
     return report
@@ -828,6 +903,8 @@ def coverage_summary(catalog,agency_checks,directory_checks):
             'checked_ever':len(checked),'accessible_ever':len(successful),
             'attempted_this_run':sum(x.get('attempted',False) for x in agency_checks),
             'accessible_this_run':sum(x['ok'] for x in agency_checks),
+            'pages_fetched_this_run':sum(x.get('page_accessed',False) for x in agency_checks),
+            'suspected_parser_gaps_this_run':sum(x.get('parser_warning',False) for x in agency_checks),
             'matches_this_run':sum(x['matches'] for x in agency_checks),
             'directories_accessible':sum(x.get('ok',False) for x in directory_checks),
             'directories_total':len(AS.DIRECTORIES),
