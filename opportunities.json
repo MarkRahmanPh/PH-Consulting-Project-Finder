@@ -1,7 +1,7 @@
 {
   "parser_version": 6,
-  "updated_pacific": "Oct 14, 2026 10:43 PM PDT",
-  "last_run_iso": "2026-10-14T22:43:05.776347-07:00",
+  "updated_pacific": "Oct 14, 2026 11:55 PM PDT",
+  "last_run_iso": "2026-10-14T23:55:30.211053-07:00",
   "official_sources_checked": 3,
   "official_sources_total": 3,
   "source_checks": [
@@ -106,8 +106,8 @@
     "checked_ever": 48,
     "accessible_ever": 39,
     "attempted_this_run": 40,
-    "accessible_this_run": 35,
-    "matches_this_run": 3,
+    "accessible_this_run": 33,
+    "matches_this_run": 6,
     "directories_accessible": 4,
     "directories_total": 4,
     "note": "Agency directory targets are NOT all scanned every run. Only rotating batches are checked. Some cities require portal accounts; some directory sites do not expose websites to automated tools. Coverage and lead status are best-effort."
@@ -208,7 +208,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 12,
-      "last_check_at": "2026-10-14T22:43:24.951739-07:00",
+      "last_check_at": "2026-10-14T23:55:45.973062-07:00",
       "last_matches": 0
     },
     {
@@ -222,7 +222,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 12,
-      "last_check_at": "2026-10-14T22:43:25.405470-07:00",
+      "last_check_at": "2026-10-14T23:55:46.743638-07:00",
       "last_matches": 0
     },
     {
@@ -566,7 +566,7 @@
       "last_check": "2026-10-14",
       "status": "Inaccessible / retry next rotation",
       "priority": 12,
-      "last_check_at": "2026-10-14T21:43:36.396470-07:00",
+      "last_check_at": "2026-10-14T23:55:31.513938-07:00",
       "last_matches": 0
     },
     {
@@ -628,7 +628,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 12,
-      "last_check_at": "2026-10-14T21:43:37.004144-07:00",
+      "last_check_at": "2026-10-14T23:55:31.896211-07:00",
       "last_matches": 3
     },
     {
@@ -932,7 +932,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 12,
-      "last_check_at": "2026-10-14T22:43:06.362376-07:00",
+      "last_check_at": "2026-10-14T23:55:32.506605-07:00",
       "last_matches": 0
     },
     {
@@ -1006,7 +1006,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 12,
-      "last_check_at": "2026-10-14T22:43:07.174487-07:00",
+      "last_check_at": "2026-10-14T23:55:32.622522-07:00",
       "last_matches": 0
     },
     {
@@ -1080,7 +1080,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 12,
-      "last_check_at": "2026-10-14T22:43:08.735785-07:00",
+      "last_check_at": "2026-10-14T23:55:34.143024-07:00",
       "last_matches": 0
     },
     {
@@ -1130,7 +1130,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 12,
-      "last_check_at": "2026-10-14T22:43:09.870951-07:00",
+      "last_check_at": "2026-10-14T23:55:35.054302-07:00",
       "last_matches": 0
     },
     {
@@ -1144,7 +1144,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 12,
-      "last_check_at": "2026-10-14T22:43:10.034307-07:00",
+      "last_check_at": "2026-10-14T23:55:35.130922-07:00",
       "last_matches": 0
     },
     {
@@ -1194,7 +1194,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 12,
-      "last_check_at": "2026-10-14T22:43:11.660100-07:00",
+      "last_check_at": "2026-10-14T23:55:35.284325-07:00",
       "last_matches": 0
     },
     {
@@ -1232,7 +1232,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 12,
-      "last_check_at": "2026-10-14T22:43:12.016915-07:00",
+      "last_check_at": "2026-10-14T23:55:35.645030-07:00",
       "last_matches": 0
     },
     {
@@ -1258,7 +1258,7 @@
       "last_check": "2026-10-14",
       "status": "Inaccessible / retry next rotation",
       "priority": 12,
-      "last_check_at": "2026-10-14T22:43:12.092403-07:00",
+      "last_check_at": "2026-10-14T23:55:35.682269-07:00",
       "last_matches": 0
     },
     {
@@ -1634,7 +1634,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 12,
-      "last_check_at": "2026-10-14T21:43:35.215556-07:00",
+      "last_check_at": "2026-10-14T23:55:30.840642-07:00",
       "last_matches": 0
     },
     {
@@ -1684,7 +1684,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 12,
-      "last_check_at": "2026-10-14T21:43:35.886511-07:00",
+      "last_check_at": "2026-10-14T23:55:31.207923-07:00",
       "last_matches": 0
     },
     {
@@ -1758,7 +1758,7 @@
       "last_check": "2026-10-14",
       "status": "Inaccessible / retry next rotation",
       "priority": 12,
-      "last_check_at": "2026-10-14T21:43:36.319089-07:00",
+      "last_check_at": "2026-10-14T23:55:31.402032-07:00",
       "last_matches": 0
     },
     {
@@ -1796,7 +1796,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:20.283282-07:00",
+      "last_check_at": "2026-10-14T23:55:41.022610-07:00",
       "last_matches": 1
     },
     {
@@ -1810,7 +1810,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:20.795657-07:00",
+      "last_check_at": "2026-10-14T23:55:41.468666-07:00",
       "last_matches": 0
     },
     {
@@ -1824,7 +1824,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:20.990978-07:00",
+      "last_check_at": "2026-10-14T23:55:41.537181-07:00",
       "last_matches": 0
     },
     {
@@ -1838,7 +1838,7 @@
       "last_check": "2026-10-14",
       "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:21.257795-07:00",
+      "last_check_at": "2026-10-14T23:55:41.673395-07:00",
       "last_matches": 0
     },
     {
@@ -1852,7 +1852,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:22.722675-07:00",
+      "last_check_at": "2026-10-14T23:55:42.917504-07:00",
       "last_matches": 0
     },
     {
@@ -1866,7 +1866,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:23.543098-07:00",
+      "last_check_at": "2026-10-14T23:55:44.077566-07:00",
       "last_matches": 0
     },
     {
@@ -1880,7 +1880,7 @@
       "last_check": "2026-10-14",
       "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:12.640222-07:00",
+      "last_check_at": "2026-10-14T23:55:36.524825-07:00",
       "last_matches": 0
     },
     {
@@ -1894,7 +1894,7 @@
       "last_check": "2026-10-14",
       "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:13.018301-07:00",
+      "last_check_at": "2026-10-14T23:55:37.059331-07:00",
       "last_matches": 0
     },
     {
@@ -1908,7 +1908,7 @@
       "last_check": "2026-10-14",
       "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:17.880262-07:00",
+      "last_check_at": "2026-10-14T23:55:40.833057-07:00",
       "last_matches": 0
     },
     {
@@ -1922,7 +1922,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:21.630116-07:00",
+      "last_check_at": "2026-10-14T23:55:41.859837-07:00",
       "last_matches": 0
     },
     {
@@ -1936,7 +1936,7 @@
       "last_check": "2026-10-14",
       "status": "Inaccessible / retry next rotation",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:21.810225-07:00",
+      "last_check_at": "2026-10-14T23:55:41.922719-07:00",
       "last_matches": 0
     },
     {
@@ -2036,7 +2036,7 @@
       "last_check": "2026-10-14",
       "status": "Inaccessible / retry next rotation",
       "priority": 8,
-      "last_check_at": "2026-10-14T21:43:49.599685-07:00",
+      "last_check_at": "2026-10-14T23:55:46.833775-07:00",
       "last_matches": 0
     },
     {
@@ -2158,7 +2158,7 @@
       "last_check": "2026-10-14",
       "status": "Inaccessible / retry next rotation",
       "priority": 8,
-      "last_check_at": "2026-10-14T21:43:50.041940-07:00",
+      "last_check_at": "2026-10-14T23:55:47.295536-07:00",
       "last_matches": 0
     },
     {
@@ -2268,7 +2268,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 8,
-      "last_check_at": "2026-10-14T22:43:31.907508-07:00",
+      "last_check_at": "2026-10-14T23:55:47.513306-07:00",
       "last_matches": 0
     },
     {
@@ -2522,7 +2522,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 8,
-      "last_check_at": "2026-10-14T22:43:34.662229-07:00",
+      "last_check_at": "2026-10-14T23:55:49.681541-07:00",
       "last_matches": 0
     },
     {
@@ -2824,7 +2824,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 8,
-      "last_check_at": "2026-10-14T21:43:49.927970-07:00",
+      "last_check_at": "2026-10-14T23:55:47.247820-07:00",
       "last_matches": 0
     },
     {
@@ -3102,7 +3102,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 8,
-      "last_check_at": "2026-10-14T22:43:32.744519-07:00",
+      "last_check_at": "2026-10-14T23:55:47.935405-07:00",
       "last_matches": 0
     },
     {
@@ -3200,7 +3200,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 8,
-      "last_check_at": "2026-10-14T22:43:39.365689-07:00",
+      "last_check_at": "2026-10-14T23:55:55.765421-07:00",
       "last_matches": 0
     },
     {
@@ -3238,7 +3238,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:36.876184-07:00",
+      "last_check_at": "2026-10-14T23:55:51.999933-07:00",
       "last_matches": 2
     },
     {
@@ -3252,7 +3252,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:37.515755-07:00",
+      "last_check_at": "2026-10-14T23:55:53.058696-07:00",
       "last_matches": 0
     },
     {
@@ -3266,7 +3266,7 @@
       "last_check": "2026-10-14",
       "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:37.919696-07:00",
+      "last_check_at": "2026-10-14T23:55:53.473326-07:00",
       "last_matches": 0
     },
     {
@@ -3294,7 +3294,7 @@
       "last_check": "2026-10-14",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:36.301367-07:00",
+      "last_check_at": "2026-10-14T23:55:51.326073-07:00",
       "last_matches": 0
     },
     {
@@ -3308,7 +3308,7 @@
       "last_check": "2026-10-14",
       "status": "Supplier portal — manual review",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:36.301415-07:00",
+      "last_check_at": "2026-10-14T23:55:51.326130-07:00",
       "last_matches": 0
     },
     {
@@ -3336,7 +3336,7 @@
       "last_check": "2026-10-14",
       "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:39.169213-07:00",
+      "last_check_at": "2026-10-14T23:55:54.842423-07:00",
       "last_matches": 0
     },
     {
@@ -3350,7 +3350,7 @@
       "last_check": "2026-10-14",
       "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-14T22:43:41.274317-07:00",
+      "last_check_at": "2026-10-14T23:55:57.936991-07:00",
       "last_matches": 0
     }
   ],
@@ -3387,6 +3387,58 @@
     }
   ],
   "agency_checks": [
+    {
+      "agency": "Pierce County",
+      "state": "WA",
+      "kind": "county",
+      "source": "https://www.piercecountywa.gov/currentsolicitations",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 0
+    },
+    {
+      "agency": "Snohomish County",
+      "state": "WA",
+      "kind": "county",
+      "source": "https://snohomishcountywa.gov/3706/Purchasing-Portal",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 0
+    },
+    {
+      "agency": "Whatcom County",
+      "state": "WA",
+      "kind": "county",
+      "source": "",
+      "ok": false,
+      "attempted": true,
+      "status": "Inaccessible / retry next rotation",
+      "matches": 0,
+      "error": "HTTPError"
+    },
+    {
+      "agency": "Issaquah",
+      "state": "WA",
+      "kind": "city",
+      "source": "",
+      "ok": false,
+      "attempted": true,
+      "status": "Inaccessible / retry next rotation",
+      "matches": 0,
+      "error": "HTTPError"
+    },
+    {
+      "agency": "Lacey",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://cityoflacey.org/rfp-rfq/",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 3
+    },
     {
       "agency": "Redmond",
       "state": "WA",
@@ -3600,28 +3652,8 @@
       "matches": 0
     },
     {
-      "agency": "Federal Way",
-      "state": "WA",
-      "kind": "city",
-      "source": "https://www.federalwaywa.gov/bids",
-      "ok": true,
-      "attempted": true,
-      "status": "Official procurement page accessed",
-      "matches": 0
-    },
-    {
-      "agency": "Bothell",
-      "state": "WA",
-      "kind": "city",
-      "source": "https://www.bothellwa.gov/bids.aspx",
-      "ok": true,
-      "attempted": true,
-      "status": "Official procurement page accessed",
-      "matches": 0
-    },
-    {
-      "agency": "Everett",
-      "state": "WA",
+      "agency": "Bend",
+      "state": "OR",
       "kind": "city",
       "source": "",
       "ok": false,
@@ -3631,25 +3663,25 @@
       "error": "HTTPError"
     },
     {
-      "agency": "King County",
-      "state": "WA",
+      "agency": "Clackamas County",
+      "state": "OR",
       "kind": "county",
+      "source": "https://www.clackamas.us/procurement-process",
+      "ok": true,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 0
+    },
+    {
+      "agency": "Eugene",
+      "state": "OR",
+      "kind": "city",
       "source": "",
       "ok": false,
       "attempted": true,
       "status": "Inaccessible / retry next rotation",
       "matches": 0,
       "error": "HTTPError"
-    },
-    {
-      "agency": "Pasco",
-      "state": "WA",
-      "kind": "city",
-      "source": "https://www.pasco-wa.gov/Bids.aspx",
-      "ok": true,
-      "attempted": true,
-      "status": "Official procurement page accessed",
-      "matches": 0
     },
     {
       "agency": "Hillsboro",
@@ -3759,36 +3791,6 @@
       "ok": true,
       "attempted": true,
       "status": "Official website accessed — no public bids link found",
-      "matches": 0
-    },
-    {
-      "agency": "Lane Transit District",
-      "state": "OR",
-      "kind": "transit",
-      "source": "https://www.ltd.org/about/doing-business/procurement/",
-      "ok": true,
-      "attempted": true,
-      "status": "Official procurement page accessed",
-      "matches": 0
-    },
-    {
-      "agency": "Metro (Oregon)",
-      "state": "OR",
-      "kind": "regional",
-      "source": "https://www.oregonmetro.gov/about-metro/doing-business-metro",
-      "ok": true,
-      "attempted": true,
-      "status": "Official procurement page accessed",
-      "matches": 0
-    },
-    {
-      "agency": "Beaverton",
-      "state": "OR",
-      "kind": "city",
-      "source": "https://beavertonoregon.gov/bid-proposal-opportunities",
-      "ok": true,
-      "attempted": true,
-      "status": "Official procurement page accessed",
       "matches": 0
     }
   ],
