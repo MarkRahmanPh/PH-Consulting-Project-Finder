@@ -215,7 +215,7 @@ FIT_RULES = [
         r"\b(?:roadway (?:engineering|design|improvements?|rehabilitation|reconstruction)|"
         r"road (?:design|engineering|reconstruction|rehabilitation|improvements?|slide repair)|"
         r"street (?:improvements?|design|reconstruction|rehabilitation)|"
-        r"street[s]?cape|civil engineering|"
+        r"street[s]?cape|civil engineering|transportation engineering|"
         r"intersection (?:improvements?|redesign|reconstruction|design)|"
         r"roadway signing|traffic signs? (?:and|&) (?:pavement )?markings?|"
         r"pavement markings?|street lighting|roadway lighting|"
@@ -259,9 +259,20 @@ def clean(s):
 
 
 def ident(url):
-    # Queryless URL is stable even when a title/addendum changes.
+    """Stable per-solicitation key. Keep bid IDs; discard marketing parameters.
+
+    CivicEngage cities use `bids.aspx?bidID=362` for each distinct RFQ.
+    Removing all query parameters previously collapsed every RFQ on such
+    sites into one key, overwriting unrelated records.
+    """
     p = urllib.parse.urlsplit(url)
-    normalized = (p.netloc.lower() + p.path.rstrip('/').lower())
+    normalized = p.netloc.lower() + p.path.rstrip('/').lower()
+    params = urllib.parse.parse_qsl(p.query, keep_blank_values=False)
+    stable = [(key.lower(), value.strip()) for key, value in params
+              if key.lower() in {'bidid', 'docid', 'solicitationid', 'bidnumber',
+                                 'opportunityid', 'rfqid'} and value.strip()]
+    if stable:
+        normalized += '?' + urllib.parse.urlencode(sorted(stable))
     return 'official-' + hashlib.sha1(normalized.encode()).hexdigest()[:18]
 
 
