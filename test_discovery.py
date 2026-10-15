@@ -65,6 +65,46 @@ class OpportunityDiscoveryTests(unittest.TestCase):
         self.assertEqual(len({b["id"] for b in bids}), 2)
         self.assertTrue(any("bidID=362" in b["url"] for b in bids))
 
+    def test_live_style_civicengage_bid_detail_verification(self):
+        """Listings with project-only titles become confirmed open RFQs only
+        after their own individual bid detail page verifies RFQ and Open."""
+        from unittest.mock import patch
+        index = """
+        <div><a href="/bids.aspx?bidID=362">Transportation Engineering On-Call</a></div>
+        <div><a href="/bids.aspx?bidID=363">Traffic Signal Timing On-Call</a></div>
+        <div><a href="/bids.aspx?bidID=364">Transportation Engineering On-Call II</a></div>
+        """
+        open_detail = """
+        <table><tr><td>Bid Number:</td><td>RFQ 10922-26</td></tr>
+        <tr><td>Status:</td><td>Open</td></tr>
+        <tr><td>Closing Date/Time:</td><td>11/4/2026 3:00 AM</td></tr>
+        </table>
+        """
+        closed_detail = """
+        <table><tr><td>Bid Number:</td><td>RFQ 10923-26</td></tr>
+        <tr><td>Status:</td><td>Closed</td></tr></table>
+        """
+        nonrfq_detail = """
+        <table><tr><td>Bid Number:</td><td>ITB 10924-26</td></tr>
+        <tr><td>Status:</td><td>Open</td></tr></table>
+        """
+        def fake_fetch(url, timeout=9):
+            bidid = url.split("bidID=")[-1]
+            return {"362": open_detail, "363": closed_detail,
+                    "364": nonrfq_detail}[bidid]
+        agency = {"id": "WA|city|redmond", "name": "Redmond",
+                  "state": "WA", "kind": "city"}
+        with patch.object(finder, "fetch", side_effect=fake_fetch):
+            rows = finder.scan_civicengage_bid_details(
+                index, "https://www.redmond.gov/bids.aspx", agency, "2026-10-15"
+            )
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["title"], "Transportation Engineering On-Call")
+        self.assertEqual(rows[0]["due_date"], "2026-11-04")
+        self.assertEqual(rows[0]["opportunity_stage"], "open_solicitation")
+        self.assertEqual(rows[0]["source_kind"], "official_detail")
+        self.assertIn("bidID=362", rows[0]["url"])
+
     def test_construction_management_only_is_excluded(self):
         self.assertIsNone(finder.classify_title(
             "RFQ Construction Management Services for Roadway Safety Improvements",
