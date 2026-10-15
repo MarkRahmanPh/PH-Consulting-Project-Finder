@@ -4072,6 +4072,31 @@
       "change_type": "EXPIRED",
       "change_on": "2026-10-13",
       "expired": true
+    },
+    {
+      "id": "wa-redmond-transportation-engineering-oncall-10922-26",
+      "state": "WA",
+      "category": "civil",
+      "agency": "City of Redmond",
+      "title": "Transportation Engineering On-Call (RFQ 10922-26)",
+      "summary": "On-call transportation engineering consulting services supporting City of Redmond transportation programs, including pavement management and ADA curb-ramp projects. The official city bid notice identifies it as open, with qualifications due November 4.",
+      "priority": "HIGH",
+      "url": "https://www.redmond.gov/bids.aspx?bidID=362",
+      "source": "City of Redmond official bid notice",
+      "source_kind": "official_detail",
+      "status": "City bid posting — open RFQ for engineering consulting",
+      "opportunity_stage": "open_solicitation",
+      "role": "Potential prime — on-call transportation engineering / ADA",
+      "due_date": "2026-11-04",
+      "due_time": "",
+      "published_date": "2026-10-12",
+      "verified_on": "2026-10-15",
+      "first_seen": "2026-10-15",
+      "found": "2026-10-15",
+      "last_seen": "2026-10-15",
+      "change_type": "NEWLY FOUND",
+      "change_on": "2026-10-15",
+      "expired": false
     }
   ],
   "disclaimer": "Official-listing checks are best effort and cannot cover every WA/OR agency. Deadline verification applies only when explicitly visible in a fetched notice. OregonBuys vendor-portal bids and amendments may require manual login. Unverified news results are not confirmed open procurements."
