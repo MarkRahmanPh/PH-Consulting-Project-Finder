@@ -5,6 +5,7 @@ Tests must not make network requests or modify opportunities.json.
 """
 import unittest
 import update as finder
+import agency_sources as agencies
 
 
 class OpportunityDiscoveryTests(unittest.TestCase):
@@ -26,6 +27,43 @@ class OpportunityDiscoveryTests(unittest.TestCase):
         a = "https://www.redmond.gov/bids.aspx?bidID=362"
         b = a + "&utm_source=github"
         self.assertEqual(finder.ident(a), finder.ident(b))
+
+    def test_civicengage_redmond_listing_is_extracted(self):
+        # End-to-end agency-page fixture: project title does not say RFQ;
+        # its individual card carries the solicitation type.
+        html = """
+        <html><body>
+          <div class="bid-item">
+            <a href="/bids.aspx?bidID=362">Transportation Engineering On-Call</a>
+            <p>Bid No. RFQ 10922-26. Status: Open.
+            Statements of Qualifications for transportation engineering services.</p>
+          </div>
+          <div class="bid-item">
+            <a href="/bids.aspx?bidID=363">Traffic Signal Timing On-Call</a>
+            <p>Bid No. RFQ 10923-26. Status: Open.</p>
+          </div>
+          <div class="bid-item">
+            <a href="/bids.aspx?bidID=364">Transportation Engineering Construction Management Only</a>
+            <p>Bid No. RFQ 10924-26. Status: Open.</p>
+          </div>
+        </body></html>
+        """
+        source = {
+            "id": "WA|city|redmond", "name": "Redmond",
+            "state": "WA", "kind": "city",
+        }
+        bids = agencies.scan_agency_bids(
+            html, "https://www.redmond.gov/bids.aspx", source,
+            finder.Document, finder.absolute, finder.classify_title,
+            finder.safe_single_item_scope, finder.safe_listing_due,
+            finder.remove_trailing_date, finder.standard_row, "2026-10-15",
+        )
+        titles = [b["title"] for b in bids]
+        self.assertIn("Transportation Engineering On-Call", titles)
+        self.assertIn("Traffic Signal Timing On-Call", titles)
+        self.assertEqual(len(bids), 2)  # CM-only rejected
+        self.assertEqual(len({b["id"] for b in bids}), 2)
+        self.assertTrue(any("bidID=362" in b["url"] for b in bids))
 
     def test_construction_management_only_is_excluded(self):
         self.assertIsNone(finder.classify_title(
