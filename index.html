@@ -129,6 +129,8 @@
   </section>
   <section class="panel health"><h2>Search source health</h2>
     <div id="healthtext">Waiting for data.</div>
+    <div id="parserwarnings" class="sub"></div>
+    <div id="discoveryage" class="sub"></div>
     <details><summary>Show source check results</summary><div id="healthdetails"></div></details>
     <p class="sub">The hourly GitHub Actions job updates the JSON file; the Refresh data button only reloads published results. A listed deadline can change without an accessible addendum.</p>
     <a class="link" href="https://github.com/MarkRahmanPh/PH-Consulting-Project-Finder/actions/workflows/daily-update.yml" target="_blank" rel="noopener noreferrer">Run search on GitHub ↗</a>
@@ -204,14 +206,19 @@
       $('cmunicipal').textContent = `${cv.cities ?? '—'} / ${cv.counties ?? '—'}`;
       $('cchecked').textContent = cv.checked_ever ?? '—';
       $('ctoday').textContent = `${cv.attempted_this_run ?? '—'} (${cv.accessible_this_run ?? 0} accessible)`;
-      $('covernote').textContent = cv.total ? `${cv.wa} WA and ${cv.or} OR agencies cataloged. ${cv.directories_accessible ?? 0}/${cv.directories_total ?? 4} directories accessible at last directory refresh. Actual public-procurement pages accessed vary by run.` : 'Run the updated Python script to populate agency coverage.';
+      const targetCount = dataset.searchable_agency_targets ?? agencies.filter(a => a.website || a.profile_url).length;
+      $('covernote').textContent = cv.total ? `${cv.wa} WA and ${cv.or} OR agencies cataloged. ${targetCount} have discoverable website/profile URLs. ${cv.pages_fetched_this_run ?? cv.accessible_this_run ?? 0} webpages accessed last run; cataloged does not mean searched.` : 'Run the updated Python script to populate agency coverage.';
       drawAgencies();
       $('active').textContent = records.filter(x => !x.expired && x.due_date && x.source_kind !== 'news_feed').length;
       $('states').textContent = `${records.filter(x=>x.state==='WA'&&!x.expired).length} / ${records.filter(x=>x.state==='OR'&&!x.expired).length}`;
       $('recent').textContent = records.filter(x=>recent(x)).length;
       $('updated').textContent = dataset.updated_pacific || 'Unknown';
       const checks = dataset.source_checks || [];
-      $('healthtext').textContent = `${dataset.official_sources_checked ?? '?'} / ${dataset.official_sources_total ?? 3} public official listings accessed on latest run. No successful access does not mean no new opportunities.`;
+      $('healthtext').textContent = `${dataset.official_sources_checked ?? '?'} / ${dataset.official_sources_total ?? 3} indexed sources accessed on latest run. Page access does not prove every RFQ was parsed.`;
+      const gaps = (dataset.agency_checks || []).filter(x => x.parser_warning);
+      $('parserwarnings').textContent = gaps.length ? `⚠ ${gaps.length} agency pages contain possible RFQs that were not extracted: ${gaps.map(x => x.agency).join(', ')}. Investigate those sources.` : 'No parser gaps flagged on the latest run. This does not guarantee complete discovery.';
+      const discovered = records.map(x => x.first_seen || x.found || '').filter(Boolean).sort().pop();
+      $('discoveryage').textContent = discovered ? `Last new record first discovered: ${discovered} · Data refresh: ${dataset.updated_pacific || 'Unknown'}` : 'No discovered records yet.';
       const additional = dataset.supplemental_public_sources || [];
       $('extrasources').innerHTML = additional.length ? additional.map(src => {
         const log = checks.find(c => c.source === src.name);
