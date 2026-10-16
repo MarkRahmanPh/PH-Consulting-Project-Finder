@@ -97,6 +97,7 @@ VERIFIED_PROCUREMENT_PAGES = [
     ("WA", "transit", "Sound Transit", "https://www.soundtransit.org/get-to-know-us/doing-business-with-us/procurement-contracts-agreements"),
     ("OR", "transit", "TriMet", "https://trimet.org/procurement/"),
     ("WA", "city", "Bothell", "https://www.bothellwa.gov/bids.aspx"),
+    ("WA", "city", "Des Moines", "https://www.desmoineswa.gov/Bids.aspx"),
     ("WA", "city", "Pasco", "https://www.pasco-wa.gov/Bids.aspx"),
     ("WA", "city", "Everett", "https://www.everettwa.gov/Bids.aspx"),
     ("WA", "county", "Pierce County", "https://www.piercecountywa.gov/currentsolicitations"),
