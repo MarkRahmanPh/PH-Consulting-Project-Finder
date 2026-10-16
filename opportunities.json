@@ -379,11 +379,13 @@
       "kind": "city",
       "name": "Des Moines",
       "profile_url": "",
-      "website": "https://www.desmoineswa.gov/171/Public-Hearings-Legal-Notices",
-      "procurement_url": "https://www.desmoineswa.gov/171/Public-Hearings-Legal-Notices",
+      "website": "https://www.desmoineswa.gov/Bids.aspx",
+      "procurement_url": "https://www.desmoineswa.gov/Bids.aspx",
       "last_check": "",
-      "status": "Source configured — awaiting next automated scan",
-      "priority": 12
+      "status": "Official source configured — awaiting next automated check",
+      "priority": 12,
+      "last_check_at": "",
+      "agency_notices_url": "https://www.desmoineswa.gov/171/Public-Hearings-Legal-Notices"
     },
     {
       "id": "WA|city|dupont",
@@ -391,11 +393,12 @@
       "kind": "city",
       "name": "DuPont",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
+      "website": "https://www.dupontwa.gov/556/Call-for-Bids",
+      "procurement_url": "https://www.dupontwa.gov/556/Call-for-Bids",
       "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "status": "Official source configured — awaiting next automated check",
+      "priority": 12,
+      "last_check_at": ""
     },
     {
       "id": "WA|city|duvall",
@@ -651,11 +654,12 @@
       "kind": "city",
       "name": "Lakewood",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
+      "website": "https://cityoflakewood.us/category/rfp-rfq-bids/",
+      "procurement_url": "https://cityoflakewood.us/category/rfp-rfq-bids/",
       "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "status": "Official source configured — awaiting next automated check",
+      "priority": 12,
+      "last_check_at": ""
     },
     {
       "id": "WA|city|liberty lake",
@@ -819,11 +823,12 @@
       "kind": "city",
       "name": "Olympia",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
+      "website": "https://www.olympiawa.gov/government/contracts___purchasing/rfps_rfqs.php",
+      "procurement_url": "https://www.olympiawa.gov/government/contracts___purchasing/rfps_rfqs.php",
       "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "status": "Official source configured — awaiting next automated check",
+      "priority": 12,
+      "last_check_at": ""
     },
     {
       "id": "WA|city|omak",
@@ -991,11 +996,12 @@
       "kind": "city",
       "name": "SeaTac",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
+      "website": "https://www.seatacwa.gov/business/rfp-rfq-bid-procurement",
+      "procurement_url": "https://www.seatacwa.gov/business/rfp-rfq-bid-procurement",
       "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "status": "Official source configured — awaiting next automated check",
+      "priority": 12,
+      "last_check_at": ""
     },
     {
       "id": "WA|city|seattle",
@@ -1053,11 +1059,12 @@
       "kind": "city",
       "name": "Snohomish",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
+      "website": "https://www.snohomishwa.gov/105/Bids-RFPs-RFQs",
+      "procurement_url": "https://www.snohomishwa.gov/105/Bids-RFPs-RFQs",
       "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "status": "Official source configured — awaiting next automated check",
+      "priority": 12,
+      "last_check_at": ""
     },
     {
       "id": "WA|city|snoqualmie",
@@ -1835,12 +1842,12 @@
       "kind": "port",
       "name": "Port of Vancouver USA",
       "profile_url": "",
-      "website": "https://www.portvanusa.com/",
-      "procurement_url": "",
-      "last_check": "2026-10-16",
-      "status": "Official website accessed — no public bids link found",
+      "website": "https://www.portvanusa.com/business-opportunities/projects-contracts/",
+      "procurement_url": "https://www.portvanusa.com/business-opportunities/projects-contracts/",
+      "last_check": "",
+      "status": "Official source configured — awaiting next automated check",
       "priority": 15,
-      "last_check_at": "2026-10-16T07:46:44.184911-07:00",
+      "last_check_at": "",
       "last_matches": 0
     },
     {
@@ -1877,12 +1884,12 @@
       "kind": "transit",
       "name": "Community Transit",
       "profile_url": "",
-      "website": "https://www.communitytransit.org/",
-      "procurement_url": "",
-      "last_check": "2026-10-16",
-      "status": "Official website accessed — no public bids link found",
+      "website": "https://www.communitytransit.org/procurement",
+      "procurement_url": "https://www.communitytransit.org/procurement",
+      "last_check": "",
+      "status": "Official source configured — awaiting next automated check",
       "priority": 15,
-      "last_check_at": "2026-10-16T08:43:56.395803-07:00",
+      "last_check_at": "",
       "last_matches": 0
     },
     {
@@ -1905,12 +1912,12 @@
       "kind": "transit",
       "name": "Pierce Transit",
       "profile_url": "",
-      "website": "https://www.piercetransit.org/",
-      "procurement_url": "",
-      "last_check": "2026-10-16",
-      "status": "Official website accessed — no public bids link found",
+      "website": "https://piercetransit.org/procurement/",
+      "procurement_url": "https://piercetransit.org/procurement/",
+      "last_check": "",
+      "status": "Official source configured — awaiting next automated check",
       "priority": 15,
-      "last_check_at": "2026-10-16T08:44:01.726230-07:00",
+      "last_check_at": "",
       "last_matches": 0
     },
     {
@@ -1919,12 +1926,12 @@
       "kind": "transit",
       "name": "Sound Transit",
       "profile_url": "",
-      "website": "https://www.soundtransit.org/",
-      "procurement_url": "https://www.soundtransit.org/get-to-know-us/doing-business-with-us",
-      "last_check": "2026-10-16",
-      "status": "Official procurement page accessed",
+      "website": "https://www.soundtransit.org/get-to-know-us/doing-business-with-us/procurement-contracts-agreements",
+      "procurement_url": "https://www.soundtransit.org/get-to-know-us/doing-business-with-us/procurement-contracts-agreements",
+      "last_check": "",
+      "status": "Official source configured — awaiting next automated check",
       "priority": 15,
-      "last_check_at": "2026-10-16T07:46:44.412284-07:00",
+      "last_check_at": "",
       "last_matches": 0
     },
     {
@@ -1933,12 +1940,12 @@
       "kind": "transit",
       "name": "Spokane Transit",
       "profile_url": "",
-      "website": "https://www.spokanetransit.com/",
-      "procurement_url": "",
-      "last_check": "2026-10-16",
-      "status": "Inaccessible / retry next rotation",
+      "website": "https://www.spokanetransit.com/bidding-opportunities/",
+      "procurement_url": "https://www.spokanetransit.com/bidding-opportunities/",
+      "last_check": "",
+      "status": "Official source configured — awaiting next automated check",
       "priority": 15,
-      "last_check_at": "2026-10-16T08:43:36.342459-07:00",
+      "last_check_at": "",
       "last_matches": 0
     },
     {
@@ -2339,11 +2346,12 @@
       "kind": "city",
       "name": "Lake Oswego",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
+      "website": "https://www.ci.oswego.or.us/bids/",
+      "procurement_url": "https://www.ci.oswego.or.us/bids/",
       "last_check": "",
-      "status": "Not yet checked",
-      "priority": 5
+      "status": "Official source configured — awaiting next automated check",
+      "priority": 8,
+      "last_check_at": ""
     },
     {
       "id": "OR|city|lincoln city",
@@ -2617,11 +2625,12 @@
       "kind": "city",
       "name": "Sherwood",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
+      "website": "https://www.sherwoodoregon.gov/rfps-new/",
+      "procurement_url": "https://www.sherwoodoregon.gov/rfps-new/",
       "last_check": "",
-      "status": "Not yet checked",
-      "priority": 5
+      "status": "Official source configured — awaiting next automated check",
+      "priority": 8,
+      "last_check_at": ""
     },
     {
       "id": "OR|city|silverton",
@@ -2713,11 +2722,12 @@
       "kind": "city",
       "name": "Tigard",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
+      "website": "https://www.tigard-or.gov/business-development/bids-requests-for-proposals",
+      "procurement_url": "https://www.tigard-or.gov/business-development/bids-requests-for-proposals",
       "last_check": "",
-      "status": "Not yet checked",
-      "priority": 5
+      "status": "Official source configured — awaiting next automated check",
+      "priority": 8,
+      "last_check_at": ""
     },
     {
       "id": "OR|city|tillamook",
@@ -3263,12 +3273,12 @@
       "kind": "port",
       "name": "Port of Portland",
       "profile_url": "",
-      "website": "https://www.portofportland.com/",
-      "procurement_url": "",
-      "last_check": "2026-10-16",
-      "status": "Official website accessed — no public bids link found",
+      "website": "https://www.portofportland.com/business/Vendors",
+      "procurement_url": "https://www.portofportland.com/business/Vendors",
+      "last_check": "",
+      "status": "Official source configured — awaiting next automated check",
       "priority": 15,
-      "last_check_at": "2026-10-16T08:44:07.816889-07:00",
+      "last_check_at": "",
       "last_matches": 0
     },
     {
@@ -3333,12 +3343,12 @@
       "kind": "transit",
       "name": "Salem Area Mass Transit District",
       "profile_url": "",
-      "website": "https://www.cherriots.org/",
-      "procurement_url": "",
-      "last_check": "2026-10-16",
-      "status": "Official website accessed — no public bids link found",
+      "website": "https://partal.cherriots.org/procurement/",
+      "procurement_url": "https://partal.cherriots.org/procurement/",
+      "last_check": "",
+      "status": "Official source configured — awaiting next automated check",
       "priority": 15,
-      "last_check_at": "2026-10-16T08:44:08.791711-07:00",
+      "last_check_at": "",
       "last_matches": 0
     },
     {
@@ -3347,17 +3357,17 @@
       "kind": "transit",
       "name": "TriMet",
       "profile_url": "",
-      "website": "https://trimet.org/",
-      "procurement_url": "",
-      "last_check": "2026-10-16",
-      "status": "Official website accessed — no public bids link found",
+      "website": "https://trimet.org/procurement/",
+      "procurement_url": "https://trimet.org/procurement/",
+      "last_check": "",
+      "status": "Official source configured — awaiting next automated check",
       "priority": 15,
-      "last_check_at": "2026-10-16T08:44:09.906956-07:00",
+      "last_check_at": "",
       "last_matches": 0
     }
   ],
-  "searchable_agency_targets": 49,
-  "public_procurement_pages_known": 40,
+  "searchable_agency_targets": 57,
+  "public_procurement_pages_known": 55,
   "directory_checks": [
     {
       "source": "WA — MRSC city & town directory",
@@ -4190,7 +4200,7 @@
       "title": "RFQ 26-003 — 6th Avenue South Pedestrian Safety Improvement Project (Civil Engineering Design)",
       "summary": "Engineering design and bid-ready PS&E for approximately 1,000 feet of new sidewalk, curb extensions, ADA ramps, crosswalks, and delineated multimodal street space on 6th Ave S from S 223rd St to S 225th St. WSDOT HSIP-funded; WSDOT LAG Manual applies. Qualifications due November 5, 2026.",
       "priority": "HIGH",
-      "url": "https://www.desmoineswa.gov/DocumentCenter/View/6966",
+      "url": "https://www.desmoineswa.gov/bids.aspx?bidID=4",
       "rfq_document_url": "https://www.desmoineswa.gov/DocumentCenter/View/6966/6th-Ave-S-Pedestrian-Safety-Improvement-Project-PDF?bidId=",
       "source": "City of Des Moines official bid listing + engineering RFQ PDF",
       "source_kind": "official_detail",
