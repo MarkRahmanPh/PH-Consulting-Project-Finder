@@ -379,10 +379,10 @@
       "kind": "city",
       "name": "Des Moines",
       "profile_url": "",
-      "website": "https://www.desmoineswa.gov/Bids.aspx",
-      "procurement_url": "https://www.desmoineswa.gov/Bids.aspx",
+      "website": "https://www.desmoineswa.gov/171/Public-Hearings-Legal-Notices",
+      "procurement_url": "https://www.desmoineswa.gov/171/Public-Hearings-Legal-Notices",
       "last_check": "",
-      "status": "Not yet checked",
+      "status": "Source configured — awaiting first automated check",
       "priority": 12
     },
     {
@@ -4190,7 +4190,7 @@
       "title": "RFQ 26-003 — 6th Avenue South Pedestrian Safety Improvement Project (Civil Engineering Design)",
       "summary": "Engineering design and bid-ready PS&E for approximately 1,000 feet of new sidewalk, curb extensions, ADA ramps, crosswalks, and delineated multimodal street space on 6th Ave S from S 223rd St to S 225th St. WSDOT HSIP-funded; WSDOT LAG Manual applies. Qualifications due November 5, 2026.",
       "priority": "HIGH",
-      "url": "https://www.desmoineswa.gov/bids.aspx?bidID=4",
+      "url": "https://www.desmoineswa.gov/DocumentCenter/View/6966",
       "rfq_document_url": "https://www.desmoineswa.gov/DocumentCenter/View/6966/6th-Ave-S-Pedestrian-Safety-Improvement-Project-PDF?bidId=",
       "source": "City of Des Moines official bid listing + engineering RFQ PDF",
       "source_kind": "official_detail",
@@ -4208,7 +4208,9 @@
       "change_type": "NEWLY FOUND",
       "change_on": "2026-10-16",
       "expired": false,
-      "is_tsp": false
+      "is_tsp": false,
+      "bid_listing_url": "https://www.desmoineswa.gov/bids.aspx?bidID=4",
+      "agency_notices_url": "https://www.desmoineswa.gov/171/Public-Hearings-Legal-Notices"
     },
     {
       "id": "wa-desmoines-ss4a-2026",
@@ -4239,5 +4241,6 @@
       "is_tsp": false
     }
   ],
-  "disclaimer": "Official-listing checks are best effort and cannot cover every WA/OR agency. Deadline verification applies only when explicitly visible in a fetched notice. OregonBuys vendor-portal bids and amendments may require manual login. Unverified news results are not confirmed open procurements."
+  "disclaimer": "Official-listing checks are best effort and cannot cover every WA/OR agency. Deadline verification applies only when explicitly visible in a fetched notice. OregonBuys vendor-portal bids and amendments may require manual login. Unverified news results are not confirmed open procurements.",
+  "manual_update_date": "2026-10-16"
 }
