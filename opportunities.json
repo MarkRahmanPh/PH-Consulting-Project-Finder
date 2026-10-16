@@ -379,11 +379,11 @@
       "kind": "city",
       "name": "Des Moines",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
+      "website": "https://www.desmoineswa.gov/Bids.aspx",
+      "procurement_url": "https://www.desmoineswa.gov/Bids.aspx",
       "last_check": "",
       "status": "Not yet checked",
-      "priority": 9
+      "priority": 12
     },
     {
       "id": "WA|city|dupont",
@@ -3356,8 +3356,8 @@
       "last_matches": 0
     }
   ],
-  "searchable_agency_targets": 48,
-  "public_procurement_pages_known": 39,
+  "searchable_agency_targets": 49,
+  "public_procurement_pages_known": 40,
   "directory_checks": [
     {
       "source": "WA — MRSC city & town directory",
@@ -4201,6 +4201,34 @@
       "due_time": "4:00 PM PT",
       "questions_due": "2026-10-30 12:00 PM PT",
       "published_date": "2026-10-15",
+      "verified_on": "2026-10-16",
+      "first_seen": "2026-10-16",
+      "found": "2026-10-16",
+      "last_seen": "2026-10-16",
+      "change_type": "NEWLY FOUND",
+      "change_on": "2026-10-16",
+      "expired": false,
+      "is_tsp": false
+    },
+    {
+      "id": "wa-desmoines-ss4a-2026",
+      "state": "WA",
+      "agency": "City of Des Moines",
+      "category": "safety",
+      "priority": "HIGH",
+      "title": "RFQ 26-002 — Safe Streets for All Engineering Services",
+      "summary": "Engineering and planning services for the City's FHWA SS4A Planning and Demonstration Grant: pedestrian crossing treatments, traffic calming, four-way stop conversion, signal timing upgrades and optimization, demonstration design, post-installation safety evaluation, and grant reporting.",
+      "url": "https://www.desmoineswa.gov/bids.aspx?bidID=3",
+      "rfq_document_url": "https://www.desmoineswa.gov/DocumentCenter/View/6830",
+      "source": "City of Des Moines official bid posting and RFQ PDF",
+      "source_kind": "official_detail",
+      "status": "Open design and safety engineering RFQ — City notice verified",
+      "opportunity_stage": "open_solicitation",
+      "role": "Potential prime or traffic engineering / safety subconsultant",
+      "due_date": "2026-10-22",
+      "due_time": "4:00 PM PT",
+      "questions_due": "2026-10-16 12:00 PM PT",
+      "published_date": "2026-10-01",
       "verified_on": "2026-10-16",
       "first_seen": "2026-10-16",
       "found": "2026-10-16",
