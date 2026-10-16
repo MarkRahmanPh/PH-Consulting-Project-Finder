@@ -9,6 +9,34 @@ import agency_sources as agencies
 
 
 class OpportunityDiscoveryTests(unittest.TestCase):
+    def test_tsp_rfqs_classify_as_its_and_high_priority(self):
+        titles = [
+            "RFQ Transit Signal Priority System Integration Services",
+            "RFP Bus Signal Priority Engineering and Implementation",
+            "On-Call TSP Signal Controller Integration Consultant",
+            "RFQ Transit Signal Prioritization Study",
+            "RFP Bus Priority at Traffic Signals Design Services",
+        ]
+        for title in titles:
+            with self.subTest(title=title):
+                self.assertEqual(finder.classify_title(
+                    title, require_procurement=True), "its")
+                self.assertEqual(finder.priority(title), "HIGH")
+                self.assertTrue(finder.is_tsp_record(
+                    {"title": title, "summary": "", "url": ""}))
+
+    def test_generic_transit_study_not_marked_as_tsp(self):
+        row = {"title": "RFP Transit Service Planning Study",
+               "summary": "Transit route network service planning"}
+        self.assertFalse(finder.is_tsp_record(row))
+
+    def test_tsp_only_construction_bid_excluded(self):
+        title = "Invitation to Bid Construction of Transit Signal Priority Infrastructure"
+        self.assertIsNone(finder.classify_title(
+            title, require_procurement=True))
+        self.assertFalse(finder.is_tsp_record(
+            {"title": title, "summary": title}))
+
     def test_transportation_engineering_on_call_is_relevant(self):
         self.assertEqual(
             finder.classify_title(
