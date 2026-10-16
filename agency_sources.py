@@ -92,6 +92,8 @@ def new_agency(state,kind,name,profile_url='',website='',procurement_url='',prio
 # Official agency procurement/public bid pages independently identified from issuing-agency websites.
 # Some pages lead to supplier portals; a listed URL is NOT proof bids can be scraped.
 VERIFIED_PROCUREMENT_PAGES = [
+    # Official city legal notices include design RFQs linking straight to their PDFs.
+    ("WA", "city", "Des Moines", "https://www.desmoineswa.gov/171/Public-Hearings-Legal-Notices"),
     # Transit agencies are direct TSP/ITS procurement issuers.
     ("WA", "transit", "Pierce Transit", "https://piercetransit.org/procurement/"),
     ("WA", "transit", "Sound Transit", "https://www.soundtransit.org/get-to-know-us/doing-business-with-us/procurement-contracts-agreements"),
