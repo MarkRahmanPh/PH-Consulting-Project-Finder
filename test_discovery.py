@@ -143,11 +143,11 @@ class OpportunityDiscoveryTests(unittest.TestCase):
         """
         details = {
             "3": "<p>Bid Number: 26-002</p><p>Status: Open</p>"
-                 "<p>The City requests qualifications from consulting firms for "
+                 "<p>Description: The City requests qualifications from consulting firms for "
                  "engineering, planning, demonstration evaluation and design.</p>"
                  "<p>Closing Date/Time: 10/22/2026 4:00 PM</p>",
             "4": "<p>Bid Number: 26-003</p><p>Status: Open</p>"
-                 "<p>Read full RFP here</p>"
+                 "<p>Description: Read full RFP here</p>"
                  "<p>Closing Date/Time: 11/5/2026 4:00 PM</p>"
         }
         def fake_fetch(url, timeout=9):
@@ -163,6 +163,25 @@ class OpportunityDiscoveryTests(unittest.TestCase):
         self.assertEqual(by_bid["3"]["due_date"], "2026-10-22")
         self.assertEqual(by_bid["4"]["due_date"], "2026-11-05")
         self.assertEqual(by_bid["4"]["category"], "ada")
+
+    def test_civicengage_global_navigation_does_not_authorize_rfqs(self):
+        """Marketing text elsewhere on the page cannot turn an ITB into an RFQ."""
+        from unittest.mock import patch
+        index = '<a href="/bids.aspx?bidID=10">Roadway Improvements RFQ</a>'
+        detail = (
+            "<p>All consultants may register. Request for Proposals are advertised"
+            " throughout the year.</p>"
+            "<p>Bid Number: 26-010</p><p>Status: Open</p>"
+            "<p>Description: Sealed construction bids for asphalt paving.</p>"
+            "<p>Publication Date/Time: 10/1/2026</p>"
+            "<p>Closing Date/Time: 11/8/2026 3:00 PM</p>")
+        agency = {"id": "WA|city|des moines", "name": "Des Moines",
+                  "state": "WA", "kind": "city"}
+        with patch.object(finder, "fetch", return_value=detail):
+            found = finder.scan_civicengage_bid_details(
+                index, "https://www.desmoineswa.gov/bids.aspx",
+                agency, "2026-10-16")
+        self.assertEqual(found, [])
 
     def test_des_moines_agency_source_is_configured(self):
         catalog = agencies.seeded_catalog([])
