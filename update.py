@@ -815,7 +815,19 @@ def scan_civicengage_bid_details(index_html, index_url, agency, today):
         try:
             detail = Document(fetch(link, timeout=9)).root.text()
             # An RFQ must be explicitly confirmed on this individual page.
-            if not re.search(r'\bBid Number\s*:?\s*(?:RFQ|RSOQ|SOQ)\b', detail, re.I):
+            # CivicEngage municipalities sometimes use a numeric bid number
+            # (such as 26-002) even for professional-services RFQs.
+            # Require BOTH explicit RFP/RFQ language and engineering/consulting
+            # scope on the *individual detail page* when the number is numeric.
+            coded_rfq = bool(re.search(
+                r'\bBid Number\s*:?\s*(?:RFQ|RSOQ|SOQ)\b', detail, re.I))
+            numeric_consulting_rfq = bool(
+                re.search(r'\b(?:request for qualifications|request for proposals|RFQ|RFP)\b',
+                          detail, re.I) and
+                re.search(r'\b(?:consultants?|consulting firms?|engineering|'
+                          r'design services?|planning services?|professional services?|'
+                          r'transportation stud(?:y|ies))\b', detail, re.I))
+            if not (coded_rfq or numeric_consulting_rfq):
                 continue
             status = re.search(r'\bStatus\s*:?\s*(Open|Closed|Awarded|Cancelled|Canceled)\b',
                                detail, re.I)
