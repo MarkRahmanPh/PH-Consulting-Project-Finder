@@ -678,7 +678,10 @@ def apply_observation(rows, observation, today):
                 row['summary'] = old['summary']
             for field in ('role', 'due_time', 'rfq_document_url',
                           'questions_due', 'published_date', 'publication_date'):
-                if old.get(field) and not observation.get(field):
+                if old.get(field) and (
+                        not observation.get(field) or
+                        (field == 'role' and observation.get(field) ==
+                         'Review prime/subconsultant fit')):
                     row[field] = old[field]
             if old.get('priority') == 'HIGH' and row.get('priority') == 'REVIEW':
                 row['priority'] = 'HIGH'
