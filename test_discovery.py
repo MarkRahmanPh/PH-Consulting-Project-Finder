@@ -270,6 +270,34 @@ class OpportunityDiscoveryTests(unittest.TestCase):
             require_procurement=True,
         ), "signal")
 
+    def test_hourly_refresh_preserves_verified_summary_priority_and_time(self):
+        url = "https://www.desmoineswa.gov/bids.aspx?bidID=4"
+        old = {
+            "id": "curated-des-moines", "url": url,
+            "title": "RFQ 26-003 — 6th Avenue South Pedestrian Safety Improvement",
+            "summary": ("Verified design RFQ for approximately 1,000 feet of "
+                        "ADA ramps, sidewalks, crosswalks and bid-ready PS&E."),
+            "role": "Potential prime design consultant",
+            "due_time": "4:00 PM PT",
+            "due_date": "2026-11-05", "priority": "HIGH",
+            "verified_on": "2026-10-16", "source_kind": "official_detail",
+            "first_seen": "2026-10-16"
+        }
+        observed = finder.standard_row(
+            "6th Avenue South Pedestrian Safety Improvement Project",
+            "Des Moines", "WA", url,
+            "6th Avenue South Pedestrian Safety Improvement Project",
+            "Des Moines individual open RFQ", "2026-10-17",
+            listing=True, observed_due="2026-11-05")
+        rows = {old["id"]: old}
+        result = finder.apply_observation(rows, observed, "2026-10-17")
+        self.assertEqual(result["id"], old["id"])
+        self.assertEqual(result["summary"], old["summary"])
+        self.assertEqual(result["priority"], "HIGH")
+        self.assertEqual(result["due_time"], "4:00 PM PT")
+        self.assertEqual(result["role"], old["role"])
+        self.assertEqual(len(rows), 1)
+
     def test_guidance_page_is_not_a_procurement(self):
         record = {
             "title": "Land use & transportation planning",
