@@ -821,19 +821,23 @@ def scan_civicengage_bid_details(index_html, index_url, agency, today):
             # scope on the *individual detail page* when the number is numeric.
             coded_rfq = bool(re.search(
                 r'\bBid Number\s*:?\s*(?:RFQ|RSOQ|SOQ)\b', detail, re.I))
-            rfq_notice = bool(re.search(
+            # For numeric bid identifiers, use only THIS bid's Description
+            # field, not navbar text or another bid's links/footer.
+            scoped = re.search(
+                r'\bDescription\s*:\s*(.*?)\b(?:Publication Date/Time|'
+                r'Closing Date/Time)\s*:', detail, re.I | re.S)
+            description = scoped.group(1) if scoped else ''
+            rfq_notice = bool(description and re.search(
                 r'\b(?:request for qualifications|request for proposals|RFQ|RFP)\b',
-                title + ' ' + detail, re.I))
+                title + ' ' + description, re.I))
             consulting_scope = bool(re.search(
                 r'\b(?:consultants?|consulting firms?|engineering|'
                 r'design services?|planning services?|professional services?|'
-                r'transportation stud(?:y|ies))\b', detail, re.I))
-            # Some city bid pages say only "Read full RFP here" while the
-            # consultant design scope is in a PDF. This is a real RFP *notice*
-            # when the separately scoped title fits PH's engineering services;
-            # this does not treat construction ITBs or vague project pages as RFQs.
+                r'transportation stud(?:y|ies))\b', description, re.I))
+            # Some official detail pages just say "Read full RFP here" while
+            # engineering scope appears only in the attached RFP PDF.
             explicit_rfp_document = bool(re.search(
-                r'\bread\s+(?:the\s+)?full\s+RFP\b', detail, re.I))
+                r'\bread\s+(?:the\s+)?full\s+RFP\b', description, re.I))
             numeric_consulting_rfq = rfq_notice and (
                 consulting_scope or explicit_rfp_document)
 
