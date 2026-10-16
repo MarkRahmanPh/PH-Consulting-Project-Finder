@@ -823,7 +823,7 @@ def scan_civicengage_bid_details(index_html, index_url, agency, today):
                 r'\bBid Number\s*:?\s*(?:RFQ|RSOQ|SOQ)\b', detail, re.I))
             rfq_notice = bool(re.search(
                 r'\b(?:request for qualifications|request for proposals|RFQ|RFP)\b',
-                detail, re.I))
+                title + ' ' + detail, re.I))
             consulting_scope = bool(re.search(
                 r'\b(?:consultants?|consulting firms?|engineering|'
                 r'design services?|planning services?|professional services?|'
