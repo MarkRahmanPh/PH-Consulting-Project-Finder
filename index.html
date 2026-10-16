@@ -83,7 +83,7 @@
   <details class="panel category-guide"><summary><strong>What the 8 project categories include</strong></summary>
     <div class="category-grid">
       <p><strong>1. Traffic Signals / Timing</strong><span>Signal timing, retiming, coordination, optimization, FYA/PPLT, LPI, controller programming, MAXTIME, EOS, signal design.</span></p>
-      <p><strong>2. ITS / ATSPM / TSP</strong><span>ITS, ATMS, adaptive signals, transit signal priority, preemption, detection, communications.</span></p>
+      <p><strong>2. ITS / ATSPM / TSP</strong><span>ITS, ATMS, adaptive signals, transit signal priority (TSP), bus priority, controller/LYT integration, TSP studies, signal design, testing and optimization, preemption, detection, communications.</span></p>
       <p><strong>3. Railroad / FRA / RCE</strong><span>Railroad crossings, grade separations, quiet zones, FRA/RCE, BNSF coordination, rail safety.</span></p>
       <p><strong>4. ADA / Pedestrian</strong><span>ADA curb ramps, pedestrian crossings, accessible signals, pedestrian safety, bicycle improvements.</span></p>
       <p><strong>5. Roadway / Civil Design</strong><span>Roadway engineering, intersection improvements, civil design, signing, pavement markings, street lighting.</span></p>
@@ -97,6 +97,7 @@
     <label><input type="checkbox" id="showleads" checked> Include unverified leads</label>
     <label><input type="checkbox" id="showexpired"> Include expired deadlines</label>
     <label><input type="checkbox" id="highonly"> High priority only</label>
+    <label><input type="checkbox" id="tsponly"> Transit Signal Priority (TSP) only</label>
   </div>
   <div class="toprow"><h2>Opportunity watchlist</h2><span class="sub" id="count">Loading…</span></div>
   <section id="projects" class="results" aria-live="polite"></section>
@@ -148,10 +149,11 @@
   const daysSince = str => {const d = new Date(`${str || '1900-01-01'}T12:00:00`);return (Date.now()-d.getTime())/86400000;};
   const recent = x => !!(x.change_on && daysSince(x.change_on) >= 0 && daysSince(x.change_on) <= 7);
   const newlyFound = x => !!((x.first_seen || x.found) && daysSince(x.first_seen || x.found) >= 0 && daysSince(x.first_seen || x.found) <= 7 && x.change_type === 'NEWLY FOUND');
+  const isTspMatch = x => /\b(?:transit signal priorit(?:y|ization)|bus signal priorit(?:y|ization)|transit priority signals?|next generation tsp|bus priority at traffic signals?)\b/i.test((x.title || '') + ' ' + (x.summary || ''));
   function draw() {
     const q = $('search').value.trim().toLowerCase(), state = $('state').value, type = $('type').value;
     let entries = records.filter(x => (!state || x.state === state) && (!type || x.category === type) &&
-      (!$('highonly').checked || x.priority === 'HIGH') && (!$('newonly').checked || newlyFound(x)) && ($('showexpired').checked || !x.expired) &&
+      (!$('highonly').checked || x.priority === 'HIGH') && (!$('tsponly').checked || x.is_tsp === true || isTspMatch(x)) && (!$('newonly').checked || newlyFound(x)) && ($('showexpired').checked || !x.expired) &&
       ($('showleads').checked || x.source_kind !== 'news_feed') &&
       [x.title,x.agency,x.summary,x.role,x.source].join(' ').toLowerCase().includes(q));
     const sort = $('sort').value;
@@ -170,7 +172,7 @@
         <div><div class="tags"><span class="tag">${esc(x.state || '—')}</span><span class="tag">${esc(human[x.category] || x.category || 'Other')}</span>
         ${x.priority === 'HIGH' ? '<span class="tag high">High priority</span>' : ''}
         ${label ? `<span class="tag ${change === 'NEWLY FOUND'?'new':change === 'EXPIRED'?'expired':'changed'}">${label}</span>` : ''}
-        ${isLead ? '<span class="tag">Unverified lead</span>' : ''}${x.opportunity_stage === 'pre_solicitation' ? '<span class="tag">Pre-solicitation only</span>' : ''}${x.opportunity_stage === 'needs_open_status_review' ? '<span class="tag">Open status unverified</span>' : ''}</div>
+        ${isLead ? '<span class="tag">Unverified lead</span>' : ''}${x.is_tsp || isTspMatch(x) ? '<span class="tag high">TSP</span>' : ''}${x.opportunity_stage === 'pre_solicitation' ? '<span class="tag">Pre-solicitation only</span>' : ''}${x.opportunity_stage === 'needs_open_status_review' ? '<span class="tag">Open status unverified</span>' : ''}</div>
         <h3>${esc(x.title)}</h3><p>${esc(x.summary || '')}</p>
         <div class="meta"><strong>${esc(x.agency || 'Agency not confirmed')}</strong> · ${esc(x.role || '')}</div>
         <div class="meta due">Due: <strong>${esc(x.due_date || 'Not verified')} ${esc(x.due_time || '')}</strong>
@@ -237,7 +239,7 @@
       $('projects').innerHTML = '<div class="none">Could not load opportunities.json. Your existing data may still be in GitHub; check website publishing.</div>';
     } finally {btn.disabled = false;btn.textContent = 'Refresh data';}
   }
-  ['search','state','type','sort','showleads','showexpired','highonly','newonly'].forEach(id => $(id).addEventListener('input',draw));
+  ['search','state','type','sort','showleads','showexpired','highonly','newonly','tsponly'].forEach(id => $(id).addEventListener('input',draw));
   ['agencysearch','agencystate','agencytype'].forEach(id=>$(id).addEventListener('input',drawAgencies));
   $('refresh').addEventListener('click',reload);
   reload();setInterval(reload,60*60*1000);
