@@ -821,12 +821,22 @@ def scan_civicengage_bid_details(index_html, index_url, agency, today):
             # scope on the *individual detail page* when the number is numeric.
             coded_rfq = bool(re.search(
                 r'\bBid Number\s*:?\s*(?:RFQ|RSOQ|SOQ)\b', detail, re.I))
-            numeric_consulting_rfq = bool(
-                re.search(r'\b(?:request for qualifications|request for proposals|RFQ|RFP)\b',
-                          detail, re.I) and
-                re.search(r'\b(?:consultants?|consulting firms?|engineering|'
-                          r'design services?|planning services?|professional services?|'
-                          r'transportation stud(?:y|ies))\b', detail, re.I))
+            rfq_notice = bool(re.search(
+                r'\b(?:request for qualifications|request for proposals|RFQ|RFP)\b',
+                detail, re.I))
+            consulting_scope = bool(re.search(
+                r'\b(?:consultants?|consulting firms?|engineering|'
+                r'design services?|planning services?|professional services?|'
+                r'transportation stud(?:y|ies))\b', detail, re.I))
+            # Some city bid pages say only "Read full RFP here" while the
+            # consultant design scope is in a PDF. This is a real RFP *notice*
+            # when the separately scoped title fits PH's engineering services;
+            # this does not treat construction ITBs or vague project pages as RFQs.
+            explicit_rfp_document = bool(re.search(
+                r'\bread\s+(?:the\s+)?full\s+RFP\b', detail, re.I))
+            numeric_consulting_rfq = rfq_notice and (
+                consulting_scope or explicit_rfp_document)
+
             if not (coded_rfq or numeric_consulting_rfq):
                 continue
             status = re.search(r'\bStatus\s*:?\s*(Open|Closed|Awarded|Cancelled|Canceled)\b',
@@ -854,6 +864,53 @@ def scan_civicengage_bid_details(index_html, index_url, agency, today):
             continue
     return matches
 
+
+
+def scan_transit_bid_details(index_html, index_url, agency, today):
+    """Confirm transport/engineering bid details linked from official STA pages.
+
+    Accept only individual same-host /bidding-opportunity/ posts with a
+    matching engineering title, explicit RFP/RFQ notice, and future closing
+    date. Unrelated contractor bids and staffing notices remain excluded.
+    """
+    host = (urllib.parse.urlsplit(index_url).hostname or '').lower()
+    if host not in {'www.spokanetransit.com', 'spokanetransit.com'}:
+        return []
+    doc = Document(index_html)
+    matches, seen = [], set()
+    for a in doc.root.findall('a'):
+        title = clean(a.text())
+        if not classify_title(title, require_procurement=False):
+            continue
+        link = absolute(index_url, a.attrs.get('href', ''))
+        parsed = urllib.parse.urlsplit(link)
+        if (parsed.hostname or '').lower() != host or not parsed.path.startswith(
+                '/bidding-opportunity/') or link in seen:
+            continue
+        seen.add(link)
+        try:
+            detail = Document(fetch(link, timeout=9)).root.text()
+            if not re.search(r'\bREQUEST FOR (?:PROPOSALS|QUALIFICATIONS)\b', detail, re.I):
+                continue
+            due_match = re.search(
+                r'\b(?:proposals? will be accepted until|'
+                r'qualifications? will be accepted until|'
+                r'closing date(?:/time)?)\s*:?\s*(.{0,110})',
+                detail, re.I)
+            due = parse_date(due_match.group(1)) if due_match else None
+            if not due or due < today:
+                continue
+            row = standard_row(title, agency['name'], agency['state'], link,
+                               title, f"{agency['name']} individual RFP/RFQ",
+                               today, listing=True, observed_due=due)
+            row.update(source_kind='official_detail',
+                       status='Individual RFP/RFQ verified — due date observed',
+                       opportunity_stage='open_solicitation',
+                       verified_on=today, agency_id=agency['id'])
+            matches.append(row)
+        except Exception:
+            continue
+    return matches[:12]
 
 
 def scan_local_agencies(catalog,rows,today):
@@ -909,16 +966,41 @@ def scan_local_agencies(catalog,rows,today):
                             # negatives on CivicEngage bidding pages.
                             detail_results=scan_civicengage_bid_details(
                                 html, checked_url, agency, today)
+            # Explicit scope-scoped SPA/WordPress bid listing details.
+            # This supports sites where index titles omit "RFP", such as Spokane
+            # Transit's /bidding-opportunity/ posts. A detail notice itself
+            # must state it is an RFP/RFQ and show a future deadline.
+            detail_results += scan_transit_bid_details(
+                html, checked_url, agency, today)
                             by_url={item['url']:item for item in results}
                             # Verified individual details override unverified listing cards.
                             for item in detail_results:by_url[item['url']]=item
                             for item in by_url.values():apply_observation(rows,item,today)
                             found=len(by_url)
                             status='Official procurement page accessed'
-                            if not found and re.search(
-                                r'\b(?:RFQ|RFP|on[ -]?call|bidID|engineering services)\b',
-                                html, re.I):
-                                status='Page accessible — solicitation text present; parser needs review'
+                            # Do not raise a false "parser gap" just because
+                            # a general vendor/agency page mentions the word RFP
+                            # in its menu. Report a suspected gap only if there is
+                            # a specifically linked, PH-relevant bid title.
+                            if not found:
+                                possible = Document(html).root.findall('a')
+                                if any(
+                                    classify_title(clean(a.text()),
+                                                   require_procurement=False) and
+                                    (re.search(
+                                        r'\b(?:RFQ|RFP|SOQ|on[ -]?call|'
+                                        r'qualifications?|proposals?)\b',
+                                        a.text(), re.I) or
+                                     re.search(r'/bids?\.aspx\?bidid=|'
+                                               r'/bidding-opportunity/',
+                                               a.attrs.get('href', ''), re.I))
+                                    for a in possible
+                                ):
+                                    status=('Page accessible — relevant bid link '
+                                            'needs parser/detail review')
+                                else:
+                                    status=('Official procurement page accessed '
+                                            '— no PH consultant RFQs confirmed')
                         elif status!='Supplier portal — manual review':
                             status='Official website accessed — no public bids link found'
         except Exception as exc:
