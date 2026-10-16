@@ -966,12 +966,10 @@ def scan_local_agencies(catalog,rows,today):
                             # negatives on CivicEngage bidding pages.
                             detail_results=scan_civicengage_bid_details(
                                 html, checked_url, agency, today)
-            # Explicit scope-scoped SPA/WordPress bid listing details.
-            # This supports sites where index titles omit "RFP", such as Spokane
-            # Transit's /bidding-opportunity/ posts. A detail notice itself
-            # must state it is an RFP/RFQ and show a future deadline.
-            detail_results += scan_transit_bid_details(
-                html, checked_url, agency, today)
+                            # Individual official WordPress bid notices.
+                            # Relevant transit bid titles may omit "RFP" on the index.
+                            detail_results += scan_transit_bid_details(
+                                html, checked_url, agency, today)
                             by_url={item['url']:item for item in results}
                             # Verified individual details override unverified listing cards.
                             for item in detail_results:by_url[item['url']]=item
