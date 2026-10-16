@@ -242,6 +242,19 @@
   ['search','state','type','sort','showleads','showexpired','highonly','newonly','tsponly'].forEach(id => $(id).addEventListener('input',draw));
   ['agencysearch','agencystate','agencytype'].forEach(id=>$(id).addEventListener('input',drawAgencies));
   $('refresh').addEventListener('click',reload);
+  // Shareable search links, e.g. ?q=6th%20Avenue%20South, jump straight
+  // to a newly published RFQ without manually configuring every filter.
+  const sharedSearch = new URLSearchParams(window.location.search).get('q');
+  if (sharedSearch) {
+    $('search').value = sharedSearch.slice(0,160);
+    $('tsponly').checked = false;
+    $('newonly').checked = false;
+    $('highonly').checked = false;
+    $('showexpired').checked = false;
+    $('showleads').checked = true;
+    $('state').value = '';
+    $('type').value = '';
+  }
   reload();setInterval(reload,60*60*1000);
 </script>
 </body></html>
