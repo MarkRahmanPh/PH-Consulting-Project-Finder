@@ -133,6 +133,41 @@ class OpportunityDiscoveryTests(unittest.TestCase):
         self.assertEqual(rows[0]["source_kind"], "official_detail")
         self.assertIn("bidID=362", rows[0]["url"])
 
+    def test_numeric_civicengage_bid_numbers_need_consultant_scope(self):
+        """Numeric bid number + verified professional RFQ is eligible;
+        a generic RFP link with no demonstrated design scope is not."""
+        from unittest.mock import patch
+        index = """
+        <a href="/bids.aspx?bidID=3">Safe Streets for All Request for Qualifications</a>
+        <a href="/bids.aspx?bidID=4">6th Avenue South Pedestrian Safety Improvement Project</a>
+        """
+        details = {
+            "3": "<p>Bid Number: 26-002</p><p>Status: Open</p>"
+                 "<p>The City requests qualifications from consulting firms for "
+                 "engineering, planning, demonstration evaluation and design.</p>"
+                 "<p>Closing Date/Time: 10/22/2026 4:00 PM</p>",
+            "4": "<p>Bid Number: 26-003</p><p>Status: Open</p>"
+                 "<p>Read full RFP here</p>"
+                 "<p>Closing Date/Time: 11/5/2026 4:00 PM</p>"
+        }
+        def fake_fetch(url, timeout=9):
+            return details[url.split("bidID=")[-1]]
+        agency = {"id": "WA|city|des moines", "name": "Des Moines",
+                  "state": "WA", "kind": "city"}
+        with patch.object(finder, "fetch", side_effect=fake_fetch):
+            result = finder.scan_civicengage_bid_details(
+                index, "https://www.desmoineswa.gov/Bids.aspx",
+                agency, "2026-10-16")
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["due_date"], "2026-10-22")
+        self.assertIn("bidID=3", result[0]["url"])
+
+    def test_des_moines_agency_source_is_configured(self):
+        catalog = agencies.seeded_catalog([])
+        row = catalog["WA|city|des moines"]
+        self.assertEqual(row["procurement_url"],
+                         "https://www.desmoineswa.gov/Bids.aspx")
+
     def test_construction_management_only_is_excluded(self):
         self.assertIsNone(finder.classify_title(
             "RFQ Construction Management Services for Roadway Safety Improvements",
