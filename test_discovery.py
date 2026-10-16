@@ -134,8 +134,8 @@ class OpportunityDiscoveryTests(unittest.TestCase):
         self.assertIn("bidID=362", rows[0]["url"])
 
     def test_numeric_civicengage_bid_numbers_need_consultant_scope(self):
-        """Numeric bid number + verified professional RFQ is eligible;
-        a generic RFP link with no demonstrated design scope is not."""
+        """Numeric CivicEngage RFPs qualify with verified consultant scope
+        or the city's linked official 'Read full RFP' document notice."""
         from unittest.mock import patch
         index = """
         <a href="/bids.aspx?bidID=3">Safe Streets for All Request for Qualifications</a>
@@ -158,9 +158,11 @@ class OpportunityDiscoveryTests(unittest.TestCase):
             result = finder.scan_civicengage_bid_details(
                 index, "https://www.desmoineswa.gov/Bids.aspx",
                 agency, "2026-10-16")
-        self.assertEqual(len(result), 1)
-        self.assertEqual(result[0]["due_date"], "2026-10-22")
-        self.assertIn("bidID=3", result[0]["url"])
+        self.assertEqual(len(result), 2)
+        by_bid = {r["url"].split("bidID=")[-1]: r for r in result}
+        self.assertEqual(by_bid["3"]["due_date"], "2026-10-22")
+        self.assertEqual(by_bid["4"]["due_date"], "2026-11-05")
+        self.assertEqual(by_bid["4"]["category"], "ada")
 
     def test_des_moines_agency_source_is_configured(self):
         catalog = agencies.seeded_catalog([])
@@ -189,6 +191,53 @@ class OpportunityDiscoveryTests(unittest.TestCase):
         self.assertEqual(len(found), 1)
         self.assertEqual(found[0]["category"], "ada")
         self.assertIn("/DocumentCenter/View/6966", found[0]["url"])
+
+    def test_spokane_transit_individual_rfp_detail(self):
+        """A project-title-only index must be checked against its own
+        future, explicitly advertised, consultant RFP detail."""
+        from unittest.mock import patch
+        index = """
+        <a href="/bidding-opportunity/26-signal-engineering/">
+        Signal Timing and Transit Priority Engineering Services</a>
+        <a href="/bidding-opportunity/26-staffing/">
+        Temporary Staffing Services</a>
+        <a href="/bidding-opportunity/25-traffic-old/">
+        Traffic Signal Timing Consultant Services (2025)</a>
+        """
+        detail = (
+            "<h1>Signal Timing and Transit Priority Engineering Services</h1>"
+            "<p>REQUEST FOR PROPOSALS 2026-101</p>"
+            "<p>Proposals will be accepted until November 20, 2026, "
+            "4:00 p.m. Pacific Time.</p>")
+        old = (
+            "<h1>Traffic Signal Timing Consultant Services</h1>"
+            "<p>REQUEST FOR PROPOSALS 2025-015</p>"
+            "<p>Proposals will be accepted until September 12, 2025.</p>")
+        def fake_fetch(url, timeout=9):
+            if "26-signal-engineering" in url:
+                return detail
+            if "25-traffic-old" in url:
+                return old
+            raise AssertionError("Unrelated staffing bid should not be fetched")
+        agency = {"id": "WA|transit|spokane transit", "name": "Spokane Transit",
+                  "state": "WA", "kind": "transit"}
+        with patch.object(finder, "fetch", side_effect=fake_fetch):
+            result = finder.scan_transit_bid_details(
+                index, "https://www.spokanetransit.com/bidding-opportunities/",
+                agency, "2026-10-16")
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["due_date"], "2026-11-20")
+        self.assertEqual(result[0]["source_kind"], "official_detail")
+
+    def test_no_duplicate_procurement_seed_sources(self):
+        keys = [(state, kind, name)
+                for state, kind, name, _ in agencies.VERIFIED_PROCUREMENT_PAGES]
+        self.assertEqual(len(keys), len(set(keys)))
+        catalog = agencies.seeded_catalog([])
+        self.assertIn("WA|city|seatac", catalog)
+        self.assertIn("WA|city|olympia", catalog)
+        self.assertIn("WA|transit|spokane transit", catalog)
+        self.assertIn("OR|city|lake oswego", catalog)
 
     def test_construction_management_only_is_excluded(self):
         self.assertIsNone(finder.classify_title(
