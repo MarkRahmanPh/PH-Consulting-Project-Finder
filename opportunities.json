@@ -283,11 +283,12 @@
       "kind": "city",
       "name": "Burien",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
+      "website": "https://www.burienwa.gov/city_hall/working_with_us/bids_rfp_rfq",
+      "procurement_url": "https://www.burienwa.gov/city_hall/working_with_us/bids_rfp_rfq",
       "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "status": "Official source configured — awaiting next automated check",
+      "priority": 12,
+      "last_check_at": ""
     },
     {
       "id": "WA|city|burlington",
@@ -604,11 +605,12 @@
       "kind": "city",
       "name": "Kent",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
+      "website": "https://www.kentwa.gov/pay-and-apply/bids-procurement-rfps",
+      "procurement_url": "https://www.kentwa.gov/pay-and-apply/bids-procurement-rfps",
       "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "status": "Official source configured — awaiting next automated check",
+      "priority": 12,
+      "last_check_at": ""
     },
     {
       "id": "WA|city|kirkland",
@@ -922,11 +924,12 @@
       "kind": "city",
       "name": "Puyallup",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
+      "website": "https://www.puyallupwa.gov/bids.aspx",
+      "procurement_url": "https://www.puyallupwa.gov/bids.aspx",
       "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "status": "Official source configured — awaiting next automated check",
+      "priority": 12,
+      "last_check_at": ""
     },
     {
       "id": "WA|city|redmond",
@@ -948,11 +951,12 @@
       "kind": "city",
       "name": "Renton",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
+      "website": "https://www.rentonwa.gov/Projects-Development/Bids-Proposals-Qualifications-and-Other-Procurement-Solicitations",
+      "procurement_url": "https://www.rentonwa.gov/Projects-Development/Bids-Proposals-Qualifications-and-Other-Procurement-Solicitations",
       "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "status": "Official source configured — awaiting next automated check",
+      "priority": 12,
+      "last_check_at": ""
     },
     {
       "id": "WA|city|richland",
@@ -1047,11 +1051,12 @@
       "kind": "city",
       "name": "Shoreline",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
+      "website": "https://www.shorelinewa.gov/business/bids-rfps",
+      "procurement_url": "https://www.shorelinewa.gov/business/bids-rfps",
       "last_check": "",
-      "status": "Not yet checked",
-      "priority": 9
+      "status": "Official source configured — awaiting next automated check",
+      "priority": 12,
+      "last_check_at": ""
     },
     {
       "id": "WA|city|snohomish",
@@ -3366,8 +3371,8 @@
       "last_matches": 0
     }
   ],
-  "searchable_agency_targets": 57,
-  "public_procurement_pages_known": 55,
+  "searchable_agency_targets": 62,
+  "public_procurement_pages_known": 60,
   "directory_checks": [
     {
       "source": "WA — MRSC city & town directory",
