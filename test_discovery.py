@@ -168,6 +168,28 @@ class OpportunityDiscoveryTests(unittest.TestCase):
         self.assertEqual(row["procurement_url"],
                          "https://www.desmoineswa.gov/Bids.aspx")
 
+    def test_des_moines_legal_notice_finds_pedestrian_design_rfq(self):
+        # City lists public engineering RFQs on a legal-notices page, linking
+        # directly to DocumentCenter PDFs rather than a conventional bids page.
+        html = """
+        <html><body><main><ul>
+          <li><a href="/DocumentCenter/View/6966">
+          Request for Qualifications - 6th Avenue South Pedestrian Safety
+          Improvement Project</a> - 11/5/2026</li>
+          <li><a href="/DocumentCenter/View/9999">
+          Construction-Only Sidewalk Replacement Invitation to Bid</a></li>
+        </ul></main></body></html>"""
+        agency = {"id": "WA|city|des moines", "name": "Des Moines",
+                  "state": "WA", "kind": "city"}
+        found = agencies.scan_agency_bids(
+            html, "https://www.desmoineswa.gov/171/Public-Hearings-Legal-Notices",
+            agency, finder.Document, finder.absolute, finder.classify_title,
+            finder.safe_single_item_scope, finder.safe_listing_due,
+            finder.remove_trailing_date, finder.standard_row, "2026-10-16")
+        self.assertEqual(len(found), 1)
+        self.assertEqual(found[0]["category"], "ada")
+        self.assertIn("/DocumentCenter/View/6966", found[0]["url"])
+
     def test_construction_management_only_is_excluded(self):
         self.assertIsNone(finder.classify_title(
             "RFQ Construction Management Services for Roadway Safety Improvements",
