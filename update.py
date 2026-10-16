@@ -53,6 +53,11 @@ QUERIES = {
         ('signal', 'Washington "signal coordination" "controller" RFP'),
         ('its', 'Washington "ITS" "ATSPM" OR "transit signal priority" consultant RFP'),
         ('its', 'Washington "traffic signal preemption" "detection" RFQ'),
+        ('its', 'Washington "transit signal priority" "RFQ"'),
+        ('its', 'Washington "transit signal priority" "RFP"'),
+        ('its', 'Washington "bus signal priority" "consultant"'),
+        ('its', 'Washington "TSP" "signal" "engineering services"'),
+        ('its', 'Washington "transit signal priority" "integration" "on-call"'),
         ('rail', 'Washington "railroad crossing" "grade separation" RFQ engineering'),
         ('rail', 'Washington "quiet zone" "FRA" "RCE" consultant'),
         ('ada', 'Washington "ADA curb ramps" "pedestrian crossings" design RFQ'),
@@ -78,6 +83,10 @@ QUERIES = {
     'OR': [
         ('signal', 'Oregon "traffic signal timing" "MAXTIME" RFQ engineering'),
         ('its', 'Oregon "ITS" "ATSPM" "TSP" consultant RFP'),
+        ('its', 'Oregon "transit signal priority" "RFQ"'),
+        ('its', 'Oregon "transit signal priority" "RFP"'),
+        ('its', 'Oregon "bus priority" "traffic signal" "consultant"'),
+        ('its', 'Oregon "TSP" "controller" "engineering services"'),
         ('rail', 'Oregon "railroad crossing" "rail safety" FRA RFQ'),
         ('rail', 'Oregon "grade separation" "quiet zone" engineering study'),
         ('ada', 'Oregon "ADA curb ramps" "pedestrian" consultant RFQ'),
@@ -181,10 +190,14 @@ FIT_RULES = [
     ('its', re.compile(
         r"\b(?:intelligent transportation systems?|ITS|ATSPM|ATMS|"
         r"adaptive signals?|adaptive signal control|transit signal priority|"
-        r"bus priority|next gen(?:eration)? TSP|TSP|emergency (?:vehicle )?preemption|"
+        r"transit signal prioritization|bus signal priority|bus priority|"
+        r"transit priority signal(?:s|ing)?|"
+        r"next gen(?:eration)? TSP|TSP|emergency (?:vehicle )?preemption|"
         r"signal preemption|traffic (?:signal )?detection|signal communications?|"
         r"traffic communications?|connected vehicle|traffic management center|"
-        r"traffic signal systems? integration|traffic signal communications?)\b", re.I)),
+        r"traffic signal systems? integration|traffic signal communications?|"
+        r"transit (?:signal )?priority (?:system|design|implementation|integration|optimization|study)|"
+        r"signal priority for buses|bus priority at (?:traffic )?signals?)\b", re.I)),
     ('signal', re.compile(
         r"\b(?:traffic signals?|signal timing|signal retiming|signal coordination|"
         r"signal optimization|signal controllers?|controller programming|"
@@ -425,8 +438,30 @@ def remove_trailing_date(title):
     return clean(re.sub(r'\s*(?:\d{1,2}/\d{1,2}/\d{2,4})\s*$', '', title))
 
 
+# TSP engineering/operations opportunities are a PH pursuit priority.
+TSP_PAT = re.compile(
+    r'\b(?:transit signal priorit(?:y|ization)|bus signal priorit(?:y|ization)|'
+    r'transit priority signal(?:s|ing)?|next gen(?:eration)? TSP|'
+    r'transit (?:signal )?priority (?:system|design|implementation|integration|optimization|study)|'
+    r'signal priority for buses|bus priority at (?:traffic )?signals?|'
+    r'TSP\b(?=.*\b(?:signal|bus|transit|controller|priority|intersection)))',
+    re.I
+)
+
+
+def is_tsp_record(row):
+    # Ground TSP classification in project title or description, not a
+    # generic agency name, and never override construction exclusions.
+    return not excluded_non_consulting(row.get('title', ''), row.get('url', '')) and bool(
+        TSP_PAT.search(clean(row.get('title', '')) + ' ' + clean(row.get('summary', '')))
+    )
+
+
 def priority(text):
-    return 'HIGH' if re.search(r'\b(signal timing|traffic engineering|railroad|rail crossing|ATSPM|on-call traffic|traffic study|ADA curb ramp)\b', text, re.I) else 'REVIEW'
+    return 'HIGH' if TSP_PAT.search(text) or re.search(
+        r'\b(signal timing|traffic engineering|railroad|rail crossing|ATSPM|on-call traffic|traffic study|ADA curb ramp)\b',
+        text, re.I
+    ) else 'REVIEW'
 
 
 def standard_row(title, agency, state, url, body, source, today, listing=False,
@@ -973,6 +1008,12 @@ def main():
                      'queries_failed': discovery_failures, 'matches': discovery_leads,
                      'note': 'RSS leads require issuing-agency verification, not confirmed open solicitations'})
     classify_expiry(rows, today)
+    for record in rows.values():
+        record['is_tsp'] = is_tsp_record(record)
+        if record['is_tsp'] and record.get('category') in ('its', 'signal', 'transit'):
+            record['category'] = 'its'
+            if record.get('source_kind') != 'news_feed':
+                record['priority'] = 'HIGH'
     records = sorted(rows.values(), key=lambda r: (
         bool(r.get('expired')), r.get('state') != 'WA', r.get('priority') != 'HIGH',
         r.get('due_date') or '9999-12-31', r.get('title', '').lower()))
