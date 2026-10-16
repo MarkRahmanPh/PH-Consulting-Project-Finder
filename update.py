@@ -670,6 +670,18 @@ def apply_observation(rows, observation, today):
         row.update({k: v for k, v in observation.items() if v is not None and k not in ('id', 'found')})
         row['id'] = old['id']
         row['first_seen'] = old.get('first_seen', old.get('found', today))
+        # Preserve manually verified consultant details when a fresh automatic
+        # listing provides only the link title. The scan can still update the
+        # status, actual due date, last-seen time and amendment history.
+        if old.get('source_kind') == 'official_detail' and old.get('verified_on'):
+            if len(old.get('summary', '')) > len(row.get('summary', '')):
+                row['summary'] = old['summary']
+            for field in ('role', 'due_time', 'rfq_document_url',
+                          'questions_due', 'published_date', 'publication_date'):
+                if old.get(field) and not observation.get(field):
+                    row[field] = old[field]
+            if old.get('priority') == 'HIGH' and row.get('priority') == 'REVIEW':
+                row['priority'] = 'HIGH'
         # Never discard an existing due date merely because a listing omitted it.
         if not observation.get('due_date'):
             row['due_date'] = old.get('due_date')
