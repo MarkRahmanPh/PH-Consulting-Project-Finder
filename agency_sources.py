@@ -92,12 +92,26 @@ def new_agency(state,kind,name,profile_url='',website='',procurement_url='',prio
 # Official agency procurement/public bid pages independently identified from issuing-agency websites.
 # Some pages lead to supplier portals; a listed URL is NOT proof bids can be scraped.
 VERIFIED_PROCUREMENT_PAGES = [
-    # Official city legal notices include design RFQs linking straight to their PDFs.
-    ("WA", "city", "Des Moines", "https://www.desmoineswa.gov/171/Public-Hearings-Legal-Notices"),
+    # CivicEngage bid index exposes live individual open/closed statuses.
     # Transit agencies are direct TSP/ITS procurement issuers.
     ("WA", "transit", "Pierce Transit", "https://piercetransit.org/procurement/"),
     ("WA", "transit", "Sound Transit", "https://www.soundtransit.org/get-to-know-us/doing-business-with-us/procurement-contracts-agreements"),
     ("OR", "transit", "TriMet", "https://trimet.org/procurement/"),
+    # Verified municipal procurement pages (not generic agency homepages).
+    ("WA", "city", "SeaTac", "https://www.seatacwa.gov/business/rfp-rfq-bid-procurement"),
+    ("WA", "city", "Olympia", "https://www.olympiawa.gov/government/contracts___purchasing/rfps_rfqs.php"),
+    ("WA", "city", "Snohomish", "https://www.snohomishwa.gov/105/Bids-RFPs-RFQs"),
+    ("WA", "city", "DuPont", "https://www.dupontwa.gov/556/Call-for-Bids"),
+    ("WA", "city", "Lakewood", "https://cityoflakewood.us/category/rfp-rfq-bids/"),
+    ("OR", "city", "Tigard", "https://www.tigard-or.gov/business-development/bids-requests-for-proposals"),
+    ("OR", "city", "Sherwood", "https://www.sherwoodoregon.gov/rfps-new/"),
+    ("OR", "city", "Lake Oswego", "https://www.ci.oswego.or.us/bids/"),
+    # Transit and port purchasing: some link onward to vendor login portals.
+    ("WA", "transit", "Community Transit", "https://www.communitytransit.org/procurement"),
+    ("WA", "transit", "Spokane Transit", "https://www.spokanetransit.com/bidding-opportunities/"),
+    ("WA", "port", "Port of Vancouver USA", "https://www.portvanusa.com/business-opportunities/projects-contracts/"),
+    ("OR", "port", "Port of Portland", "https://www.portofportland.com/business/Vendors"),
+    ("OR", "transit", "Salem Area Mass Transit District", "https://partal.cherriots.org/procurement/"),
     ("WA", "city", "Bothell", "https://www.bothellwa.gov/bids.aspx"),
     ("WA", "city", "Des Moines", "https://www.desmoineswa.gov/Bids.aspx"),
     ("WA", "city", "Pasco", "https://www.pasco-wa.gov/Bids.aspx"),
