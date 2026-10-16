@@ -32,3 +32,32 @@ Keep engineering design, PS&E, traffic signal/ITS programming and design, planni
 - Publication dates are distinct from first-discovered dates and proposal deadlines. A pre-solicitation or RFI should never automatically be labeled an open RFP.
 - Wider coverage requires more **valid official procurement URLs, official vendor APIs or licensed feeds**, not merely larger agency counts.
 - This is a discovery tool; verify the issuing agency's actual solicitation PDF, addenda, eligibility and closing date before pursuing work.
+
+## Agency coverage repairs (October 2026)
+
+The agency catalog is a geographic directory, not a crawler of all listed cities.
+Only rows with independently verified procurement/agency website URLs are scanned.
+The actual counts are reported by `searchable_agency_targets` and
+`agency_coverage` in `opportunities.json`. A portal may be accessible without
+exposing bid records or proposal documents for automated extraction.
+
+`agency_sources.py` now seeds known procurement URLs for additional WA cities
+(including Des Moines, SeaTac, Olympia, Snohomish, DuPont, Kent, Renton,
+Burien, Shoreline and Puyallup) and OR cities/transit/port agencies.
+For CivicEngage `Bids.aspx` sites, the search can verify RFQ/RFP status and
+deadline from each individual numeric-ID bid page. PDF-only "Read full RFP"
+pages require an actual bid-specific description; global website navigation
+does not establish consulting scope. Spokane Transit individual
+`/bidding-opportunity/` notices receive separate scope and deadline checks.
+
+**Vendor portal limitation:** Community Transit (ProcureWare), TriMet, Port of
+Portland (PlanetBids), Sherwood (Beacon), and other agencies may require
+registration or use JavaScript-only vendor portals. Their public procurement
+landing pages are useful sources, but a successful fetch does **not** prove
+all their open notices were automatically indexed.
+
+Offline regression tests are in `test_discovery.py`; the
+`.github/workflows/test-discovery.yml` workflow tests code pushes. The
+hourly `daily-update.yml` workflow handles live discovery and publication.
+GitHub Actions runs can be delayed or fail; verify the latest completed
+run's source status and then use **Refresh data** in the dashboard.
