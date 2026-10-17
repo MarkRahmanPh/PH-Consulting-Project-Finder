@@ -1,8 +1,8 @@
 {
   "parser_version": 6,
-  "updated_pacific": "Oct 16, 2026 11:50 PM PDT",
-  "last_run_iso": "2026-10-16T23:50:37.560301-07:00",
-  "official_sources_checked": 2,
+  "updated_pacific": "Oct 17, 2026 12:40 AM PDT",
+  "last_run_iso": "2026-10-17T00:40:52.269687-07:00",
+  "official_sources_checked": 3,
   "official_sources_total": 3,
   "source_checks": [
     {
@@ -12,8 +12,8 @@
     },
     {
       "source": "WA WEBS public bid calendar",
-      "ok": false,
-      "error": "TimeoutError"
+      "ok": true,
+      "matches": 0
     },
     {
       "source": "OR Port of Coos Bay solicitations",
@@ -109,7 +109,7 @@
     "accessible_this_run": 35,
     "pages_fetched_this_run": 35,
     "suspected_parser_gaps_this_run": 0,
-    "matches_this_run": 7,
+    "matches_this_run": 5,
     "directories_accessible": 4,
     "directories_total": 4,
     "note": "Agency directory targets are NOT all scanned every run. Only rotating batches are checked. Some cities require portal accounts; some directory sites do not expose websites to automated tools. Coverage and lead status are best-effort."
@@ -207,10 +207,10 @@
       "profile_url": "",
       "website": "https://bellevuewa.gov/city-government/departments/ITD/doing-business-with-it",
       "procurement_url": "https://bellevuewa.gov/city-government/departments/ITD/doing-business-with-it",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 12,
-      "last_check_at": "2026-10-16T23:50:44.234634-07:00",
+      "last_check_at": "2026-10-17T00:41:15.593025-07:00",
       "last_matches": 0
     },
     {
@@ -285,10 +285,10 @@
       "profile_url": "",
       "website": "https://www.burienwa.gov/city_hall/working_with_us/bids_rfp_rfq",
       "procurement_url": "https://www.burienwa.gov/city_hall/working_with_us/bids_rfp_rfq",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 12,
-      "last_check_at": "2026-10-16T22:40:56.056722-07:00",
+      "last_check_at": "2026-10-17T00:41:00.951825-07:00",
       "last_matches": 0
     },
     {
@@ -383,10 +383,10 @@
       "profile_url": "",
       "website": "https://www.desmoineswa.gov/Bids.aspx",
       "procurement_url": "https://www.desmoineswa.gov/Bids.aspx",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed",
       "priority": 12,
-      "last_check_at": "2026-10-16T22:40:57.647171-07:00",
+      "last_check_at": "2026-10-17T00:41:03.209506-07:00",
       "agency_notices_url": "https://www.desmoineswa.gov/171/Public-Hearings-Legal-Notices",
       "last_matches": 2
     },
@@ -398,10 +398,10 @@
       "profile_url": "",
       "website": "https://www.dupontwa.gov/556/Call-for-Bids",
       "procurement_url": "https://www.dupontwa.gov/556/Call-for-Bids",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 12,
-      "last_check_at": "2026-10-16T22:40:58.705806-07:00",
+      "last_check_at": "2026-10-17T00:41:04.346902-07:00",
       "last_matches": 0
     },
     {
@@ -610,10 +610,10 @@
       "profile_url": "",
       "website": "https://www.kentwa.gov/pay-and-apply/bids-procurement-rfps",
       "procurement_url": "https://www.kentwa.gov/pay-and-apply/bids-procurement-rfps",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 12,
-      "last_check_at": "2026-10-16T22:41:01.349199-07:00",
+      "last_check_at": "2026-10-17T00:41:08.373179-07:00",
       "last_matches": 0
     },
     {
@@ -662,10 +662,10 @@
       "profile_url": "",
       "website": "https://cityoflakewood.us/category/rfp-rfq-bids/",
       "procurement_url": "https://cityoflakewood.us/category/rfp-rfq-bids/",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 12,
-      "last_check_at": "2026-10-16T22:41:01.550126-07:00",
+      "last_check_at": "2026-10-17T00:41:08.532963-07:00",
       "last_matches": 0
     },
     {
@@ -832,10 +832,10 @@
       "profile_url": "",
       "website": "https://www.olympiawa.gov/government/contracts___purchasing/rfps_rfqs.php",
       "procurement_url": "https://www.olympiawa.gov/government/contracts___purchasing/rfps_rfqs.php",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 12,
-      "last_check_at": "2026-10-16T22:41:02.065166-07:00",
+      "last_check_at": "2026-10-17T00:41:08.863242-07:00",
       "last_matches": 0
     },
     {
@@ -932,10 +932,10 @@
       "profile_url": "",
       "website": "https://www.puyallupwa.gov/bids.aspx",
       "procurement_url": "https://www.puyallupwa.gov/bids.aspx",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 12,
-      "last_check_at": "2026-10-16T22:41:02.752518-07:00",
+      "last_check_at": "2026-10-17T00:41:09.747414-07:00",
       "last_matches": 0
     },
     {
@@ -960,10 +960,10 @@
       "profile_url": "",
       "website": "https://www.rentonwa.gov/Projects-Development/Bids-Proposals-Qualifications-and-Other-Procurement-Solicitations",
       "procurement_url": "https://www.rentonwa.gov/Projects-Development/Bids-Proposals-Qualifications-and-Other-Procurement-Solicitations",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 12,
-      "last_check_at": "2026-10-16T23:50:38.251234-07:00",
+      "last_check_at": "2026-10-17T00:41:10.448257-07:00",
       "last_matches": 0
     },
     {
@@ -1010,10 +1010,10 @@
       "profile_url": "",
       "website": "https://www.seatacwa.gov/business/rfp-rfq-bid-procurement",
       "procurement_url": "https://www.seatacwa.gov/business/rfp-rfq-bid-procurement",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 12,
-      "last_check_at": "2026-10-16T23:50:38.726258-07:00",
+      "last_check_at": "2026-10-17T00:41:10.718250-07:00",
       "last_matches": 0
     },
     {
@@ -1062,10 +1062,10 @@
       "profile_url": "",
       "website": "https://www.shorelinewa.gov/business/bids-rfps",
       "procurement_url": "https://www.shorelinewa.gov/business/bids-rfps",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 12,
-      "last_check_at": "2026-10-16T23:50:39.614155-07:00",
+      "last_check_at": "2026-10-17T00:41:10.967355-07:00",
       "last_matches": 0
     },
     {
@@ -1076,10 +1076,10 @@
       "profile_url": "",
       "website": "https://www.snohomishwa.gov/105/Bids-RFPs-RFQs",
       "procurement_url": "https://www.snohomishwa.gov/105/Bids-RFPs-RFQs",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 12,
-      "last_check_at": "2026-10-16T23:50:40.210960-07:00",
+      "last_check_at": "2026-10-17T00:41:11.815149-07:00",
       "last_matches": 0
     },
     {
@@ -1216,10 +1216,10 @@
       "profile_url": "",
       "website": "https://www.cityofvancouver.us/business/procurement-services/",
       "procurement_url": "https://www.cityofvancouver.us/business/procurement-services/",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 12,
-      "last_check_at": "2026-10-16T22:40:40.831860-07:00",
+      "last_check_at": "2026-10-17T00:40:53.511726-07:00",
       "last_matches": 0
     },
     {
@@ -1254,10 +1254,10 @@
       "profile_url": "",
       "website": "https://www.wenatcheewa.gov/services/bid-opportunities",
       "procurement_url": "https://www.wenatcheewa.gov/services/bid-opportunities",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 12,
-      "last_check_at": "2026-10-16T22:40:41.289953-07:00",
+      "last_check_at": "2026-10-17T00:40:53.789273-07:00",
       "last_matches": 0
     },
     {
@@ -1280,10 +1280,10 @@
       "profile_url": "",
       "website": "https://www.woodinville.gov/193/Bids-Proposals",
       "procurement_url": "https://www.woodinville.gov/193/Bids-Proposals",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Inaccessible / retry next rotation",
       "priority": 12,
-      "last_check_at": "2026-10-16T22:40:41.399814-07:00",
+      "last_check_at": "2026-10-17T00:40:53.851558-07:00",
       "last_matches": 0
     },
     {
@@ -1818,10 +1818,10 @@
       "profile_url": "",
       "website": "https://portofbenton.com/business-with-us/",
       "procurement_url": "https://portofbenton.com/business-with-us/",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-16T23:50:40.438973-07:00",
+      "last_check_at": "2026-10-17T00:41:12.019861-07:00",
       "last_matches": 1
     },
     {
@@ -1832,10 +1832,10 @@
       "profile_url": "",
       "website": "https://www.portseattle.org/",
       "procurement_url": "https://www.portseattle.org/business/bid-opportunities ",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 15,
-      "last_check_at": "2026-10-16T23:50:41.025604-07:00",
+      "last_check_at": "2026-10-17T00:41:12.202763-07:00",
       "last_matches": 0
     },
     {
@@ -1846,10 +1846,10 @@
       "profile_url": "",
       "website": "https://www.portoftacoma.com/",
       "procurement_url": "https://www.portoftacoma.com/procurement",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 15,
-      "last_check_at": "2026-10-16T23:50:41.288023-07:00",
+      "last_check_at": "2026-10-17T00:41:13.125457-07:00",
       "last_matches": 0
     },
     {
@@ -1860,10 +1860,10 @@
       "profile_url": "",
       "website": "https://www.portvanusa.com/business-opportunities/projects-contracts/",
       "procurement_url": "https://www.portvanusa.com/business-opportunities/projects-contracts/",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 15,
-      "last_check_at": "2026-10-16T22:40:50.508477-07:00",
+      "last_check_at": "2026-10-17T00:40:59.000396-07:00",
       "last_matches": 0
     },
     {
@@ -1874,10 +1874,10 @@
       "profile_url": "",
       "website": "https://omwbe.wa.gov/small-business-assistance/bids-contracting-opportunities",
       "procurement_url": "https://omwbe.wa.gov/bid-opportunities/rfq-wetland-and-stream-services-request-2025-county-safety-program",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 15,
-      "last_check_at": "2026-10-16T23:50:42.020411-07:00",
+      "last_check_at": "2026-10-17T00:41:13.957604-07:00",
       "last_matches": 0
     },
     {
@@ -1888,10 +1888,10 @@
       "profile_url": "",
       "website": "https://wsdot.wa.gov/",
       "procurement_url": "https://wsdot.wa.gov/business-wsdot/how-do-business-us",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 15,
-      "last_check_at": "2026-10-16T23:50:42.552989-07:00",
+      "last_check_at": "2026-10-17T00:41:14.268684-07:00",
       "last_matches": 0
     },
     {
@@ -1902,10 +1902,10 @@
       "profile_url": "",
       "website": "https://www.communitytransit.org/procurement",
       "procurement_url": "https://www.communitytransit.org/procurement",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 15,
-      "last_check_at": "2026-10-16T22:40:42.475367-07:00",
+      "last_check_at": "2026-10-17T00:40:55.007300-07:00",
       "last_matches": 0
     },
     {
@@ -1916,10 +1916,10 @@
       "profile_url": "",
       "website": "https://kingcounty.gov/",
       "procurement_url": "",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official website accessed — no public bids link found",
       "priority": 15,
-      "last_check_at": "2026-10-16T22:40:41.870347-07:00",
+      "last_check_at": "2026-10-17T00:40:53.995506-07:00",
       "last_matches": 0
     },
     {
@@ -1930,10 +1930,10 @@
       "profile_url": "",
       "website": "https://piercetransit.org/procurement/",
       "procurement_url": "https://piercetransit.org/procurement/",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 15,
-      "last_check_at": "2026-10-16T22:40:50.256147-07:00",
+      "last_check_at": "2026-10-17T00:40:58.857709-07:00",
       "last_matches": 0
     },
     {
@@ -1944,10 +1944,10 @@
       "profile_url": "",
       "website": "https://www.soundtransit.org/get-to-know-us/doing-business-with-us/procurement-contracts-agreements",
       "procurement_url": "https://www.soundtransit.org/get-to-know-us/doing-business-with-us/procurement-contracts-agreements",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 15,
-      "last_check_at": "2026-10-16T22:40:54.756649-07:00",
+      "last_check_at": "2026-10-17T00:40:59.495077-07:00",
       "last_matches": 0
     },
     {
@@ -1958,10 +1958,10 @@
       "profile_url": "",
       "website": "https://www.spokanetransit.com/bidding-opportunities/",
       "procurement_url": "https://www.spokanetransit.com/bidding-opportunities/",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Inaccessible / retry next rotation",
       "priority": 15,
-      "last_check_at": "2026-10-16T22:40:54.889439-07:00",
+      "last_check_at": "2026-10-17T00:40:59.597597-07:00",
       "last_matches": 0
     },
     {
@@ -2058,10 +2058,10 @@
       "profile_url": "",
       "website": "https://bendoregon.gov/departments/administration/procurement/",
       "procurement_url": "https://bendoregon.gov/departments/administration/procurement/",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Inaccessible / retry next rotation",
       "priority": 8,
-      "last_check_at": "2026-10-16T22:41:22.811689-07:00",
+      "last_check_at": "2026-10-17T00:41:16.323691-07:00",
       "last_matches": 0
     },
     {
@@ -2180,10 +2180,10 @@
       "profile_url": "",
       "website": "https://www.eugene-or.gov/108/Purchasing",
       "procurement_url": "https://www.eugene-or.gov/108/Purchasing",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Inaccessible / retry next rotation",
       "priority": 8,
-      "last_check_at": "2026-10-16T22:41:23.251947-07:00",
+      "last_check_at": "2026-10-17T00:41:16.746005-07:00",
       "last_matches": 0
     },
     {
@@ -2290,10 +2290,10 @@
       "profile_url": "",
       "website": "https://www.hillsboro-oregon.gov/our-city/departments/finance/procurement",
       "procurement_url": "https://www.hillsboro-oregon.gov/our-city/departments/finance/procurement",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 8,
-      "last_check_at": "2026-10-16T22:41:23.617565-07:00",
+      "last_check_at": "2026-10-17T00:41:17.116270-07:00",
       "last_matches": 0
     },
     {
@@ -2546,10 +2546,10 @@
       "profile_url": "",
       "website": "https://www.portland.gov/business-opportunities",
       "procurement_url": "https://www.portland.gov/business-opportunities",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 8,
-      "last_check_at": "2026-10-16T23:50:55.805505-07:00",
+      "last_check_at": "2026-10-17T00:41:18.767800-07:00",
       "last_matches": 0
     },
     {
@@ -2644,10 +2644,10 @@
       "profile_url": "",
       "website": "https://www.sherwoodoregon.gov/rfps-new/",
       "procurement_url": "https://www.sherwoodoregon.gov/rfps-new/",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 8,
-      "last_check_at": "2026-10-16T22:41:22.255204-07:00",
+      "last_check_at": "2026-10-17T00:41:15.775708-07:00",
       "last_matches": 0
     },
     {
@@ -2742,10 +2742,10 @@
       "profile_url": "",
       "website": "https://www.tigard-or.gov/business-development/bids-requests-for-proposals",
       "procurement_url": "https://www.tigard-or.gov/business-development/bids-requests-for-proposals",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 8,
-      "last_check_at": "2026-10-16T22:41:22.595842-07:00",
+      "last_check_at": "2026-10-17T00:41:16.132740-07:00",
       "last_matches": 0
     },
     {
@@ -2852,10 +2852,10 @@
       "profile_url": "",
       "website": "https://www.clackamas.us/procurement-process",
       "procurement_url": "https://www.clackamas.us/procurement-process",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 8,
-      "last_check_at": "2026-10-16T22:41:23.105612-07:00",
+      "last_check_at": "2026-10-17T00:41:16.457524-07:00",
       "last_matches": 0
     },
     {
@@ -3130,10 +3130,10 @@
       "profile_url": "",
       "website": "https://multco.us/info/bids-proposal-opportunities",
       "procurement_url": "https://multco.us/info/bids-proposal-opportunities",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 8,
-      "last_check_at": "2026-10-16T23:50:55.614037-07:00",
+      "last_check_at": "2026-10-17T00:41:17.684758-07:00",
       "last_matches": 0
     },
     {
@@ -3228,10 +3228,10 @@
       "profile_url": "",
       "website": "https://www.washingtoncountyor.gov/procurement",
       "procurement_url": "https://www.washingtoncountyor.gov/procurement",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 8,
-      "last_check_at": "2026-10-16T23:50:58.884440-07:00",
+      "last_check_at": "2026-10-17T00:41:23.516935-07:00",
       "last_matches": 0
     },
     {
@@ -3266,10 +3266,10 @@
       "profile_url": "",
       "website": "https://www.portofcoosbay.com/solicitations-public-notices",
       "procurement_url": "https://www.portofcoosbay.com/solicitations-public-notices",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed",
       "priority": 15,
-      "last_check_at": "2026-10-16T23:50:58.125924-07:00",
+      "last_check_at": "2026-10-17T00:41:22.882776-07:00",
       "last_matches": 2
     },
     {
@@ -3280,10 +3280,10 @@
       "profile_url": "",
       "website": "https://www.portofmorrow.com/",
       "procurement_url": "https://www.portofmorrow.com/rfps",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 15,
-      "last_check_at": "2026-10-16T23:50:58.552015-07:00",
+      "last_check_at": "2026-10-17T00:41:23.161156-07:00",
       "last_matches": 0
     },
     {
@@ -3322,10 +3322,10 @@
       "profile_url": "",
       "website": "https://www.oregon.gov/odot/",
       "procurement_url": "https://www.oregon.gov/odot/Business/Procurement/Pages/index.aspx",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 15,
-      "last_check_at": "2026-10-16T23:50:57.719218-07:00",
+      "last_check_at": "2026-10-17T00:41:22.551749-07:00",
       "last_matches": 0
     },
     {
@@ -3336,10 +3336,10 @@
       "profile_url": "",
       "website": "https://oregonbuys.gov/",
       "procurement_url": "",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Supplier portal — manual review",
       "priority": 15,
-      "last_check_at": "2026-10-16T23:50:57.719273-07:00",
+      "last_check_at": "2026-10-17T00:41:22.551808-07:00",
       "last_matches": 0
     },
     {
@@ -3350,10 +3350,10 @@
       "profile_url": "",
       "website": "https://www.ltd.org/",
       "procurement_url": "https://www.ltd.org/about/doing-business/procurement/",
-      "last_check": "2026-10-16",
+      "last_check": "2026-10-17",
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "priority": 15,
-      "last_check_at": "2026-10-16T23:51:03.347098-07:00",
+      "last_check_at": "2026-10-17T00:41:27.955585-07:00",
       "last_matches": 0
     },
     {
@@ -3418,6 +3418,200 @@
     }
   ],
   "agency_checks": [
+    {
+      "agency": "Vancouver",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://www.cityofvancouver.us/business/procurement-services/",
+      "ok": true,
+      "page_accessed": true,
+      "parser_warning": false,
+      "attempted": true,
+      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
+      "matches": 0
+    },
+    {
+      "agency": "Wenatchee",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://www.wenatcheewa.gov/services/bid-opportunities",
+      "ok": true,
+      "page_accessed": true,
+      "parser_warning": false,
+      "attempted": true,
+      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
+      "matches": 0
+    },
+    {
+      "agency": "Woodinville",
+      "state": "WA",
+      "kind": "city",
+      "source": "",
+      "ok": false,
+      "page_accessed": false,
+      "parser_warning": false,
+      "attempted": true,
+      "status": "Inaccessible / retry next rotation",
+      "matches": 0,
+      "error": "HTTPError"
+    },
+    {
+      "agency": "King County Metro",
+      "state": "WA",
+      "kind": "transit",
+      "source": "https://kingcounty.gov/",
+      "ok": true,
+      "page_accessed": true,
+      "parser_warning": false,
+      "attempted": true,
+      "status": "Official website accessed — no public bids link found",
+      "matches": 0
+    },
+    {
+      "agency": "Community Transit",
+      "state": "WA",
+      "kind": "transit",
+      "source": "https://www.communitytransit.org/procurement",
+      "ok": true,
+      "page_accessed": true,
+      "parser_warning": false,
+      "attempted": true,
+      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
+      "matches": 0
+    },
+    {
+      "agency": "Pierce Transit",
+      "state": "WA",
+      "kind": "transit",
+      "source": "https://piercetransit.org/procurement/",
+      "ok": true,
+      "page_accessed": true,
+      "parser_warning": false,
+      "attempted": true,
+      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
+      "matches": 0
+    },
+    {
+      "agency": "Port of Vancouver USA",
+      "state": "WA",
+      "kind": "port",
+      "source": "https://www.portvanusa.com/business-opportunities/projects-contracts/",
+      "ok": true,
+      "page_accessed": true,
+      "parser_warning": false,
+      "attempted": true,
+      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
+      "matches": 0
+    },
+    {
+      "agency": "Sound Transit",
+      "state": "WA",
+      "kind": "transit",
+      "source": "https://www.soundtransit.org/get-to-know-us/doing-business-with-us/procurement-contracts-agreements",
+      "ok": true,
+      "page_accessed": true,
+      "parser_warning": false,
+      "attempted": true,
+      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
+      "matches": 0
+    },
+    {
+      "agency": "Spokane Transit",
+      "state": "WA",
+      "kind": "transit",
+      "source": "",
+      "ok": false,
+      "page_accessed": false,
+      "parser_warning": false,
+      "attempted": true,
+      "status": "Inaccessible / retry next rotation",
+      "matches": 0,
+      "error": "HTTPError"
+    },
+    {
+      "agency": "Burien",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://www.burienwa.gov/city_hall/working_with_us/bids_rfp_rfq",
+      "ok": true,
+      "page_accessed": true,
+      "parser_warning": false,
+      "attempted": true,
+      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
+      "matches": 0
+    },
+    {
+      "agency": "Des Moines",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://www.desmoineswa.gov/Bids.aspx",
+      "ok": true,
+      "page_accessed": true,
+      "parser_warning": false,
+      "attempted": true,
+      "status": "Official procurement page accessed",
+      "matches": 2
+    },
+    {
+      "agency": "DuPont",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://www.dupontwa.gov/556/Call-for-Bids",
+      "ok": true,
+      "page_accessed": true,
+      "parser_warning": false,
+      "attempted": true,
+      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
+      "matches": 0
+    },
+    {
+      "agency": "Kent",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://www.kentwa.gov/pay-and-apply/bids-procurement-rfps",
+      "ok": true,
+      "page_accessed": true,
+      "parser_warning": false,
+      "attempted": true,
+      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
+      "matches": 0
+    },
+    {
+      "agency": "Lakewood",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://cityoflakewood.us/category/rfp-rfq-bids/",
+      "ok": true,
+      "page_accessed": true,
+      "parser_warning": false,
+      "attempted": true,
+      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
+      "matches": 0
+    },
+    {
+      "agency": "Olympia",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://www.olympiawa.gov/government/contracts___purchasing/rfps_rfqs.php",
+      "ok": true,
+      "page_accessed": true,
+      "parser_warning": false,
+      "attempted": true,
+      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
+      "matches": 0
+    },
+    {
+      "agency": "Puyallup",
+      "state": "WA",
+      "kind": "city",
+      "source": "https://www.puyallupwa.gov/bids.aspx",
+      "ok": true,
+      "page_accessed": true,
+      "parser_warning": false,
+      "attempted": true,
+      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
+      "matches": 0
+    },
     {
       "agency": "Renton",
       "state": "WA",
@@ -3539,10 +3733,10 @@
       "matches": 0
     },
     {
-      "agency": "Bellingham",
-      "state": "WA",
+      "agency": "Sherwood",
+      "state": "OR",
       "kind": "city",
-      "source": "https://cob.org/services/business/purchasing/purchasing-bid-opening",
+      "source": "https://www.sherwoodoregon.gov/rfps-new/",
       "ok": true,
       "page_accessed": true,
       "parser_warning": false,
@@ -3551,10 +3745,10 @@
       "matches": 0
     },
     {
-      "agency": "Federal Way",
-      "state": "WA",
+      "agency": "Tigard",
+      "state": "OR",
       "kind": "city",
-      "source": "https://www.federalwaywa.gov/bids",
+      "source": "https://www.tigard-or.gov/business-development/bids-requests-for-proposals",
       "ok": true,
       "page_accessed": true,
       "parser_warning": false,
@@ -3563,20 +3757,8 @@
       "matches": 0
     },
     {
-      "agency": "Bothell",
-      "state": "WA",
-      "kind": "city",
-      "source": "https://www.bothellwa.gov/bids.aspx",
-      "ok": true,
-      "page_accessed": true,
-      "parser_warning": false,
-      "attempted": true,
-      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
-      "matches": 0
-    },
-    {
-      "agency": "Everett",
-      "state": "WA",
+      "agency": "Bend",
+      "state": "OR",
       "kind": "city",
       "source": "",
       "ok": false,
@@ -3588,23 +3770,10 @@
       "error": "HTTPError"
     },
     {
-      "agency": "King County",
-      "state": "WA",
+      "agency": "Clackamas County",
+      "state": "OR",
       "kind": "county",
-      "source": "",
-      "ok": false,
-      "page_accessed": false,
-      "parser_warning": false,
-      "attempted": true,
-      "status": "Inaccessible / retry next rotation",
-      "matches": 0,
-      "error": "HTTPError"
-    },
-    {
-      "agency": "Pasco",
-      "state": "WA",
-      "kind": "city",
-      "source": "https://www.pasco-wa.gov/Bids.aspx",
+      "source": "https://www.clackamas.us/procurement-process",
       "ok": true,
       "page_accessed": true,
       "parser_warning": false,
@@ -3613,45 +3782,8 @@
       "matches": 0
     },
     {
-      "agency": "Pierce County",
-      "state": "WA",
-      "kind": "county",
-      "source": "https://www.piercecountywa.gov/currentsolicitations",
-      "ok": true,
-      "page_accessed": true,
-      "parser_warning": false,
-      "attempted": true,
-      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
-      "matches": 0
-    },
-    {
-      "agency": "Snohomish County",
-      "state": "WA",
-      "kind": "county",
-      "source": "https://snohomishcountywa.gov/3706/Purchasing-Portal",
-      "ok": true,
-      "page_accessed": true,
-      "parser_warning": false,
-      "attempted": true,
-      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
-      "matches": 0
-    },
-    {
-      "agency": "Whatcom County",
-      "state": "WA",
-      "kind": "county",
-      "source": "",
-      "ok": false,
-      "page_accessed": false,
-      "parser_warning": false,
-      "attempted": true,
-      "status": "Inaccessible / retry next rotation",
-      "matches": 0,
-      "error": "HTTPError"
-    },
-    {
-      "agency": "Issaquah",
-      "state": "WA",
+      "agency": "Eugene",
+      "state": "OR",
       "kind": "city",
       "source": "",
       "ok": false,
@@ -3663,70 +3795,10 @@
       "error": "HTTPError"
     },
     {
-      "agency": "Lacey",
-      "state": "WA",
+      "agency": "Hillsboro",
+      "state": "OR",
       "kind": "city",
-      "source": "https://cityoflacey.org/rfp-rfq/",
-      "ok": true,
-      "page_accessed": true,
-      "parser_warning": false,
-      "attempted": true,
-      "status": "Official procurement page accessed",
-      "matches": 3
-    },
-    {
-      "agency": "Redmond",
-      "state": "WA",
-      "kind": "city",
-      "source": "https://www.redmond.gov/bids.aspx",
-      "ok": true,
-      "page_accessed": true,
-      "parser_warning": false,
-      "attempted": true,
-      "status": "Official procurement page accessed",
-      "matches": 1
-    },
-    {
-      "agency": "Seattle",
-      "state": "WA",
-      "kind": "city",
-      "source": "https://www.seattle.gov/purchasing-and-contracting",
-      "ok": true,
-      "page_accessed": true,
-      "parser_warning": false,
-      "attempted": true,
-      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
-      "matches": 0
-    },
-    {
-      "agency": "Spokane",
-      "state": "WA",
-      "kind": "city",
-      "source": "https://my.spokanecity.org/administrative/purchasing/",
-      "ok": true,
-      "page_accessed": true,
-      "parser_warning": false,
-      "attempted": true,
-      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
-      "matches": 0
-    },
-    {
-      "agency": "Sumner",
-      "state": "WA",
-      "kind": "city",
-      "source": "https://sumnerwa.gov/bids/",
-      "ok": true,
-      "page_accessed": true,
-      "parser_warning": false,
-      "attempted": true,
-      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
-      "matches": 0
-    },
-    {
-      "agency": "Tacoma",
-      "state": "WA",
-      "kind": "city",
-      "source": "https://tacoma.gov/government/departments/finance/procurement-and-payables-division/purchasing/contracting-opportunities/",
+      "source": "https://www.hillsboro-oregon.gov/our-city/departments/finance/procurement",
       "ok": true,
       "page_accessed": true,
       "parser_warning": false,
@@ -3829,78 +3901,6 @@
       "attempted": true,
       "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
       "matches": 0
-    },
-    {
-      "agency": "Metro (Oregon)",
-      "state": "OR",
-      "kind": "regional",
-      "source": "https://www.oregonmetro.gov/about-metro/doing-business-metro",
-      "ok": true,
-      "page_accessed": true,
-      "parser_warning": false,
-      "attempted": true,
-      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
-      "matches": 0
-    },
-    {
-      "agency": "Beaverton",
-      "state": "OR",
-      "kind": "city",
-      "source": "https://beavertonoregon.gov/bid-proposal-opportunities",
-      "ok": true,
-      "page_accessed": true,
-      "parser_warning": false,
-      "attempted": true,
-      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
-      "matches": 0
-    },
-    {
-      "agency": "Port of Portland",
-      "state": "OR",
-      "kind": "port",
-      "source": "https://www.portofportland.com/business/Vendors",
-      "ok": true,
-      "page_accessed": true,
-      "parser_warning": false,
-      "attempted": true,
-      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
-      "matches": 0
-    },
-    {
-      "agency": "Salem Area Mass Transit District",
-      "state": "OR",
-      "kind": "transit",
-      "source": "https://partal.cherriots.org/procurement/",
-      "ok": true,
-      "page_accessed": true,
-      "parser_warning": false,
-      "attempted": true,
-      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
-      "matches": 0
-    },
-    {
-      "agency": "TriMet",
-      "state": "OR",
-      "kind": "transit",
-      "source": "https://trimet.org/procurement/",
-      "ok": true,
-      "page_accessed": true,
-      "parser_warning": false,
-      "attempted": true,
-      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
-      "matches": 0
-    },
-    {
-      "agency": "Lake Oswego",
-      "state": "OR",
-      "kind": "city",
-      "source": "https://www.ci.oswego.or.us/bids/",
-      "ok": true,
-      "page_accessed": true,
-      "parser_warning": false,
-      "attempted": true,
-      "status": "Official procurement page accessed — no PH consultant RFQs confirmed",
-      "matches": 0
     }
   ],
   "catalog_last_refresh": "2026-10-11",
@@ -3924,10 +3924,10 @@
       "due_time": "4:00 PM PT",
       "questions_due": "2026-10-16 12:00 PM PT",
       "published_date": "2026-10-01",
-      "verified_on": "2026-10-16",
+      "verified_on": "2026-10-17",
       "first_seen": "2026-10-16",
       "found": "2026-10-16",
-      "last_seen": "2026-10-16",
+      "last_seen": "2026-10-17",
       "change_type": "NEWLY FOUND",
       "change_on": "2026-10-16",
       "expired": false,
@@ -3995,7 +3995,7 @@
       "source_kind": "official_detail",
       "first_seen": "2026-10-11",
       "addenda_count": 0,
-      "last_seen": "2026-10-16",
+      "last_seen": "2026-10-17",
       "expired": false,
       "is_tsp": false
     },
@@ -4018,10 +4018,10 @@
       "due_time": "4:00 PM PT",
       "questions_due": "2026-10-30 12:00 PM PT",
       "published_date": "2026-10-15",
-      "verified_on": "2026-10-16",
+      "verified_on": "2026-10-17",
       "first_seen": "2026-10-16",
       "found": "2026-10-16",
-      "last_seen": "2026-10-16",
+      "last_seen": "2026-10-17",
       "change_type": "NEWLY FOUND",
       "change_on": "2026-10-16",
       "expired": false,
@@ -4045,10 +4045,10 @@
       "source": "WA OMWBE official bid listing",
       "status": "Issuing notice checked — deadline observed",
       "found": "2026-10-11",
-      "verified_on": "2026-10-16",
+      "verified_on": "2026-10-17",
       "source_kind": "official_detail",
       "first_seen": "2026-10-11",
-      "last_seen": "2026-10-16",
+      "last_seen": "2026-10-17",
       "addenda_count": 0,
       "expired": false,
       "is_tsp": false
@@ -4089,8 +4089,8 @@
       "due_date": "2026-10-30",
       "due_time": "",
       "role": "Review prime/subconsultant fit",
-      "verified_on": "2026-10-16",
-      "last_seen": "2026-10-16",
+      "verified_on": "2026-10-17",
+      "last_seen": "2026-10-17",
       "addenda_count": 0,
       "first_seen": "2026-10-11",
       "found": "2026-10-11",
@@ -4114,8 +4114,8 @@
       "due_date": "2026-11-04",
       "due_time": "",
       "role": "Review prime/subconsultant fit",
-      "verified_on": "2026-10-16",
-      "last_seen": "2026-10-16",
+      "verified_on": "2026-10-17",
+      "last_seen": "2026-10-17",
       "addenda_count": 0,
       "first_seen": "2026-10-11",
       "found": "2026-10-11",
@@ -4167,7 +4167,7 @@
       "due_time": "",
       "role": "Review prime/subconsultant fit",
       "verified_on": null,
-      "last_seen": "2026-10-16",
+      "last_seen": "2026-10-17",
       "addenda_count": null,
       "agency_id": "WA|port|port of benton",
       "first_seen": "2026-10-12",
@@ -4192,10 +4192,10 @@
       "source": "Port of Coos Bay official solicitations",
       "status": "Issuing notice checked — deadline observed",
       "found": "2026-10-11",
-      "verified_on": "2026-10-16",
+      "verified_on": "2026-10-17",
       "source_kind": "official_detail",
       "first_seen": "2026-10-11",
-      "last_seen": "2026-10-16",
+      "last_seen": "2026-10-17",
       "addenda_count": 3,
       "expired": false,
       "agency_id": "OR|port|port of coos bay",
@@ -4218,10 +4218,10 @@
       "source": "Port of Coos Bay official solicitations",
       "status": "Issuing notice checked — deadline observed",
       "found": "2026-10-11",
-      "verified_on": "2026-10-16",
+      "verified_on": "2026-10-17",
       "source_kind": "official_detail",
       "first_seen": "2026-10-11",
-      "last_seen": "2026-10-16",
+      "last_seen": "2026-10-17",
       "addenda_count": 3,
       "expired": false,
       "agency_id": "OR|port|port of coos bay",
@@ -4272,8 +4272,8 @@
       "due_date": "2026-10-12",
       "due_time": "",
       "role": "Review prime/subconsultant fit",
-      "verified_on": "2026-10-16",
-      "last_seen": "2026-10-16",
+      "verified_on": "2026-10-17",
+      "last_seen": "2026-10-17",
       "addenda_count": 0,
       "first_seen": "2026-10-11",
       "found": "2026-10-11",
