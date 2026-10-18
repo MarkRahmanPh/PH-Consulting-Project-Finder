@@ -1,13 +1,28 @@
 name: Daily PH opportunity discovery
 on:
+  # Test and refresh immediately after source/recognition fixes, not just hourly.
+  # Generated opportunities.json commits are excluded to prevent update loops.
+  push:
+    branches: [main]
+    paths:
+      - 'update.py'
+      - 'agency_sources.py'
+      - 'procurement_sources.py'
+      - 'test_discovery.py'
+      - '.github/workflows/daily-update.yml'
   schedule:
     - cron: '17 * * * *' # Run hourly at :17 UTC (also :17 Pacific); GitHub may delay scheduled runs
   workflow_dispatch:
 permissions:
   contents: write
+# Keep a scheduled scan and a code-triggered scan from racing to push JSON.
+concurrency:
+  group: ph-project-finder-opportunity-refresh
+  cancel-in-progress: false
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
