@@ -9,6 +9,26 @@ import agency_sources as agencies
 
 
 class OpportunityDiscoveryTests(unittest.TestCase):
+    def test_lewis_county_road_slide_design_rfq_is_found(self):
+        title = ("RFQ - Design and Engineering for the Davis Lake Road "
+                 "MP 1.67 Slide Repair Project")
+        self.assertEqual(finder.classify_title(
+            title, require_procurement=True), "civil")
+
+    def test_omwbe_organization_field_restores_real_issuing_agency(self):
+        html = """
+        <main><h1>RFQ PW 26-0011 - On-Call Traffic Engineering Services</h1>
+        <p>The City seeks on-call traffic engineering firms.</p>
+        <p>Closing Date: Thursday, November 5, 2026</p>
+        <p>Organization: City of Woodinville</p>
+        <p>Point of Contact: Procurement Team</p></main>
+        """
+        row = {"title":"RFQ PW 26-0011 - On-Call Traffic Engineering Services",
+               "url":"https://omwbe.wa.gov/bid-opportunities/rfq-pw-26-0011"}
+        detail = finder.official_detail(html, row, "2026-10-17")
+        self.assertEqual(detail["issuing_agency"], "City of Woodinville")
+        self.assertEqual(detail["due_date"], "2026-11-05")
+
     def test_clark_county_consulting_rfps_discovered(self):
         self.assertEqual(finder.classify_title(
             "RFP #969 - Intersection Control Evaluation - NE 72nd Avenue",
