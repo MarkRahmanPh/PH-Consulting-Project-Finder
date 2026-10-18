@@ -231,6 +231,7 @@ FIT_RULES = [
         r"street[s]?cape|civil engineering|transportation engineering|"
         r"pavement engineering (?:support|services?|consulting)|"
         r"pavement management (?:stud(?:y|ies)|services?|design)|"
+        r"road(?:way)?\s+MP\s+\d+(?:\.\d+)?\s+slide repair|"
         r"intersection control evaluations?|intersection control stud(?:y|ies)|"
         r"intersection (?:improvements?|redesign|reconstruction|design)|"
         r"roadway signing|traffic signs? (?:and|&) (?:pavement )?markings?|"
@@ -592,9 +593,24 @@ def official_detail(html, row, today):
         # HTML document may identify addenda without a linked PDF.
         mentions = re.findall(r'\b(?:addendum|addenda)\s*\d+\b', text, re.I)
         addenda = {clean(x).lower() for x in mentions}
+    # OMWBE submissions identify the actual issuing agency in this record's
+    # own Organization field. Preserve official agency names on the dashboard
+    # rather than displaying a generic portal placeholder indefinitely.
+    issuing_agency = None
+    if urllib.parse.urlsplit(row.get('url', '')).hostname in (
+            'omwbe.wa.gov', 'www.omwbe.wa.gov'):
+        org = re.search(
+            r'\bOrganization:\s*(.{3,105}?)\s+Point of Contact\s*:',
+            text, re.I)
+        if org:
+            candidate = clean(org.group(1))
+            if candidate and len(candidate) <= 90 and not re.search(
+                    r'\b(?:closing date|published|deadline)\b', candidate, re.I):
+                issuing_agency = candidate
     return {'due_date': due, 'addenda_count': len(addenda),
             'category': classify_title(row.get('title', ''), require_procurement=False),
-            'detail_excerpt': text[:410], 'verified_on': today}
+            'detail_excerpt': text[:410], 'issuing_agency': issuing_agency,
+            'verified_on': today}
 
 
 def google_news(query):
@@ -839,6 +855,9 @@ def check_details(rows, today, logs):
                 row['change_on'] = today
             row['addenda_count'] = result['addenda_count']
             row['category'] = result['category']
+            if result.get('issuing_agency') and str(row.get('agency', '')).startswith(
+                    ('Agency named in notice', 'WA WEBS (see notice', 'Not confirmed')):
+                row['agency'] = result['issuing_agency']
             row['last_seen'] = today
             row['source_kind'] = 'official_detail'
             logs.append({'source': row['title'][:55], 'ok': True})
