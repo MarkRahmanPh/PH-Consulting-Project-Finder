@@ -229,6 +229,9 @@ FIT_RULES = [
         r"road (?:design|engineering|reconstruction|rehabilitation|improvements?|slide repair)|"
         r"street (?:improvements?|design|reconstruction|rehabilitation)|"
         r"street[s]?cape|civil engineering|transportation engineering|"
+        r"pavement engineering (?:support|services?|consulting)|"
+        r"pavement management (?:stud(?:y|ies)|services?|design)|"
+        r"intersection control evaluations?|intersection control stud(?:y|ies)|"
         r"intersection (?:improvements?|redesign|reconstruction|design)|"
         r"roadway signing|traffic signs? (?:and|&) (?:pavement )?markings?|"
         r"pavement markings?|street lighting|roadway lighting|"
@@ -555,7 +558,13 @@ def scan_coos(html, base, today):
         p = urllib.parse.urlsplit(url)
         if p.netloc not in ('portofcoosbay.com', 'www.portofcoosbay.com'): continue
         if '/request-for-proposals-' not in p.path: continue
-        title = a.text()
+        # Some Coos Bay list links embed the entire introductory paragraph
+        # inside one anchor. Stop at the known start of the body to avoid
+        # publishing 200-character truncated, unreadable project titles.
+        raw_title = a.text()
+        title = clean(re.split(
+            r'\bThe Oregon International Port of Coos Bay\b',
+            raw_title, maxsplit=1, flags=re.I)[0])
         if url in seen or not classify_title(title): continue
         seen.add(url)
         yield standard_row(title, 'Oregon International Port of Coos Bay', 'OR', url, title,
@@ -670,6 +679,25 @@ def apply_observation(rows, observation, today):
         row.update({k: v for k, v in observation.items() if v is not None and k not in ('id', 'found')})
         row['id'] = old['id']
         row['first_seen'] = old.get('first_seen', old.get('found', today))
+        # Directory/aggregator source metadata is less precise than the
+        # previously identified issuing agency. Never replace the verified
+        # City of Woodinville (etc.) with "Agency named in notice".
+        generic_agencies = ('Agency named in notice', 'WA WEBS (see notice',
+                            'Not confirmed')
+        if (old.get('agency') and
+                not old['agency'].startswith(generic_agencies) and
+                str(observation.get('agency', '')).startswith(generic_agencies)):
+            row['agency'] = old['agency']
+        # A title-only scraper observation must not erase a useful, verified
+        # manually recorded scope or proposal team recommendation.
+        brief = clean(observation.get('summary', ''))
+        prior_summary = clean(old.get('summary', ''))
+        if prior_summary and (brief == clean(observation.get('title', '')) or
+                              len(brief) < 35) and len(prior_summary) > len(brief):
+            row['summary'] = prior_summary
+        if (old.get('role') and observation.get('role') ==
+                'Review prime/subconsultant fit'):
+            row['role'] = old['role']
         # Preserve manually verified consultant details when a fresh automatic
         # listing provides only the link title. The scan can still update the
         # status, actual due date, last-seen time and amendment history.
@@ -706,6 +734,82 @@ def apply_observation(rows, observation, today):
         row['change_on'] = today
         rows[row['id']] = row
     return rows[row['id']]
+
+
+
+# Duplicate notices can be syndicated by OMWBE and the issuing agency.
+# Deduplicate only by an unambiguous RFQ/RFP identification code, not by
+# "similar-sounding" titles or shared corridor locations.
+NOTICE_REFERENCE = re.compile(
+    r'\b(?:RFP|RFQ|RSOQ|SOQ)\s*(?:#\s*:?\s*|No\.?\s*|:\s*)?'
+    r'([A-Z]{1,4}[- ]\d{2,4}[- ]\d{1,4}(?:[- ]\d{1,4})?)\b', re.I
+)
+
+
+def notice_reference(title):
+    match = NOTICE_REFERENCE.search(title or '')
+    return re.sub(r'[^A-Z0-9]', '', match.group(1).upper()) if match else ''
+
+
+def deduplicate_official_notices(rows):
+    """Merge multi-site postings of the SAME numbered solicitation.
+
+    Keep the issuing-agency record, alternative source links, and earliest
+    discovery date; never conflate different solicitations at one junction.
+    """
+    group = {}
+    removed = 0
+    for rid, item in list(rows.items()):
+        if item.get('source_kind') == 'news_feed':
+            continue
+        reference = notice_reference(item.get('title', ''))
+        if not reference:
+            continue
+        key = (item.get('state'), reference, item.get('category'))
+        group.setdefault(key, []).append((rid, item))
+    for notices in group.values():
+        if len(notices) < 2:
+            continue
+        def trust(value):
+            rid, item = value
+            host = (urllib.parse.urlsplit(item.get('url') or '').hostname or '').lower()
+            return (not str(item.get('agency') or '').startswith(
+                ('Agency named in notice', 'WA WEBS', 'Not confirmed')),
+                host not in ('omwbe.wa.gov', 'www.omwbe.wa.gov'),
+                item.get('source_kind') == 'official_detail',
+                len(item.get('summary') or ''))
+        winner_id, winner = max(notices, key=trust)
+        for rid, item in notices:
+            if rid == winner_id:
+                continue
+            # If both identify different real issuing agencies, the number
+            # alone is not unique statewide and MUST NOT merge these rows.
+            a, b = winner.get('agency', ''), item.get('agency', '')
+            unknown = lambda x: str(x).startswith(
+                ('Agency named in notice', 'WA WEBS', 'Not confirmed'))
+            if a != b and not (unknown(a) or unknown(b)):
+                continue
+            alternate = set(winner.get('alternate_urls') or [])
+            alternate.update(item.get('alternate_urls') or [])
+            if item.get('url') != winner.get('url'):
+                alternate.add(item['url'])
+            winner['alternate_urls'] = sorted(alternate)
+            dates = [x for x in [winner.get('first_seen'),
+                                  item.get('first_seen')] if x]
+            if dates:
+                winner['first_seen'] = min(dates)
+            if not winner.get('due_date') and item.get('due_date'):
+                winner['due_date'] = item['due_date']
+            if not winner.get('due_time') and item.get('due_time'):
+                winner['due_time'] = item['due_time']
+            if not winner.get('verified_on') and item.get('verified_on'):
+                winner['verified_on'] = item['verified_on']
+            if item.get('priority') == 'HIGH':
+                winner['priority'] = 'HIGH'
+            del rows[rid]
+            removed += 1
+    return removed
+
 
 
 def check_details(rows, today, logs):
@@ -1119,6 +1223,7 @@ def main():
                      'queries_failed': discovery_failures, 'matches': discovery_leads,
                      'note': 'RSS leads require issuing-agency verification, not confirmed open solicitations'})
     classify_expiry(rows, today)
+    duplicate_notices_merged = deduplicate_official_notices(rows)
     for record in rows.values():
         record['is_tsp'] = is_tsp_record(record)
         if record['is_tsp'] and record.get('category') in ('its', 'signal', 'transit'):
@@ -1146,6 +1251,7 @@ def main():
         'supplemental_public_sources': PS.PUBLIC_SOURCES,
         'agency_coverage': cover,
         'agency_catalog': sorted(catalog.values(), key=lambda a: (a.get('state') != 'WA', a.get('kind',''), a.get('name',''))),
+        'duplicate_official_notices_merged': duplicate_notices_merged,
         'searchable_agency_targets': sum(bool(a.get('website') or a.get('profile_url')) for a in catalog.values()),
         'public_procurement_pages_known': sum(bool(a.get('procurement_url')) for a in catalog.values()),
         'directory_checks': directory_checks,
