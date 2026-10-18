@@ -4,7 +4,7 @@ Live dashboard: https://markrahmanph.github.io/PH-Consulting-Project-Finder/
 
 ## Search coverage and limits
 
-GitHub Actions runs `update.py` at minute **17 of every hour** (UTC and Pacific time both share the minute). It may start late during GitHub scheduling congestion. Each execution attempts up to **40 rotating agency sites** (default configured by `PH_AGENCY_BATCH`), plus the available official index pages and the supplemental public OregonBuys and WSDOT search pages.
+GitHub Actions runs `update.py` at minute **17 of every hour** (UTC and Pacific time both share the minute). It also runs after changes to search code, tests, or its workflow file. Code-change runs and hourly runs are serialized to avoid competing feed updates; feed-only commits do not trigger repeat runs. Scheduled runs can start late during GitHub congestion. Each execution attempts up to **40 rotating agency sites** (default configured by `PH_AGENCY_BATCH`), plus the available official index pages and the supplemental public OregonBuys and WSDOT search pages.
 
 Sources and discovery routes:
 - Washington OMWBE and WEBS official public listings.
@@ -22,7 +22,7 @@ Keep engineering design, PS&E, traffic signal/ITS programming and design, planni
 
 ### Running and checking
 1. In GitHub Actions, open `Daily PH opportunity discovery`; choose **Run workflow** for an immediate run.
-2. The workflow first runs `python -m py_compile update.py agency_sources.py procurement_sources.py`, then `python update.py`.
+2. The workflow compiles the search scripts, runs `python -m unittest -q test_discovery`, and only then runs `python update.py`. A failing test prevents publishing a new feed.
 3. Open `opportunities.json` to inspect `last_run_iso`, `agency_coverage`, `source_checks`, `manual_review_sources` and `searchable_agency_targets` after a successful update.
 4. On the dashboard press **Refresh data** to load the latest saved data. The button itself does not search procurement sites.
 
