@@ -92,6 +92,8 @@ def new_agency(state,kind,name,profile_url='',website='',procurement_url='',prio
 # Official agency procurement/public bid pages independently identified from issuing-agency websites.
 # Some pages lead to supplier portals; a listed URL is NOT proof bids can be scraped.
 VERIFIED_PROCUREMENT_PAGES = [
+    # Clark County's official RFP landing page includes ICE and pavement consulting.
+    ("WA", "county", "Clark County", "https://clark.wa.gov/internal-services/request-proposal-1"),
     # CivicEngage bid index exposes live individual open/closed statuses.
     # Transit agencies are direct TSP/ITS procurement issuers.
     ("WA", "transit", "Pierce Transit", "https://piercetransit.org/procurement/"),
