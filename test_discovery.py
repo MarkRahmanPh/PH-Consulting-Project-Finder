@@ -9,6 +9,87 @@ import agency_sources as agencies
 
 
 class OpportunityDiscoveryTests(unittest.TestCase):
+    def test_clark_county_consulting_rfps_discovered(self):
+        self.assertEqual(finder.classify_title(
+            "RFP #969 - Intersection Control Evaluation - NE 72nd Avenue",
+            require_procurement=True), "civil")
+        self.assertEqual(finder.classify_title(
+            "RFP #968 - 2027 Pavement Engineering Support",
+            require_procurement=True), "civil")
+        # A separate Marysville paving project is CM/inspection only.
+        self.assertIsNone(finder.classify_title(
+            "RFQu Pavement Preservation - Construction Management Only",
+            require_procurement=True))
+
+    def test_agency_and_description_survive_generic_aggregator_update(self):
+        old = {
+            "id": "woodinville-pw-26-0011",
+            "title": "RFQ PW 26-0011 - On-Call Traffic Engineering Services",
+            "agency": "City of Woodinville",
+            "state": "WA", "category": "signal",
+            "source_kind": "official_detail",
+            "summary": "Two-year on-call traffic engineering contract for traffic "
+                       "signal operations, engineering, and safety services.",
+            "role": "Potential prime",
+            "url": "https://omwbe.wa.gov/bid-opportunities/test-woodinville",
+            "priority": "HIGH", "due_date": "2026-11-05",
+            "verified_on": "2026-10-17", "first_seen": "2026-10-11",
+        }
+        observed = finder.standard_row(
+            old["title"], "Agency named in notice — check source", "WA",
+            old["url"], old["title"], "WA OMWBE official bid listing",
+            "2026-10-17", listing=True, observed_due="2026-11-05")
+        rows = {old["id"]: old}
+        finder.apply_observation(rows, observed, "2026-10-17")
+        row = rows[old["id"]]
+        self.assertEqual(row["agency"], "City of Woodinville")
+        self.assertIn("Two-year", row["summary"])
+        self.assertEqual(row["role"], "Potential prime")
+        self.assertEqual(row["first_seen"], "2026-10-11")
+
+    def test_same_numbered_rfp_from_agency_and_omwbe_deduplicates(self):
+        agency_notice = {
+            "id": "shoalwater-agency", "state": "WA", "category": "safety",
+            "title": "SS4A Comprehensive Safety Action Plan (RFP P-2027-2)",
+            "agency": "Shoalwater Bay Indian Tribe",
+            "source_kind": "official_detail",
+            "url": "https://www.shoalwaterbay-nsn.gov/rfp-ss4a",
+            "summary": "Detailed proposal requirements and crash analysis",
+            "first_seen": "2026-10-11", "due_date": "2026-11-04",
+        }
+        omwbe_notice = {
+            "id": "shoalwater-omwbe", "state": "WA", "category": "safety",
+            "title": "RFP #: P-2027-2 SS4A Safety Action Plan",
+            "agency": "Agency named in notice — check source",
+            "source_kind": "official_detail",
+            "url": "https://omwbe.wa.gov/bid-opportunities/ss4a-safety",
+            "summary": "SS4A",
+            "first_seen": "2026-10-12", "due_date": "2026-11-04",
+        }
+        rows = {r["id"]:r for r in [agency_notice, omwbe_notice]}
+        self.assertEqual(finder.notice_reference(agency_notice["title"]), "P20272")
+        self.assertEqual(finder.notice_reference(omwbe_notice["title"]), "P20272")
+        self.assertEqual(finder.deduplicate_official_notices(rows), 1)
+        self.assertEqual(len(rows), 1)
+        self.assertIn("shoalwater-agency", rows)
+        self.assertEqual(rows["shoalwater-agency"]["alternate_urls"],
+                         [omwbe_notice["url"]])
+
+    def test_coos_bay_titles_stop_before_intro_paragraph(self):
+        html = """
+        <a href="/request-for-proposals-cbrl-upgrades-planning-project">
+        Request for Proposals - CBRL Upgrades Planning Project
+        The Oregon International Port of Coos Bay ("Port"), in
+        collaboration with partners, is inviting qualified engineering
+        consultants to submit proposals.</a>
+        """
+        results = list(finder.scan_coos(
+            html, "https://www.portofcoosbay.com/solicitations-public-notices",
+            "2026-10-17"))
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]["title"],
+                         "Request for Proposals - CBRL Upgrades Planning Project")
+
     def test_tsp_rfqs_classify_as_its_and_high_priority(self):
         titles = [
             "RFQ Transit Signal Priority System Integration Services",
