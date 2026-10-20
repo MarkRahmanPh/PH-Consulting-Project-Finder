@@ -9,6 +9,24 @@ import agency_sources as agencies
 
 
 class OpportunityDiscoveryTests(unittest.TestCase):
+    def test_new_municipal_engineering_soqs_are_discoverable(self):
+        cases = [
+            "City of Grandview Municipal Engineering Services Request for Statement of Qualifications",
+            "City of Cle Elum, Washington Request for Statement of Qualifications Municipal Engineering Services",
+        ]
+        for title in cases:
+            with self.subTest(title=title):
+                self.assertEqual(finder.classify_title(
+                    title, require_procurement=True), "civil")
+
+    def test_odot_transportation_land_use_planning_rfp_classified(self):
+        self.assertEqual(finder.classify_title(
+            "RFP for 2027 Transportation Land Use Planning Price Agreement",
+            require_procurement=True), "planning")
+        self.assertIsNone(finder.classify_title(
+            "Pre-Solicitation Notice for stormwater treatment system design",
+            require_procurement=True))
+
     def test_lewis_county_road_slide_design_rfq_is_found(self):
         title = ("RFQ - Design and Engineering for the Davis Lake Road "
                  "MP 1.67 Slide Repair Project")
