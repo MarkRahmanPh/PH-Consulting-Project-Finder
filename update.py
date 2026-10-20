@@ -64,6 +64,7 @@ QUERIES = {
         ('ada', 'Washington "accessible pedestrian signals" RFP'),
         ('civil', 'Washington "roadway design" "intersection improvements" engineering RFQ'),
         ('civil', 'Washington "civil engineering" "roadway" on-call RFQ'),
+        ('civil', 'Washington city "municipal engineering services" "SOQ" traffic street'),
         ('safety', 'Washington "SS4A" "crash analysis" safety action plan consultant'),
         ('safety', 'Washington "HSIP" "speed management" traffic safety RFQ'),
         ('planning', 'Washington "traffic impact study" "transportation planning" RFQ'),
@@ -99,6 +100,7 @@ QUERIES = {
         ('ada', 'Oregon "pedestrian" "design services" RFQ'),
         ('civil', 'Oregon "civil roadway" "on call" "consultant" RFQ'),
         ('planning', 'Oregon "transportation system plan" "consultant services" RFP'),
+        ('planning', 'Oregon ODOT "transportation land use planning" "price agreement" RFP'),
     ],
 }
 
@@ -229,6 +231,7 @@ FIT_RULES = [
         r"road (?:design|engineering|reconstruction|rehabilitation|improvements?|slide repair)|"
         r"street (?:improvements?|design|reconstruction|rehabilitation)|"
         r"street[s]?cape|civil engineering|transportation engineering|"
+        r"municipal engineering (?:services|consulting|consultants)|"
         r"pavement engineering (?:support|services?|consulting)|"
         r"pavement management (?:stud(?:y|ies)|services?|design)|"
         r"road(?:way)?\s+MP\s+\d+(?:\.\d+)?\s+slide repair|"
@@ -248,7 +251,8 @@ FIT_RULES = [
         r"goods movement|truck route studies|rail freight (?:operations?|stud(?:y|ies)|planning))\b", re.I)),
     ('planning', re.compile(
         r"\b(?:transportation (?:system|safety|options|land.use|development|master) "
-        r"plans?|transportation planning|transportation system planning|"
+        r"plans?|transportation land.use planning|"
+        r"transportation planning|transportation system planning|"
         r"transportation system plans?|transportation master plans?|"
         r"traffic impact (?:stud(?:y|ies)|analysis)|"
         r"traffic (?:stud(?:y|ies)|forecasting|forecast|modeling|models?|analysis|assessment)|"
