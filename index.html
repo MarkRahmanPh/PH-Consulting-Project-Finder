@@ -177,6 +177,7 @@
         <div class="meta"><strong>${esc(x.agency || 'Agency not confirmed')}</strong> · ${esc(x.role || '')}</div>
         <div class="meta due">Due: <strong>${esc(x.due_date || 'Not verified')} ${esc(x.due_time || '')}</strong>
         ${x.previous_due_date && change === 'DEADLINE CHANGED' ? ` · Previously ${esc(x.previous_due_date)}` : ''}</div>
+        ${x.bid_opening_date ? `<div class="meta">Bid opening: <strong>${esc(x.bid_opening_date)} ${esc(x.bid_opening_time || '')}</strong> · Proposal submission deadline must be verified from the RFP</div>` : ''}
         <div class="meta">${esc(x.status || 'Requires review')} · ${esc(x.source || '')} ${x.verified_on ? `· Checked ${esc(x.verified_on)}` : ''}</div></div>
         <div class="aside"><a class="link" href="${link}" target="_blank" rel="noopener noreferrer">${isLead ? 'Review lead' : 'View source'} ↗</a>
         <span class="sub">First seen ${esc(x.first_seen || x.found || 'Unknown')}</span></div></article>`;
