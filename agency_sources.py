@@ -101,6 +101,7 @@ VERIFIED_PROCUREMENT_PAGES = [
     ("OR", "transit", "TriMet", "https://trimet.org/procurement/"),
     # Verified municipal procurement pages (not generic agency homepages).
     ("WA", "city", "SeaTac", "https://www.seatacwa.gov/business/rfp-rfq-bid-procurement"),
+    ("WA", "city", "Sequim", "https://www.sequimwa.gov/Bids.aspx"),
     ("WA", "city", "Renton", "https://www.rentonwa.gov/Projects-Development/Bids-Proposals-Qualifications-and-Other-Procurement-Solicitations"),
     ("WA", "city", "Kent", "https://www.kentwa.gov/pay-and-apply/bids-procurement-rfps"),
     ("WA", "city", "Burien", "https://www.burienwa.gov/city_hall/working_with_us/bids_rfp_rfq"),
