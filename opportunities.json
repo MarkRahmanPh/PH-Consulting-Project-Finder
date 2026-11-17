@@ -1068,11 +1068,11 @@
       "kind": "city",
       "name": "Sequim",
       "profile_url": "",
-      "website": "",
-      "procurement_url": "",
+      "website": "https://www.sequimwa.gov/Bids.aspx",
+      "procurement_url": "https://www.sequimwa.gov/Bids.aspx",
       "last_check": "",
       "status": "Not yet checked",
-      "priority": 9
+      "priority": 12
     },
     {
       "id": "WA|city|shoreline",
@@ -3928,6 +3928,28 @@
   ],
   "catalog_last_refresh": "2026-11-15",
   "items": [
+    {
+      "id": "sequim-mrsc-systemic-signalized-rfq-2026",
+      "state": "WA",
+      "category": "signal",
+      "agency": "City of Sequim",
+      "title": "RFQ — Systemic Signalized Intersections and Pedestrian Safety Improvement Project",
+      "summary": "MRSC roster notice dated November 17, 2026: professional A/E design services for traffic signal cabinet replacements and signal operational improvements at three intersections, plus crosswalk improvements on three corridors. WSDOT HSIP funding. Verify RFQ package and submission deadline with City or MRSC.",
+      "priority": "HIGH",
+      "url": "https://www.sequimwa.gov/1019/Current-Public-Works-Projects",
+      "source": "MRSC roster notice supplied by PH Consulting; official city project page corroborates scope",
+      "source_kind": "manual_roster_lead",
+      "status": "Roster RFQ announced — deadline and public availability unverified",
+      "opportunity_stage": "roster_notice",
+      "due_date": null,
+      "due_time": "",
+      "role": "Potential prime or subconsultant",
+      "verified_on": null,
+      "first_seen": "2026-11-17",
+      "last_seen": "2026-11-17",
+      "addenda_count": null,
+      "expired": false
+    },
     {
       "id": "wa-wsdot-prequal-2026",
       "state": "WA",
