@@ -1252,7 +1252,7 @@ def main():
     # Public project page corroborates the scope, but does NOT establish
     # a public open bid posting or a proposal deadline.
     sequim_url = 'https://www.sequimwa.gov/1019/Current-Public-Works-Projects'
-    sequim_id = ident(sequim_url + '#systemic-signalized-intersections-rfq-2026')
+    sequim_id = 'sequim-mrsc-systemic-signalized-rfq-2026'
     if sequim_id not in rows:
         rows[sequim_id] = {
             'id': sequim_id, 'state': 'WA', 'category': 'signal',
