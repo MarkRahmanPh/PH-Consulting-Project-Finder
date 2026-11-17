@@ -1248,6 +1248,32 @@ def main():
                      'ok': discovery_ok > 0, 'queries_ok': discovery_ok,
                      'queries_failed': discovery_failures, 'matches': discovery_leads,
                      'note': 'RSS leads require issuing-agency verification, not confirmed open solicitations'})
+    # MRSC roster announcement supplied by PH Consulting on 2026-11-17.
+    # Public project page corroborates the scope, but does NOT establish
+    # a public open bid posting or a proposal deadline.
+    sequim_url = 'https://www.sequimwa.gov/1019/Current-Public-Works-Projects'
+    sequim_id = ident(sequim_url + '#systemic-signalized-intersections-rfq-2026')
+    if sequim_id not in rows:
+        rows[sequim_id] = {
+            'id': sequim_id, 'state': 'WA', 'category': 'signal',
+            'agency': 'City of Sequim',
+            'title': 'RFQ — Systemic Signalized Intersections and Pedestrian Safety Improvement Project',
+            'summary': ('MRSC roster consultant notice dated November 17, 2026: '
+                        'professional A/E design services for traffic signal cabinet '
+                        'replacements and signal operational improvements at three '
+                        'intersections, plus crosswalk improvements on three corridors. '
+                        'WSDOT HSIP funding. Verify RFQ package and submission deadline '
+                        'with the City or through the MRSC roster.'),
+            'priority': 'HIGH', 'url': sequim_url,
+            'source': 'MRSC roster notice supplied by PH Consulting; City project page corroborates scope',
+            'source_kind': 'manual_roster_lead',
+            'status': 'Roster RFQ announced — deadline and public availability unverified',
+            'opportunity_stage': 'roster_notice',
+            'due_date': None, 'due_time': '',
+            'role': 'Potential prime or subconsultant',
+            'verified_on': None, 'first_seen': '2026-11-17',
+            'last_seen': today, 'addenda_count': None,
+        }
     classify_expiry(rows, today)
     duplicate_notices_merged = deduplicate_official_notices(rows)
     for record in rows.values():
