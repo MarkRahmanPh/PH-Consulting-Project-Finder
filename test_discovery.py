@@ -9,6 +9,17 @@ import agency_sources as agencies
 
 
 class OpportunityDiscoveryTests(unittest.TestCase):
+    def test_sequim_roster_rfq_is_relevant_and_source_is_monitored(self):
+        title = ("City of Sequim - RFQ for Systemic Signalized Intersections "
+                 "and Pedestrian Safety Improvement Project")
+        self.assertEqual(finder.classify_title(title, require_procurement=True), "signal")
+        cabinet = "RFQ Traffic Signal Cabinet Replacement Engineering Design"
+        self.assertEqual(finder.classify_title(cabinet, require_procurement=True), "signal")
+        catalog = agencies.seeded_catalog()
+        self.assertEqual(
+            catalog[agencies.key("WA", "city", "Sequim")]["procurement_url"],
+            "https://www.sequimwa.gov/Bids.aspx")
+
     def test_new_municipal_engineering_soqs_are_discoverable(self):
         cases = [
             "City of Grandview Municipal Engineering Services Request for Statement of Qualifications",
