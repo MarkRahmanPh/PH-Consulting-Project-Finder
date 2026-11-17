@@ -50,6 +50,8 @@ ALLOWED_DETAIL_HOSTS = {
 QUERIES = {
     'WA': [
         ('signal', 'Washington "signal timing" OR "traffic engineering" RFQ consultant'),
+        ('signal', 'Washington "systemic signalized intersections" "pedestrian safety" RFQ'),
+        ('signal', 'Washington "signal cabinet replacement" "engineering design" RFQ'),
         ('signal', 'Washington "signal coordination" "controller" RFP'),
         ('its', 'Washington "ITS" "ATSPM" OR "transit signal priority" consultant RFP'),
         ('its', 'Washington "traffic signal preemption" "detection" RFQ'),
@@ -203,6 +205,7 @@ FIT_RULES = [
     ('signal', re.compile(
         r"\b(?:traffic signals?|signal timing|signal retiming|signal coordination|"
         r"signal optimization|signal controllers?|controller programming|"
+        r"signalized intersection(?:s)?|signal cabinet replacements?|"
         r"controller upgrades?|signal designs?|signalized intersections?|"
         r"MAXTIME|Econolite|Cobalt EOS|ASC/3|FYA|PPLT|"
         r"leading pedestrian intervals?|LPI|traffic engineering|"
